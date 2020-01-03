@@ -23,6 +23,10 @@ class TicTacToe():
     @property
     def is_over(self):
         return self._is_over
+    
+    @property
+    def current_player(self):
+        return self._current_player
 
     @property
     def winner(self):

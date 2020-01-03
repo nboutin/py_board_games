@@ -12,6 +12,7 @@ def main():
     view = ASCII_View(game.grid)
 
     while game.is_over == False:
+        view.current_player = game.current_player
         view.display()
         x, y = view.ask_input()
 

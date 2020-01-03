@@ -6,3 +6,7 @@ TicTacToe game written in Python
 
     $ cd pytictactoe
     $ python -m unittest -v
+    
+# ToDo
+
+-[ ] Add AI using MinMax algorithm
