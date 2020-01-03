@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import logging
 from enum import Enum
 
 
@@ -23,6 +24,9 @@ class Point():
     def y(self):
         return self._y
 
+    def __str__(self):
+        return "({},{})".format(self._x, self._y)
+
 
 class Board():
 
@@ -30,23 +34,21 @@ class Board():
     __ROW = 3  # Y
 
     def __init__(self):
-        '''
-        ToDo: try with Numpy array for better performance ?
-        '''
+        '''ToDo: try with Numpy array for better performance ?'''
         self._grid = [[None for x in range(Board.__COLUMN)]
                       for x in range(Board.__ROW)]
         self._free_cell_count = Board.__COLUMN * Board.__ROW
 
     def has_free_cell(self):
         return self._free_cell_count > 0
-    
+
     @property
     def grid(self):
         return self._grid
 
     def play(self, point, token):
 
-        if point.x >= Board.__COLUMN or point.y >= Board.__ROW:
+        if 0 > point.x or point.x >= Board.__COLUMN or 0 > point.y or point.y >= Board.__ROW:
             return False
 
         # Check free cell
@@ -60,7 +62,7 @@ class Board():
         return True
 
     def undo(self, point):
-        if point.x >= Board.__COLUMN or point.y >= Board.__ROW:
+        if 0 > point.x or point.x >= Board.__COLUMN or 0 > point.y or point.y >= Board.__ROW:
             return False
 
         self._grid[point.x][point.y] = None

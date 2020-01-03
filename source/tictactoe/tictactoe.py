@@ -3,7 +3,6 @@
 
 from tictactoe.board import (Token, Board, Point)
 from tictactoe.player import Player
-from concurrent.futures._base import FINISHED
 
 
 class TicTacToe():
@@ -28,7 +27,7 @@ class TicTacToe():
     @property
     def winner(self):
         return self._winner_player
-    
+
     @property
     def history(self):
         return self._moves
