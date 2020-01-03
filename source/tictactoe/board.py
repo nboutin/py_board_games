@@ -18,4 +18,3 @@ class Board():
         __COLUMN = 3 # X
         __ROW = 3 # Y
         self._grid = [[None for x in range(__COLUMN)] for x in range(__ROW)]
-        print (self._grid)

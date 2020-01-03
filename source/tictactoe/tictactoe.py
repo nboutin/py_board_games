@@ -11,3 +11,6 @@ class TicTacToe():
         self._p1 = Player("Player 1", Token.CROSS)
         self._p2 = Player("Player 2", Token.CIRCLE)
         self._current_player = self._p1
+        
+    def get_grid(self):
+        return self._board._grid
