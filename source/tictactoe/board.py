@@ -47,16 +47,18 @@ class Board():
         return self._grid
 
     def play(self, point, token):
+        ''' grid coordinate are reversed (y,x)'''
+        x,y = point.x, point.y
 
-        if 0 > point.x or point.x >= Board.__COLUMN or 0 > point.y or point.y >= Board.__ROW:
+        if 0 > x or x >= Board.__COLUMN or 0 > y or y >= Board.__ROW:
             return False
 
         # Check free cell
-        if self._grid[point.x][point.y] is not None:
+        if self._grid[y][x] is not None:
             return False
 
         # Add token to grid
-        self._grid[point.x][point.y] = token
+        self._grid[y][x] = token
         self._free_cell_count -= 1
 
         return True
