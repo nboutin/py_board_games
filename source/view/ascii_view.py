@@ -11,6 +11,9 @@ class ASCII_View():
         self._grid = grid
         self._messages = list()
         self.current_player = None
+        
+    def welcome(self, title, version):
+        print('{} {}'.format(title, version))
 
     def display(self):
         self._print_grid(self._grid)
@@ -18,15 +21,16 @@ class ASCII_View():
         self._print_messages()
 
     def ask_input(self):
-        i = input("Enter index [0-8]: ")
-        i = int(i)
-        return int(i / 3), i % 3
+        i = input("Enter (x,y): ")
+        return int(i[0]), int(i[1])
 
     def message(self, msg):
         self._messages.append(msg)
 
     def _print_grid(self, grid):
-        for row in grid:
+        print ('  012')
+        for i, row in enumerate(grid):
+            print('{} '.format(i), end='')
             for cell in row:
                 print(self._token_str(cell), end='')
             print('')

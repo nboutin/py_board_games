@@ -1,6 +1,7 @@
 # pytictactoe
 
-TicTacToe game written in Python
+TicTacToe game written in Python.
+Display in console.
 
 # Test
 
