@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.0] - 2020-01-04
+
 ### Added
 - Two human players TicTacToe game
 - Unittest
