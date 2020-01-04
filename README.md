@@ -10,4 +10,8 @@ Display in console.
     
 # ToDo
 
--[ ] Add AI using MinMax algorithm
+- [ ] Add AI using MinMax algorithm
+- [ ] Add unittest for Minmax
+- [ ] Add Minmax AlphaBeta
+- [ ] Add Minmax Negamax
+- [ ] Add Minmax Negascout

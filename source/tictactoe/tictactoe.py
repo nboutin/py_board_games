@@ -7,10 +7,10 @@ from tictactoe.player import Player
 
 class TicTacToe():
 
-    def __init__(self):
+    def __init__(self, p1 = None, p2 = None):
         self._board = Board()
-        self._p1 = Player("Player 1", Token.CROSS)
-        self._p2 = Player("Player 2", Token.CIRCLE)
+        self._p1 = p1 if not p1 is None else Player("Player 1", Token.CROSS)
+        self._p2 = p2 if not p2 is None else Player("Player 2", Token.CIRCLE)
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
@@ -50,6 +50,14 @@ class TicTacToe():
         self._compute_next_player()
 
         return True
+    
+    def undo(self):
+        move = self._moves.pop()
+        if move:
+            self._board.undo(move)
+            self._compute_next_player()
+        self._winner_player = None
+        self._is_over = False
 
     def _compute_next_player(self):
         if self._current_player == self._p1:

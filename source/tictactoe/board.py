@@ -35,6 +35,7 @@ class Board():
 
     def __init__(self):
         '''ToDo: try with Numpy array for better performance ?'''
+        
         self._grid = [[None for x in range(Board.__COLUMN)]
                       for x in range(Board.__ROW)]
         self._free_cell_count = Board.__COLUMN * Board.__ROW
@@ -64,10 +65,12 @@ class Board():
         return True
 
     def undo(self, point):
-        if 0 > point.x or point.x >= Board.__COLUMN or 0 > point.y or point.y >= Board.__ROW:
+        x,y = point.x, point.y
+        
+        if 0 > x or x >= Board.__COLUMN or 0 > y or y >= Board.__ROW:
             return False
 
-        self._grid[point.x][point.y] = None
+        self._grid[y][x] = None
         self._free_cell_count += 1
 
         return True
