@@ -73,11 +73,11 @@ class TestMinmax(unittest.TestCase):
         game.undo()
 
         game.play(Point(2,1))
-        self.assertEqual(minmax._minmax(game, depth, False), 0)
+        self.assertEqual(minmax._minmax(game, depth, False), Minmax.DRAW_POINT)
         game.undo()
 
         game.play(Point(2,2))
-        self.assertEqual(minmax._minmax(game, depth, False), 0)
+        self.assertEqual(minmax._minmax(game, depth, False), Minmax.DRAW_POINT)
         game.undo()
 
     def test_minmax_d1(self):
@@ -103,14 +103,45 @@ class TestMinmax(unittest.TestCase):
         game.undo()
 
         game.play(Point(2,1))
-        self.assertEqual(minmax._minmax(game, depth, False), 0)
+        self.assertEqual(minmax._minmax(game, depth, False), Minmax.DRAW_POINT)
         game.undo()
 
         game.play(Point(2,2))
         self.assertEqual(minmax._minmax(game, depth, False), Minmax.LOOSE_POINT)
         game.undo()
         
+    def test_minmax_d2(self):
+        ''' O|-|X
+            X|X|O
+            O|-|-
+        '''
+        ai_player = Player("AI_1", Token.CROSS, True)
+        game = TicTacToe(p1 = ai_player)
+        minmax = Minmax(ai_player, 7)
+        depth = 2
         
+        game.play(Point(2,0))
+        game.play(Point(0,0))
+        game.play(Point(0,1))
+        game.play(Point(0,2))
+        game.play(Point(1,1))
+        game.play(Point(2,1))
+        
+        game.play(Point(1,0))
+        self.assertEqual(minmax._minmax(game, depth, False), Minmax.DRAW_POINT)
+        game.undo()
+
+        game.play(Point(1,2))
+        self.assertEqual(minmax._minmax(game, depth, False), Minmax.DRAW_POINT)
+        game.undo()
+        
+    def test_minmax(self):
+        '''
+        X|-|-
+        -|-|-
+        -|-|-
+        '''
+        pass
         
 
 if __name__ == "__main__":

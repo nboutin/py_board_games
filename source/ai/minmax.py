@@ -13,6 +13,7 @@ class Minmax():
     
     WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
+    DRAW_POINT = 0
     
     def __init__(self, player, depth):
         self._player = player
@@ -64,4 +65,4 @@ class Minmax():
                 return Minmax.WIN_POINT
             else:
                 return Minmax.LOOSE_POINT
-        return 0
+        return Minmax.DRAW_POINT
