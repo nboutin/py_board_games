@@ -16,6 +16,7 @@ class ASCII_View():
         print('{} {}'.format(title, version))
 
     def display(self):
+        print('-----')
         self._print_grid(self._grid)
         self._print_player(self.current_player)
         self._print_messages()
@@ -28,11 +29,11 @@ class ASCII_View():
         self._messages.append(msg)
 
     def _print_grid(self, grid):
-        print ('  012')
+        print ('  0 1 2')
         for i, row in enumerate(grid):
-            print('{} '.format(i), end='')
+            print('{}|'.format(i), end='')
             for cell in row:
-                print(self._token_str(cell), end='')
+                print(self._token_str(cell) + "|", end='')
             print('')
 
     def _print_player(self, player):
