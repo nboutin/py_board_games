@@ -20,6 +20,12 @@ class TestBoard(unittest.TestCase):
                 self.assertTrue(board.play(Point(x, y), Token.CROSS))
 
         self.assertFalse(board.has_free_cell())
+        
+    def test_played_cell_count(self):
+        board = Board()
+        self.assertEqual(board.played_cell_count, 0)
+        self.assertTrue(board.play(Point(0, 0), Token.CROSS))
+        self.assertEqual(board.played_cell_count, 1)
 
     def test_play_busy_cell(self):
         board = Board()

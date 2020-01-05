@@ -13,7 +13,7 @@ def main():
 
     ai_player = Player("AI_2", Token.CIRCLE, True)
     game = TicTacToe(p2 = ai_player)
-    minmax = Minmax(ai_player, 6)
+    minmax = Minmax(ai_player, 7)
     
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", __VERSION)

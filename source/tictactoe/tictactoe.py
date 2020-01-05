@@ -71,6 +71,8 @@ class TicTacToe():
         '''
         Decide if a game is over
         '''
+        if self._board.played_cell_count < 5:
+            return False 
 
         # Horizontal
         has_winner, token = self._has_winner_horizontal(self._board.grid)

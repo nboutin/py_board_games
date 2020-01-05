@@ -42,6 +42,10 @@ class Board():
 
     def has_free_cell(self):
         return self._free_cell_count > 0
+    
+    @property
+    def played_cell_count(self):
+        return Board.__COLUMN * Board.__ROW - self._free_cell_count
 
     @property
     def grid(self):
