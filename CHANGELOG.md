@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- MinMax algorithm
+
 ## [1.0.0] - 2020-01-04
 
 ### Added

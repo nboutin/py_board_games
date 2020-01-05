@@ -11,6 +11,9 @@ class Minmax():
                Point(0,1),Point(1,1),Point(2,1),
                Point(0,2),Point(1,2),Point(2,2)]
     
+    WIN_POINT = 100
+    LOOSE_POINT = -WIN_POINT
+    
     def __init__(self, player, depth):
         self._player = player
         self._depth = depth
@@ -58,7 +61,7 @@ class Minmax():
     def _evaluate(self, game, win_token):
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return 100
+                return Minmax.WIN_POINT
             else:
-                return -100
+                return Minmax.LOOSE_POINT
         return 0
