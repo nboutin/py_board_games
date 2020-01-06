@@ -16,7 +16,7 @@ AI opponent using MinMax algorithm.
 - [x] Add unittest for Minmax
 - [x] Do not evaluate for winner when less than 5 token have been played
 - [x] Add user input to select Ai vs Human
-- [ ] Measure time needed to evaluate next move with Minmax
+- [x] Measure time needed to evaluate next move with Minmax
 - [ ] Add Minmax Negamax
 - [ ] Add Minmax AlphaBeta
 - [ ] Add Minmax Negascout

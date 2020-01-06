@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import time
 
 from tictactoe.board import (Point)
 
@@ -23,12 +24,22 @@ class Minmax():
         '''
         self._player = player
         self._depth = depth
+        self._computation_time = 0.0
+        
+    @property
+    def computation_time(self):
+        return self._computation_time
 
     def compute(self, game):
         best_move = None
         depth = self._depth
 
+        start = time.time()
         _, best_move = self._max(game, depth)
+
+        end = time.time()
+        self._computation_time = round(end - start, 3)
+
         return best_move
 
     def _max(self, game, depth):

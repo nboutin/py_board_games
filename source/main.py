@@ -17,7 +17,7 @@ def main():
 
     game = TicTacToe(p1=p1, p2=p2)
 
-    depth = 10
+    depth = 9
     if p1.is_ai:
         minmax1 = Minmax(p1, depth)
     if p2.is_ai:
@@ -32,9 +32,12 @@ def main():
 
         if game.current_player.is_ai:
             if game.current_player == p1:
-                p = minmax1.compute(game)
+                mm = minmax1
             elif game.current_player == p2:
-                p = minmax2.compute(game)
+                mm = minmax2
+
+            p = mm.compute(game)
+            view.message("Time:{}".format(mm.computation_time))
         else:
             x, y = view.ask_input()
             p = Point(x, y)
