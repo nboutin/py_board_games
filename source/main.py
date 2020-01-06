@@ -11,9 +11,9 @@ __VERSION = "1.1.0-dev"
 
 def main():
 
-    ai_player = Player("AI_2", Token.CIRCLE, True)
-    game = TicTacToe(p2 = ai_player)
-    minmax = Minmax(ai_player, 7)
+    ai_player = Player("AI_1", Token.CROSS, True)
+    game = TicTacToe(p1 = ai_player)
+    minmax = Minmax(ai_player, 10)
     
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", __VERSION)
