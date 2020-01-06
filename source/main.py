@@ -9,12 +9,20 @@ from ai.minmax import Minmax
 
 __VERSION = "1.1.0-dev"
 
+
 def main():
 
-    ai_player = Player("AI_1", Token.CROSS, True)
-    game = TicTacToe(p1 = ai_player)
-    minmax = Minmax(ai_player, 10)
-    
+    mode = input("Select mode (0:H_H, 1:AI_H, 2:H_AI, 3:AI_AI):")
+    p1, p2 = select_mode(int(mode))
+
+    game = TicTacToe(p1=p1, p2=p2)
+
+    depth = 10
+    if p1.is_ai:
+        minmax1 = Minmax(p1, depth)
+    if p2.is_ai:
+        minmax2 = Minmax(p2, depth)
+
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", __VERSION)
 
@@ -23,19 +31,43 @@ def main():
         view.display()
 
         if game.current_player.is_ai:
-            p = minmax.compute(game)
+            if game.current_player == p1:
+                p = minmax1.compute(game)
+            elif game.current_player == p2:
+                p = minmax2.compute(game)
         else:
-            x,y = view.ask_input()
-            p = Point(x,y)
+            x, y = view.ask_input()
+            p = Point(x, y)
 
         if not game.play(p):
             view.message("Input is invalid")
-    
+
     if game.winner is None:
         view.message("Game is finished. Draw")
     else:
         view.message("Game is finished. Winner is {}".format(game.winner.name))
     view.display()
+
+
+def select_mode(mode):
+
+    p1, p2 = None, None
+
+    if mode == 0:
+        p1 = Player("Player_1", Token.CROSS)
+        p2 = Player("Player_2", Token.CIRCLE)
+    elif mode == 1:
+        p1 = Player("AI_1", Token.CROSS, True)
+        p2 = Player("Player_2", Token.CIRCLE)
+    elif mode == 2:
+        p1 = Player("Player_1", Token.CROSS)
+        p2 = Player("AI_2", Token.CIRCLE, True)
+    elif mode == 3:
+        p1 = Player("AI_1", Token.CROSS, True)
+        p2 = Player("AI_2", Token.CIRCLE, True)
+
+    return p1, p2
+
 
 if __name__ == "__main__":
     main()
