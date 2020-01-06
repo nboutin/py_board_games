@@ -7,7 +7,7 @@ from tictactoe.player import Player
 from view.ascii_view import ASCII_View
 from ai.minmax import Minmax
 
-__VERSION = "1.1.0"
+__VERSION = "1.2.0-dev"
 
 
 def main():
