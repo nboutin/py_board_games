@@ -7,7 +7,7 @@ import time
 from tictactoe.board import (Point)
 
 
-class Minmax():
+class Minmax_AlphaBeta():
 
     __MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
                Point(0, 1), Point(1, 1), Point(2, 1),
@@ -25,7 +25,7 @@ class Minmax():
         self._player = player
         self._depth = depth
         self._computation_time = 0.0
-        
+
     @property
     def computation_time(self):
         return self._computation_time
@@ -33,16 +33,18 @@ class Minmax():
     def compute(self, game):
         best_move = None
         depth = self._depth
+        alpha = -sys.maxsize - 1
+        beta = sys.maxsize
 
         start = time.time()
-        _, best_move = self._max(game, depth)
+        _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
 
         end = time.time()
         self._computation_time = round(end - start, 3)
 
         return best_move
 
-    def _max(self, game, depth):
+    def _max_alpha_beta(self, game, depth, alpha, beta):
 
         max = -sys.maxsize - 1
         best_move = None
@@ -50,16 +52,23 @@ class Minmax():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in Minmax.__MOVES:
+        for move in Minmax_AlphaBeta.__MOVES:
             if game.play(move):
-                val, _ = self._min(game, depth - 1)
+                val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
                 if val > max:
                     max = val
                     best_move = move
             game.undo()
+
+            if max >= beta:
+                return max, best_move
+
+            if max > alpha:
+                alpha = max
+
         return max, best_move
 
-    def _min(self, game, depth):
+    def _min_alpha_beta(self, game, depth, alpha, beta):
 
         min = sys.maxsize
         best_move = None
@@ -67,13 +76,20 @@ class Minmax():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in Minmax.__MOVES:
+        for move in Minmax_AlphaBeta.__MOVES:
             if game.play(move):
-                val, _ = self._max(game, depth - 1)
+                val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
                 if val < min:
                     min = val
                     best_move = move
             game.undo()
+
+            if min <= alpha:
+                return min, best_move
+
+            if min < beta:
+                beta = min
+
         return min, best_move
 
     def _is_leaf(self, game, depth):
@@ -87,7 +103,7 @@ class Minmax():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax.WIN_POINT + depth
+                return Minmax_AlphaBeta.WIN_POINT + depth
             else:
-                return Minmax.LOOSE_POINT - depth
-        return Minmax.DRAW_POINT
+                return Minmax_AlphaBeta.LOOSE_POINT - depth
+        return Minmax_AlphaBeta.DRAW_POINT

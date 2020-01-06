@@ -6,6 +6,7 @@ from tictactoe.board import (Point, Token)
 from tictactoe.player import Player
 from view.ascii_view import ASCII_View
 from ai.minmax import Minmax
+from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 __VERSION = "1.2.0-dev"
 
@@ -19,9 +20,9 @@ def main():
 
     depth = 9
     if p1.is_ai:
-        minmax1 = Minmax(p1, depth)
+        minmax1 = Minmax_AlphaBeta(p1, depth)
     if p2.is_ai:
-        minmax2 = Minmax(p2, depth)
+        minmax2 = Minmax_AlphaBeta(p2, depth)
 
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", __VERSION)
