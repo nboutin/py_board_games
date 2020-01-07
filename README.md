@@ -1,12 +1,16 @@
-# pytictactoe
+# Py Board Games
 
-TicTacToe game written in Python.
-Display in console.
-AI opponent using MinMax algorithm.
+Classic board games written in Python using Console as GUI.
+AI opponent is using MinMax algorithm.
+
+## Games available
+
+- TicTacToe
+
 
 # Test
 
-    $ cd pytictactoe
+    $ cd py_board_games
     $ python -m unittest -v
     
 # ToDo
@@ -17,8 +21,8 @@ AI opponent using MinMax algorithm.
 - [x] Do not evaluate for winner when less than 5 token have been played
 - [x] Add user input to select Ai vs Human
 - [x] Measure time needed to evaluate next move with Minmax
+- [x] Add Minmax AlphaBeta
 - [ ] Add Minmax Negamax
-- [ ] Add Minmax AlphaBeta
 - [ ] Add Minmax Negascout
 
 # Links

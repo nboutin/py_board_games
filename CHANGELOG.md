@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - MinMax AlphaBeta implementation
 
+### Changed
+- Repository name from pytictactoe to py_board_games
+
 ## [1.1.0] - 2020-01-06
 
 ### Added
