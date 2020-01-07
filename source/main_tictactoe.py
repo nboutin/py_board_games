@@ -4,7 +4,7 @@
 from tictactoe.tictactoe import TicTacToe
 from tictactoe.board import (Point, Token)
 from tictactoe.player import Player
-from view.ascii_view import ASCII_View
+from tictactoe.ascii_view import ASCII_View
 from ai.minmax import Minmax
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 

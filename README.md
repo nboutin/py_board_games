@@ -24,6 +24,7 @@ AI opponent is using MinMax algorithm.
 - [x] Add Minmax AlphaBeta
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Add Connect Four game
+- [ ] Setup Continuous Integration
 
 # Nice to Have
 - [ ] Add Minmax Negamax
