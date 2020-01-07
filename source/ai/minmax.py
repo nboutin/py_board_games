@@ -25,7 +25,7 @@ class Minmax():
         self._player = player
         self._depth = depth
         self._computation_time = 0.0
-        
+
     @property
     def computation_time(self):
         return self._computation_time

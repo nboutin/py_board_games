@@ -5,7 +5,7 @@ from builtins import property
 
 class Player():
 
-    def __init__(self, name, token, is_ai = False):
+    def __init__(self, name, token, is_ai=False):
         self._name = name
         self._token = token
         self._is_ai = is_ai
@@ -21,7 +21,7 @@ class Player():
     @property
     def is_ai(self):
         return self._is_ai
-    
+
     @is_ai.setter
     def is_ai(self, val):
         self._is_ai = val
