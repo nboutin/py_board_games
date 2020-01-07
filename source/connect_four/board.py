@@ -50,7 +50,9 @@ class Board():
         return self._grid
 
     def play(self, x, token):
-        ''' grid coordinate are reversed (y,x)'''
+        ''' grid coordinate are reversed (y,x)
+        @todo move free falling token to call connect_four
+        '''
 
         if 0 > x or x >= Board._COLUMN:
             return False
@@ -80,3 +82,17 @@ class Board():
         self._cell_free_column_count[x] += 1
 
         return True
+    
+    def check_line(self, x_start, x_end, y, line_test):
+        '''
+        check if line_test is present in row y between x_start and x_end
+        '''
+        row = self._grid[y]
+        length = len(line_test)
+        for x in range(x_start, x_end):
+            if row[x:length] == line_test:
+                return True
+        return False
+    
+    
+    

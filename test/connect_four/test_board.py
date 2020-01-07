@@ -66,7 +66,22 @@ class TestBoard(unittest.TestCase):
         board.undo(1)
         self.assertEqual(board.cell_played_count, 1)
         self.assertEqual(board._cell_free_column_count[1], Board._ROW)
+        
+    def test_check_line(self):
+        board = Board()
+        
+        x_max = Board._COLUMN - 1
+        y_max = Board._ROW - 1
+        
+        self.assertFalse(board.check_line(0, x_max, y_max, [Token.BLUE]))
+        self.assertTrue(board.play(0, Token.BLUE))
+        self.assertTrue(board.check_line(0, x_max, y_max, [Token.BLUE]))
+        
+        self.assertTrue(board.play(1, Token.BLUE))
+        self.assertTrue(board.check_line(0, x_max, y_max, [Token.BLUE, Token.BLUE]))
 
+        self.assertTrue(board.play(2, Token.BLUE))
+        self.assertTrue(board.check_line(0, x_max, y_max, [Token.BLUE, Token.BLUE, Token.BLUE]))
 
 if __name__ == '__main__':
     unittest.main()
