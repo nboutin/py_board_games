@@ -8,6 +8,10 @@ from connect_four.player import Player
 
 class ConnectFour():
 
+    # LINE_WIN_LEN = 4
+    _PATTERNS = [[token for i in range(4)]
+                 for token in [Token.BLUE, Token.RED]]
+
     def __init__(self, p1=None, p2=None):
         self._board = Board()
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.BLUE)
@@ -83,10 +87,10 @@ class ConnectFour():
         # Vertical
         if not has_winner:
             has_winner, token = self._has_winner_vertical(self._board)
-#
-#         # Diagonal
-#         if not has_winner:
-#             has_winner, token = self._has_winner_diagonal(self._board.grid)
+
+        # Diagonal
+        if not has_winner:
+            has_winner, token = self._has_winner_diagonal(self._board.grid)
 
         if has_winner:
             self._winner_player = self._p1 if token == self._p1.token else self._p2
@@ -100,38 +104,35 @@ class ConnectFour():
         '''
         x_min = 0
         x_max = Board._COLUMN
-        line_len = 4
 
-        for token in [Token.BLUE, Token.RED]:
-            line_test = [token for i in range(line_len)]
+        for pattern in ConnectFour._PATTERNS:
 
             for y in range(Board._ROW):
-                if board.check_line_horizontal(x_min, x_max, y, line_test):
-                    return True, token
+                if board.check_line_horizontal(x_min, x_max, y, pattern):
+                    return True, pattern[0]
 
         return False, None
 
     def _has_winner_vertical(self, board):
-
+        '''
+        @todo: improve by using last move x value to limit scope of search
+        '''
         y_min = 0
         y_max = Board._ROW
-        line_len = 4
 
-        for token in [Token.BLUE, Token.RED]:
-            line_test = [token for i in range(line_len)]
+        for pattern in ConnectFour._PATTERNS:
 
             for x in range(Board._COLUMN):
-                if board.check_line_vertical(y_min, y_max, x, line_test):
-                    return True, token
+                if board.check_line_vertical(y_min, y_max, x, pattern):
+                    return True, pattern[0]
 
         return False, None
 
-    def _has_winner_diagonal(self, grid):
+    def _has_winner_diagonal(self, board):
 
-        #         if not grid[0][0] is None and grid[0][0] == grid[1][1] and grid[0][0] == grid[2][2]:
-        #             return True, grid[0][0]
+        #       for pattern in ConnectFour._PATTERNS:
         #
-        #         if not grid[0][2] is None and grid[0][2] == grid[1][1] and grid[0][2] == grid[2][0]:
-        #             return True, grid[0][2]
+        #             if board.check_line_diagonal(pattern):
+        #                 return True, pattern[0]
 
         return False, None
