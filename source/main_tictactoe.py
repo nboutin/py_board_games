@@ -10,6 +10,9 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 __VERSION = "1.2.0-dev"
 
+__MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
+           Point(0, 1), Point(1, 1), Point(2, 1),
+           Point(0, 2), Point(1, 2), Point(2, 2)]
 
 def main():
 
@@ -20,9 +23,9 @@ def main():
 
     depth = 9
     if p1.is_ai:
-        minmax1 = Minmax_AlphaBeta(p1, depth)
+        minmax1 = Minmax_AlphaBeta(p1, depth, __MOVES)
     if p2.is_ai:
-        minmax2 = Minmax_AlphaBeta(p2, depth)
+        minmax2 = Minmax_AlphaBeta(p2, depth, __MOVES)
 
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", __VERSION)
@@ -38,7 +41,7 @@ def main():
                 mm = minmax2
 
             p = mm.compute(game)
-            view.message("Time:{}".format(mm.computation_time))
+            view.message("Move: {} ({}s)".format(p, mm.computation_time))
         else:
             x, y = view.ask_input()
             p = Point(x, y)

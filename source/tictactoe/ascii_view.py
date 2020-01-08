@@ -16,10 +16,10 @@ class ASCII_View():
         print('{} {}'.format(title, version))
 
     def display(self):
+        self._print_messages()
         print('-----')
         self._print_grid(self._grid)
         self._print_player(self.current_player)
-        self._print_messages()
 
     def ask_input(self):
         i = input("Enter (x,y): ")

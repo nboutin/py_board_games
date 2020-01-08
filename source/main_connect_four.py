@@ -10,6 +10,8 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 __VERSION = "1.2.0-dev"
 
+__MOVES = [0, 1, 2, 3, 4, 5, 6]
+
 
 def main():
 
@@ -20,9 +22,9 @@ def main():
 
     depth = 9
     if p1.is_ai:
-        minmax1 = Minmax_AlphaBeta(p1, depth)
+        minmax1 = Minmax_AlphaBeta(p1, depth, __MOVES)
     if p2.is_ai:
-        minmax2 = Minmax_AlphaBeta(p2, depth)
+        minmax2 = Minmax_AlphaBeta(p2, depth, __MOVES)
 
     view = ASCII_View(game.grid)
     view.welcome("Connect Four", __VERSION)
@@ -38,7 +40,7 @@ def main():
                 mm = minmax2
 
             move = mm.compute(game)
-            view.message("Time:{}".format(mm.computation_time))
+            view.message("Move: {} ({}s)".format(move, mm.computation_time))
         else:
             move = view.ask_input()
 

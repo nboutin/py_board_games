@@ -9,21 +9,18 @@ from tictactoe.board import (Point)
 
 class Minmax_AlphaBeta():
 
-    __MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
-               Point(0, 1), Point(1, 1), Point(2, 1),
-               Point(0, 2), Point(1, 2), Point(2, 2)]
-
     WIN_POINT = 10
     LOOSE_POINT = -WIN_POINT
     DRAW_POINT = 0
 
-    def __init__(self, player, depth):
+    def __init__(self, player, depth, moves):
         '''
         @param player: AI player
         @param depth: explore tree moves until depth value (min:1)
         '''
         self._player = player
         self._depth = depth
+        self._moves = moves
         self._computation_time = 0.0
 
     @property
@@ -52,7 +49,7 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in Minmax_AlphaBeta.__MOVES:
+        for move in self._moves:
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
                 if val > max:
@@ -76,7 +73,7 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in Minmax_AlphaBeta.__MOVES:
+        for move in self._moves:
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
                 if val < min:
