@@ -72,19 +72,21 @@ class ConnectFour():
         '''
         Decide if a game is over
         '''
-        if self._board.cell_played_count < 8:
+
+        # todo: explain magic number
+        if self._board.cell_played_count < 7:
             return False
 
         # Horizontal
-        has_winner, token = self._has_winner_horizontal(self._board.grid)
+        has_winner, token = self._has_winner_horizontal(self._board)
 
         # Vertical
         if not has_winner:
-            has_winner, token = self._has_winner_vertical(self._board.grid)
-
-        # Diagonal
-        if not has_winner:
-            has_winner, token = self._has_winner_diagonal(self._board.grid)
+            has_winner, token = self._has_winner_vertical(self._board)
+#
+#         # Diagonal
+#         if not has_winner:
+#             has_winner, token = self._has_winner_diagonal(self._board.grid)
 
         if has_winner:
             self._winner_player = self._p1 if token == self._p1.token else self._p2
@@ -92,18 +94,41 @@ class ConnectFour():
         self._is_over = not self._board.has_free_cell() or has_winner
         return self._is_over
 
-    def _has_winner_horizontal(self, grid):
+    def _has_winner_horizontal(self, board):
+        '''
+        @todo: improve by using last move y value to limit scope of search
+        '''
+        x_min = 0
+        x_max = Board._COLUMN
+        line_len = 4
 
-        #         for token in [Token.CROSS, Token.CIRCLE]:
-        #             test_line = [token for x in range(3)]
-        #
-        #             for row in grid:
-        #                 if row == test_line:
-        #                     return True, token
+        for token in [Token.BLUE, Token.RED]:
+            line_test = [token for i in range(line_len)]
+
+            for y in range(Board._ROW):
+                if board.check_line_horizontal(x_min, x_max, y, line_test):
+                    return True, token
 
         return False, None
 
-    def _has_winner_vertical(self, grid):
+    def _has_winner_vertical(self, board):
+        '''
+         for(int y = Board::N_ROW - LIGNE; y >= 0; --y)
+        {
+            for(int x = 0; x < Board::N_COLUMN; ++x)
+            {
+                for(const auto c : {color_e::red, color_e::yellow})
+                {
+                    std::array<Board::cell_t, LIGNE> line;
+                    line.fill(c);
+
+                    if(std::equal(g[x].begin() + y, g[x].begin() + y + LIGNE, line.begin(), line.end()))
+                        return {c};
+                }
+            }
+        }
+        return {};
+        '''
         return False, None
 
     def _has_winner_diagonal(self, grid):

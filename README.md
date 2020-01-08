@@ -25,6 +25,11 @@ AI opponent is using MinMax algorithm.
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Add Connect Four game
 - [ ] Setup Continuous Integration
+- [ ] Factorize ressources between games
+
+# Optimization
+
+- [ ] Compute end game only considering last move and its impact 
 
 # Nice to Have
 - [ ] Add Minmax Negamax

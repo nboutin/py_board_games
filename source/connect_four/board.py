@@ -36,7 +36,8 @@ class Board():
         self._grid = [[None for x in range(Board._COLUMN)]
                       for x in range(Board._ROW)]
         self._cell_free_count = Board._COLUMN * Board._ROW
-        self._cell_free_column_count = [Board._ROW for i in range(Board._COLUMN)]
+        self._cell_free_column_count = [
+            Board._ROW for i in range(Board._COLUMN)]
 
     def has_free_cell(self):
         return self._cell_free_count > 0
@@ -82,17 +83,24 @@ class Board():
         self._cell_free_column_count[x] += 1
 
         return True
-    
-    def check_line(self, x_start, x_end, y, line_test):
+
+    def check_line_horizontal(self, x_start, x_end, y, line_test):
         '''
         check if line_test is present in row y between x_start and x_end
+        @todo explain bound check (built-in list ?)
         '''
         row = self._grid[y]
         length = len(line_test)
         for x in range(x_start, x_end):
-            if row[x:length] == line_test:
+            if row[x:x + length] == line_test:
                 return True
         return False
-    
-    
-    
+
+    def __str__(self):
+        ''' string representation for debug purpose'''
+        s = '\n'
+        for row in self._grid:
+            for cell in row:
+                s += "{}|".format(cell)
+            s += '\n'
+        return s
