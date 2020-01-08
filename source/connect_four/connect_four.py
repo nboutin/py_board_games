@@ -112,23 +112,18 @@ class ConnectFour():
         return False, None
 
     def _has_winner_vertical(self, board):
-        '''
-         for(int y = Board::N_ROW - LIGNE; y >= 0; --y)
-        {
-            for(int x = 0; x < Board::N_COLUMN; ++x)
-            {
-                for(const auto c : {color_e::red, color_e::yellow})
-                {
-                    std::array<Board::cell_t, LIGNE> line;
-                    line.fill(c);
 
-                    if(std::equal(g[x].begin() + y, g[x].begin() + y + LIGNE, line.begin(), line.end()))
-                        return {c};
-                }
-            }
-        }
-        return {};
-        '''
+        y_min = 0
+        y_max = Board._ROW
+        line_len = 4
+
+        for token in [Token.BLUE, Token.RED]:
+            line_test = [token for i in range(line_len)]
+
+            for x in range(Board._COLUMN):
+                if board.check_line_vertical(y_min, y_max, x, line_test):
+                    return True, token
+
         return False, None
 
     def _has_winner_diagonal(self, grid):

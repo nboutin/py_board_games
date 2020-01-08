@@ -85,14 +85,21 @@ class Board():
         return True
 
     def check_line_horizontal(self, x_start, x_end, y, line_test):
+        row = self._grid[y]
+        return self._check_line(row, x_start, x_end, line_test)
+
+    def check_line_vertical(self, y_start, y_end, x, line_test):
+        column = [self._grid[y][x] for y in range(Board._ROW)]
+        return self._check_line(column, y_start, y_end, line_test)
+
+    def _check_line(self, line, start, end, pattern):
         '''
-        check if line_test is present in row y between x_start and x_end
+        check if line_test is present in row y between start and end
         @todo explain bound check (built-in list ?)
         '''
-        row = self._grid[y]
-        length = len(line_test)
-        for x in range(x_start, x_end):
-            if row[x:x + length] == line_test:
+        length = len(pattern)
+        for x in range(start, end):
+            if line[x:x + length] == pattern:
                 return True
         return False
 
