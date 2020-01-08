@@ -62,10 +62,15 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.cell_played_count, 2)
         self.assertEqual(board._cell_free_column_count[0], Board._ROW - 1)
         self.assertEqual(board._cell_free_column_count[1], Board._ROW - 1)
+        self.assertEqual(board.grid[5][0], Token.BLUE)
+        self.assertEqual(board.grid[5][1], Token.BLUE)
 
         board.undo(1)
         self.assertEqual(board.cell_played_count, 1)
         self.assertEqual(board._cell_free_column_count[1], Board._ROW)
+        
+        self.assertEqual(board.grid[5][0], Token.BLUE)
+        self.assertEqual(board.grid[5][1], None)
         
     def test_check_line_horizontal(self):
         board = Board()

@@ -58,7 +58,7 @@ class ConnectFour():
 
     def undo(self):
         move = self._moves.pop()
-        if move:
+        if not move is None:
             self._board.undo(move)
             self._compute_next_player()
         self._winner_player = None

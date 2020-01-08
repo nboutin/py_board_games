@@ -76,7 +76,7 @@ class Board():
         if 0 > x or x >= Board._COLUMN:
             return False
 
-        y = self._cell_free_column_count[x] - 1
+        y = self._cell_free_column_count[x]
 
         self._grid[y][x] = None
         self._cell_free_count += 1
