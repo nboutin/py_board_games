@@ -4,8 +4,6 @@
 import sys
 import time
 
-from game_base.board import (Point)
-
 
 class Minmax_AlphaBeta():
 

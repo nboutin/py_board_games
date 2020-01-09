@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from connect_four.board import Token
+from connect_four.connect_four import Token
 
 
 class ASCII_View():

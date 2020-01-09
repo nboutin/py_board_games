@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
-from connect_four.board import (Board, Point, Token)
+from connect_four.board import (Board, Point)
 
 
 class TestBoard(unittest.TestCase):

@@ -2,8 +2,16 @@
 # -*- coding: utf-8 -*-
 
 
-from connect_four.board import (Token, Board, Point)
-from connect_four.player import Player
+from connect_four.board import (Board, Point)
+from game_base.player import Player
+
+
+from enum import Enum
+
+
+class Token(Enum):
+    BLUE = 1
+    RED = 2
 
 
 class ConnectFour():
