@@ -23,7 +23,9 @@ class Point():
 class Board():
 
     def __init__(self, column_count, row_count):
-        '''ToDo: try with Numpy array for better performance ?'''
+        '''
+        @todo Try with Numpy array for better performance ?
+        '''
 
         self._column = column_count  # X
         self._row = row_count        # Y
@@ -44,8 +46,13 @@ class Board():
     def grid(self):
         return self._grid
 
-    def play(self, point, token):
-        ''' grid coordinate are reversed (y,x)'''
+    def add_token(self, point, token):
+        '''
+        @brief Add token at point coordinate
+        @param[in] point, (x,y) coordinate
+        @param[in] token to add
+        @warning Grid coordinate are reversed (y,x)
+        '''
         x, y = point.x, point.y
 
         if 0 > x or x >= self._column or 0 > y or y >= self._row:
@@ -61,6 +68,9 @@ class Board():
 
         return True
 
+    def drop_token(self, x, token):
+        pass
+
     def undo(self, point):
         x, y = point.x, point.y
 
@@ -71,7 +81,7 @@ class Board():
         self._cell_free_count += 1
 
         return True
-    
+
     def check_line_horizontal(self, x_start, x_end, y, line_test):
         row = self._grid[y]
         return self._check_line(row, x_start, x_end, line_test)
@@ -82,8 +92,8 @@ class Board():
 
     def _check_line(self, line, start, end, pattern):
         '''
-        check if line_test is present in row y between start and end
-        @todo explain bound check (built-in list ?)
+        @brief Check if line_test is present in row y between start and end
+        @todo Explain bound check (built-in list ?)
         '''
         length = len(pattern)
         for x in range(start, end):
@@ -92,7 +102,9 @@ class Board():
         return False
 
     def __str__(self):
-        ''' string representation for debug purpose'''
+        '''
+        @brief string representation for debug purpose
+        '''
         s = '\n'
         for row in self._grid:
             for cell in row:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from tictactoe.board import Token
+from tictactoe.tictactoe import Token
 
 
 class ASCII_View():

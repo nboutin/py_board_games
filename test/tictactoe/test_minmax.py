@@ -9,8 +9,8 @@ import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from tictactoe.player import Player
-from tictactoe.board import (Token, Point)
-from tictactoe.tictactoe import TicTacToe
+from game_base.board import Point
+from tictactoe.tictactoe import (TicTacToe, Token)
 from ai.minmax import Minmax
 
 

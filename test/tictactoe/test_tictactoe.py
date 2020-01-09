@@ -6,8 +6,8 @@ import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
-from tictactoe.tictactoe import TicTacToe
-from tictactoe.board import (Token, Point)
+from tictactoe.tictactoe import (TicTacToe, Token)
+from game_base.board import (Point)
 
 
 class TestTicTacToe(unittest.TestCase):

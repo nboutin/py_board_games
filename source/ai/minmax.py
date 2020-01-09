@@ -4,7 +4,7 @@
 import sys
 import time
 
-from tictactoe.board import (Point)
+from game_base.board import (Point)
 
 
 class Minmax():

@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tictactoe.board import (Token, Board, Point)
+from game_base.board import (Board, Point)
 from tictactoe.player import Player
+
+from enum import Enum
+
+
+class Token(Enum):
+    CROSS = 1
+    CIRCLE = 2
 
 
 class TicTacToe():
 
+    __COLUMN = 3
+    __ROW = 3
+
     def __init__(self, p1=None, p2=None):
-        self._board = Board()
+        self._board = Board(TicTacToe.__COLUMN, TicTacToe.__ROW)
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.CROSS)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.CIRCLE)
         self._current_player = self._p1
@@ -41,7 +51,7 @@ class TicTacToe():
             self._moves.append(None)    # bad move
             return False
 
-        if not self._board.play(point, self._current_player.token):
+        if not self._board.add_token(point, self._current_player.token):
             self._moves.append(None)    # bad move
             return False
 
@@ -71,7 +81,8 @@ class TicTacToe():
         '''
         Decide if a game is over
         '''
-        if self._board.played_cell_count < 5:
+        # todo: explain magic number
+        if self._board.cell_used_count < 5:
             return False
 
         # Horizontal

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tictactoe.tictactoe import TicTacToe
-from tictactoe.board import (Point, Token)
+from tictactoe.tictactoe import (TicTacToe, Token)
+# from tictactoe.board import (Point, Token)
+from game_base.board import Point
 from tictactoe.player import Player
 from tictactoe.ascii_view import ASCII_View
 from ai.minmax import Minmax
