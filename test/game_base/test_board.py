@@ -69,22 +69,47 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(board.grid[0][0], token)
         self.assertEqual(board.grid[0][1], None)
-        
+
 #     def test_check_line_horizontal(self):
 #         board = Board()
-#         
+#
 #         x_max = Board._COLUMN - 1
 #         y_max = Board._ROW - 1
-#         
+#
 #         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
 #         self.assertTrue(board.play(0, Token.BLUE))
 #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
-#         
+#
 #         self.assertTrue(board.play(1, Token.BLUE))
 #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE]))
-# 
+#
 #         self.assertTrue(board.play(2, Token.BLUE))
 #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE, Token.BLUE]))
+
+    def test_get_diag_down(self):
+        board = Board(5, 4)
+        token = 'x'
+
+        # diag start at 0,0
+        board.add_token(Point(0, 0), token)
+        board.add_token(Point(1, 1), token)
+        board.add_token(Point(2, 2), token)
+        board.add_token(Point(3, 3), token)
+
+        self.assertEqual(board.get_diag_down(0, 0, 1), [token])
+        self.assertEqual(board.get_diag_down(0, 0, 2), [token, token])
+        self.assertEqual(board.get_diag_down(0, 0, 3), [token, token, token])
+        self.assertEqual(board.get_diag_down(0, 0, 4),
+                         [token, token, token, token])
+
+        # diag start at 1,2
+        board = Board(5, 4)
+        board.add_token(Point(1, 2), token)
+        board.add_token(Point(2, 3), token)
+        board.add_token(Point(3, 4), token)
+        self.assertEqual(board.get_diag_down(1, 2, 1), [token])
+        self.assertEqual(board.get_diag_down(1, 2, 2), [token, token])
+        self.assertEqual(board.get_diag_down(2, 3, 1), [token])
 
 
 if __name__ == '__main__':

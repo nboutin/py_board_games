@@ -5,9 +5,11 @@ import unittest
 import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
+# sys.path.insert(0, os.path.join(sys.path[0], '..','..','source'))
+
 
 from connect_four.connect_four import (ConnectFour, Token)
-from game_base.board import Point
+from game_base.board import (Point, Board)
 
 
 class TestConnectFour(unittest.TestCase):
@@ -143,17 +145,39 @@ class TestConnectFour(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p1)
 
-#     def test_win_diag_player1(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(1, 1)))
-#         self.assertTrue(game.play(Point(2, 0)))
-#         self.assertTrue(game.play(Point(2, 2)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, game._p1)
-#
+    def test_has_winner_diag_down(self):
+        board = Board(7, 6)
+        token = Token.BLUE
+
+        board.add_token(Point(0, 2), token)
+        board.add_token(Point(1, 3), token)
+        board.add_token(Point(2, 4), token)
+        board.add_token(Point(3, 5), token)
+
+        game = ConnectFour()
+        self.assertEqual(game._has_winner_diag_down(board), (True, token))
+
+    def test_win_diag_down_player1(self):
+        game = ConnectFour()
+        self.assertTrue(game.play(0))
+        self.assertTrue(game.play(0))
+        self.assertTrue(game.play(0))
+        self.assertTrue(game.play(1))
+
+        self.assertTrue(game.play(0))  # B
+
+        self.assertTrue(game.play(1))
+        self.assertTrue(game.play(1))  # B
+
+        self.assertTrue(game.play(2))
+        self.assertTrue(game.play(2))  # B
+
+        self.assertTrue(game.play(4))
+        self.assertTrue(game.play(3))  # B
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p1)
+
 #     def test_win_diag_player2(self):
 #         game = TicTacToe()
 #         self.assertTrue(game.play(Point(0, 0)))

@@ -26,6 +26,7 @@ AI opponent is using MinMax algorithm.
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Add Connect Four game
 - [ ] Setup Continuous Integration
+- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
 
 # Optimization
 
