@@ -6,10 +6,10 @@ from game_base.board_drop import (BoardDrop)
 from game_base.player import Player
 
 
-from enum import Enum
+from enum import (Enum, auto)
 
 
-class Token(Enum):
+class Token(auto):
     BLUE = 1
     RED = 2
 
@@ -18,6 +18,8 @@ class ConnectFour():
 
     _COLUMN = 7  # X
     _ROW = 6  # Y
+    
+    _MOVES = [0, 1, 2, 3, 4, 5, 6]
 
     _LINE_WIN_LEN = 4
     _PATTERNS = [[token for i in range(4)]

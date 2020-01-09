@@ -50,6 +50,9 @@ class Minmax_AlphaBeta():
         for move in self._moves:
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
+#                 print("max {} {} {}".format(depth, move, val))
+#                 if depth == self._depth:
+#                     print()
                 if val > max:
                     max = val
                     best_move = move
@@ -69,11 +72,12 @@ class Minmax_AlphaBeta():
         best_move = None
 
         if self._is_leaf(game, depth):
-            return self._evaluate(game, depth,  self._player.token), best_move
+            return self._evaluate(game, depth, self._player.token), best_move
 
         for move in self._moves:
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
+#                 print("min {} {} {}".format(depth, move, val))
                 if val < min:
                     min = val
                     best_move = move
