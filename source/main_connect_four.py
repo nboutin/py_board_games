@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from game_base.player import Player
-from connect_four.board import (Point)
+from game_base.board import (Point)
 from connect_four.connect_four import (ConnectFour, Token)
 from connect_four.ascii_view import ASCII_View
 from ai.minmax import Minmax

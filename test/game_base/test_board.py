@@ -69,6 +69,22 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(board.grid[0][0], token)
         self.assertEqual(board.grid[0][1], None)
+        
+#     def test_check_line_horizontal(self):
+#         board = Board()
+#         
+#         x_max = Board._COLUMN - 1
+#         y_max = Board._ROW - 1
+#         
+#         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
+#         self.assertTrue(board.play(0, Token.BLUE))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
+#         
+#         self.assertTrue(board.play(1, Token.BLUE))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE]))
+# 
+#         self.assertTrue(board.play(2, Token.BLUE))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE, Token.BLUE]))
 
 
 if __name__ == '__main__':

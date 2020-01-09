@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from connect_four.board import (Board, Point)
+from game_base.board_drop import (BoardDrop)
 from game_base.player import Player
 
 
@@ -16,12 +16,15 @@ class Token(Enum):
 
 class ConnectFour():
 
+    _COLUMN = 7  # X
+    _ROW = 6  # Y
+
     # LINE_WIN_LEN = 4
     _PATTERNS = [[token for i in range(4)]
                  for token in [Token.BLUE, Token.RED]]
 
     def __init__(self, p1=None, p2=None):
-        self._board = Board()
+        self._board = BoardDrop(ConnectFour._COLUMN, ConnectFour._ROW)
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.BLUE)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.RED)
         self._current_player = self._p1
@@ -54,7 +57,7 @@ class ConnectFour():
             self._moves.append(None)    # bad move
             return False
 
-        if not self._board.play(move, self._current_player.token):
+        if not self._board.drop_token(move, self._current_player.token):
             self._moves.append(None)    # bad move
             return False
 
@@ -86,7 +89,7 @@ class ConnectFour():
         '''
 
         # todo: explain magic number
-        if self._board.cell_played_count < 7:
+        if self._board.cell_used_count < 7:
             return False
 
         # Horizontal
@@ -111,11 +114,11 @@ class ConnectFour():
         @todo: improve by using last move y value to limit scope of search
         '''
         x_min = 0
-        x_max = Board._COLUMN
+        x_max = ConnectFour._COLUMN
 
         for pattern in ConnectFour._PATTERNS:
 
-            for y in range(Board._ROW):
+            for y in range(ConnectFour._ROW):
                 if board.check_line_horizontal(x_min, x_max, y, pattern):
                     return True, pattern[0]
 
@@ -126,11 +129,11 @@ class ConnectFour():
         @todo: improve by using last move x value to limit scope of search
         '''
         y_min = 0
-        y_max = Board._ROW
+        y_max = ConnectFour._ROW
 
         for pattern in ConnectFour._PATTERNS:
 
-            for x in range(Board._COLUMN):
+            for x in range(ConnectFour._COLUMN):
                 if board.check_line_vertical(y_min, y_max, x, pattern):
                     return True, pattern[0]
 

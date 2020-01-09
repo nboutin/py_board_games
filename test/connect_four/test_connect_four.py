@@ -7,7 +7,7 @@ import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from connect_four.connect_four import (ConnectFour, Token)
-from connect_four.board import Point
+from game_base.board import Point
 
 
 class TestConnectFour(unittest.TestCase):

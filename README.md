@@ -22,10 +22,10 @@ AI opponent is using MinMax algorithm.
 - [x] Add user input to select Ai vs Human
 - [x] Measure time needed to evaluate next move with Minmax
 - [x] Add Minmax AlphaBeta
+- [x] Factorize ressources between games
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Add Connect Four game
 - [ ] Setup Continuous Integration
-- [ ] Factorize ressources between games
 
 # Optimization
 
