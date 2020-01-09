@@ -108,7 +108,7 @@ class Board():
         return [self._grid[y + i][x + i] for i in range(len)]
 
     def get_diag_up(self, x, y, len):
-        return [self._grid[y - i][x - i] for i in range(len)]
+        return [self._grid[y + i][x - i] for i in range(len)]
 
     def __str__(self):
         '''

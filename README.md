@@ -27,6 +27,7 @@ AI opponent is using MinMax algorithm.
 - [ ] Add Connect Four game
 - [ ] Setup Continuous Integration
 - [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
+- [ ] Make Minmax using thread
 
 # Optimization
 

@@ -18,7 +18,7 @@ def main():
 
     game = ConnectFour(p1=p1, p2=p2)
 
-    depth = 6
+    depth = 8
     if p1.is_ai:
         minmax1 = Minmax_AlphaBeta(p1, depth, ConnectFour._MOVES)
     if p2.is_ai:

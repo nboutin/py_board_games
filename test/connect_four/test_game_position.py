@@ -15,6 +15,30 @@ from game_base.player import Player
 
 class TestGamePosition(unittest.TestCase):
 
+    def test_pos2(self):
+        '''
+          0 1 2 3 4 5 6 
+        0|X|-|-|-|-|-|-|
+        1|O|-|O|-|-|-|-|
+        2|X|-|X|O|-|-|-|
+        3|O|O|O|X|X|-|-|
+        4|O|X|X|X|O|-|-|
+        5|O|X|O|X|X|-|-|
+        '''
+        p2 = Player("AI_2", Token.RED, True)
+        game = ConnectFour(p2=p2)
+        
+        moves = [3,0,4,2,3,0,2,0,0,4,1,2,3,3,1,1,2,0,0,2,4,0,2,4]
+        for move in moves:
+            game.play(move)
+
+        self.assertEqual(game._board.get_diag_up(4,2,4), [1,1,1,1])
+        game.undo()
+        
+        depth = 2
+        minmax = Minmax_AlphaBeta(p2, depth, ConnectFour._MOVES)
+        self.assertEqual(minmax.compute(game), 4)
+
     def test_pos1(self):
         '''
           0 1 2 3 4 5 6 
@@ -26,7 +50,7 @@ class TestGamePosition(unittest.TestCase):
         5|O|-|O|X|X|X|O|
         '''
         p2 = Player("AI_2", Token.RED, True)
-        game = ConnectFour()
+        game = ConnectFour(p2=p2)
         
         moves = [3,0,4,2,5,6,4,0,3,0,0,2,2,2,5,6,4,4,3]
         for move in moves:
