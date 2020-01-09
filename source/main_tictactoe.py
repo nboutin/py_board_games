@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tictactoe.tictactoe import (TicTacToe, Token)
-# from tictactoe.board import (Point, Token)
 from game_base.board import Point
-from tictactoe.player import Player
+from game_base.player import Player
+from tictactoe.tictactoe import (TicTacToe, Token)
 from tictactoe.ascii_view import ASCII_View
 from ai.minmax import Minmax
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
@@ -14,6 +13,7 @@ __VERSION = "1.2.0-dev"
 __MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
            Point(0, 1), Point(1, 1), Point(2, 1),
            Point(0, 2), Point(1, 2), Point(2, 2)]
+
 
 def main():
 

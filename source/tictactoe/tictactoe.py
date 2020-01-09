@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from game_base.board import (Board, Point)
-from tictactoe.player import Player
+from game_base.player import Player
 
 from enum import Enum
 

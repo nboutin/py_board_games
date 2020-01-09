@@ -8,8 +8,8 @@ import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
-from tictactoe.player import Player
 from game_base.board import Point
+from game_base.player import Player
 from tictactoe.tictactoe import (TicTacToe, Token)
 from ai.minmax import Minmax
 
