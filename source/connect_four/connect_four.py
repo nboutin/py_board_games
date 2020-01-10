@@ -95,12 +95,13 @@ class ConnectFour():
             return False
 
         # Horizontal
-        has_winner, token = self._has_winner_horizontal(self._board)
+        has_winner, token = self._has_winner_horizontal(
+            self._board, self._board.moves[-1].y)
 
         # Vertical
         if not has_winner:
             has_winner, token = self._has_winner_vertical(
-                self._board, self._moves[-1])
+                self._board, self._board.moves[-1].x)
 
         # Diagonal
         if not has_winner:
@@ -112,25 +113,17 @@ class ConnectFour():
         self._is_over = not self._board.has_free_cell() or has_winner
         return self._is_over
 
-    def _has_winner_horizontal(self, board):
-        '''
-        @todo: improve by using last move y value to limit scope of search
-        '''
+    def _has_winner_horizontal(self, board, y_last):
         x_min = 0
         x_max = ConnectFour._COLUMN
 
-        for y in range(ConnectFour._ROW):
-
-            for pattern in ConnectFour._PATTERNS:
-                if board.check_line_horizontal(x_min, x_max, y, pattern):
-                    return True, pattern[0]
+        for pattern in ConnectFour._PATTERNS:
+            if board.check_line_horizontal(x_min, x_max, y_last, pattern):
+                return True, pattern[0]
 
         return False, None
 
     def _has_winner_vertical(self, board, x_last):
-        '''
-        @todo: improve by using last move x value to limit scope of search
-        '''
         y_min = 0
         y_max = ConnectFour._ROW
 

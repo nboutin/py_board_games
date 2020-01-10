@@ -16,6 +16,11 @@ AI opponent is using MinMax algorithm.
     
 # ToDo
 
+- [ ] Add history to Board
+- [ ] Profile TicTacToe implementation for optimization
+- [ ] Setup Continuous Integration
+- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
+- [ ] Make Minmax using thread
 - [x] Evaluate leaf point in respect to current depth
 - [x] Add AI using MinMax algorithm
 - [x] Add unittest for Minmax
@@ -24,19 +29,11 @@ AI opponent is using MinMax algorithm.
 - [x] Measure time needed to evaluate next move with Minmax
 - [x] Add Minmax AlphaBeta
 - [x] Factorize ressources between games
-- [ ] Profile TicTacToe implementation for optimization
-- [ ] Add Connect Four game
-- [ ] Setup Continuous Integration
-- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
-- [ ] Make Minmax using thread
+- [x] Add Connect Four game
 
 # Optimization
 
-- [ ] Compute end game only considering last move and its impact 
-
-# Nice to Have
-- [ ] Add Minmax Negamax
-- [ ] Add Minmax Negascout
+- [x] Connect Four: Compute end game only considering last move and its impact
 
 # Links
 

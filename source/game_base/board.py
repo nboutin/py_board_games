@@ -34,6 +34,7 @@ class Board():
                       for y in range(self._row)]
 
         self._cell_free_count = self._column * self._row
+        self._moves = list()
 
     def has_free_cell(self):
         return self._cell_free_count > 0
@@ -45,6 +46,10 @@ class Board():
     @property
     def grid(self):
         return self._grid
+
+    @property
+    def moves(self):
+        return self._moves
 
     def add_token(self, point, token):
         '''
@@ -65,6 +70,7 @@ class Board():
         # Add token to grid
         self._grid[y][x] = token
         self._cell_free_count -= 1
+        self._moves.append(point)
 
         return True
 
@@ -79,6 +85,7 @@ class Board():
 
         self._grid[y][x] = None
         self._cell_free_count += 1
+        self._moves.pop()
 
         return True
 

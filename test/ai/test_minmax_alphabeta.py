@@ -31,7 +31,9 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-        self.assertAlmostEqual(duration / n, 1.0, delta=0.10)
+        excepted = 0.777
+        delta = excepted / 10  # 10%
+        self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
 
 if __name__ == '__main__':
