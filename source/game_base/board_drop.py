@@ -9,10 +9,10 @@ class BoardDrop(Board):
     def __init__(self, column_count, row_count):
         super().__init__(column_count, row_count)
 
-        self._cell_free_column_count = [self._row for i in range(self._column)]
+        self._cell_free_column_count = [self._row for _ in range(self._column)]
 
     def add_token(self, point, token):
-        raise Exception("do not use")
+        raise Exception("Not Implemented")
 
     def drop_token(self, x, token):
         '''
@@ -34,11 +34,14 @@ class BoardDrop(Board):
 
         return True
 
-    def undo(self, x):
+    def undo(self, x=None):
+        
+        point = None
+        if x is not None:
+            y = self._cell_free_column_count[x]
+            point = Point(x,y)
 
-        y = self._cell_free_column_count[x]
-
-        if not super().undo(Point(x, y)):
+        if not super().undo(point):
             return False
 
         self._cell_free_column_count[x] += 1

@@ -15,6 +15,10 @@ class Point():
     @property
     def y(self):
         return self._y
+    
+    @property
+    def point(self):
+        return (self._x, self._y)
 
     def __str__(self):
         return "({},{})".format(self._x, self._y)
@@ -58,7 +62,7 @@ class Board():
         @param[in] token to add
         @warning Grid coordinate are reversed (y,x)
         '''
-        x, y = point.x, point.y
+        x, y = point.point
 
         if 0 > x or x >= self._column or 0 > y or y >= self._row:
             return False
@@ -77,8 +81,14 @@ class Board():
     def drop_token(self, x, token):
         pass
 
-    def undo(self, point):
-        x, y = point.x, point.y
+    def undo(self, point=None):
+        '''
+        @param[in] point to undo, if None last point
+        '''
+        if point is None:
+            point = self._moves.pop()
+
+        x, y = point.point
 
         if 0 > x or x >= self._column or 0 > y or y >= self._row:
             return False

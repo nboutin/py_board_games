@@ -17,6 +17,7 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 class TestMinmaxAlphaBeta(unittest.TestCase):
 
+    @unittest.skip("perf")
     def test_perf(self):
 
         n = 10

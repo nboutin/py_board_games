@@ -16,11 +16,12 @@ AI opponent is using MinMax algorithm.
     
 # ToDo
 
-- [ ] Add history to Board
+- [ ] Make ASCII_View a base class
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Setup Continuous Integration
 - [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
 - [ ] Make Minmax using thread
+- [x] Add history to Board
 - [x] Evaluate leaf point in respect to current depth
 - [x] Add AI using MinMax algorithm
 - [x] Add unittest for Minmax
