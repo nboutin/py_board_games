@@ -18,7 +18,7 @@ class ConnectFour():
 
     _COLUMN = 7  # X
     _ROW = 6  # Y
-    
+
     _MOVES = [0, 1, 2, 3, 4, 5, 6]
 
     _LINE_WIN_LEN = 4
@@ -99,7 +99,8 @@ class ConnectFour():
 
         # Vertical
         if not has_winner:
-            has_winner, token = self._has_winner_vertical(self._board)
+            has_winner, token = self._has_winner_vertical(
+                self._board, self._moves[-1])
 
         # Diagonal
         if not has_winner:
@@ -126,18 +127,16 @@ class ConnectFour():
 
         return False, None
 
-    def _has_winner_vertical(self, board):
+    def _has_winner_vertical(self, board, x_last):
         '''
         @todo: improve by using last move x value to limit scope of search
         '''
         y_min = 0
         y_max = ConnectFour._ROW
 
-        for x in range(ConnectFour._COLUMN):
-
-            for pattern in ConnectFour._PATTERNS:
-                if board.check_line_vertical(y_min, y_max, x, pattern):
-                    return True, pattern[0]
+        for pattern in ConnectFour._PATTERNS:
+            if board.check_line_vertical(y_min, y_max, x_last, pattern):
+                return True, pattern[0]
 
         return False, None
 
