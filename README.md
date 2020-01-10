@@ -6,6 +6,7 @@ AI opponent is using MinMax algorithm.
 ## Games available
 
 - TicTacToe
+- Connect Four
 
 
 # Test
@@ -39,6 +40,12 @@ AI opponent is using MinMax algorithm.
 
 # Links
 
+## Tree
+
+* https://anytree.readthedocs.io/en/2.7.3/
+
+## Minmax
+
 * https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/
 * https://github.com/Cledersonbc/tic-tac-toe-minimax
 * https://www.ntu.edu.sg/home/ehchua/programming/java/JavaGame_TicTacToe_AI.html
@@ -46,11 +53,12 @@ AI opponent is using MinMax algorithm.
 
 # Other board games
 
+* Quixo / https://foxmind.co.il/uploads/70213732698722edfaf.pdf
+* Ultimate TicTacToe / https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe
 * [Hex](https://fr.wikipedia.org/wiki/Hex)
 * Chess
 * Go
 * Nim
-* Connect Four
 * Le jeu de Dame
 * Backgammon
 * Reversi
