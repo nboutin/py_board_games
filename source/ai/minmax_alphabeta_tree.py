@@ -53,7 +53,7 @@ class Minmax_AlphaBeta_Tree():
 
         for move in self._moves:
             if game.play(move):
-                node = self.make_node(True, depth, move, parent, 0)
+                node = self.make_node(True, move, parent, 0)
 
                 val, _ = self._min_alpha_beta(
                     game, depth + 1, alpha, beta, node)
@@ -82,7 +82,7 @@ class Minmax_AlphaBeta_Tree():
 
         for move in self._moves:
             if game.play(move):
-                node = self.make_node(False, depth, move, parent, 0)
+                node = self.make_node(False, move, parent, 0)
 
                 val, _ = self._max_alpha_beta(
                     game, depth + 1, alpha, beta, node)
@@ -123,7 +123,7 @@ class Minmax_AlphaBeta_Tree():
             s += '%s%s(%s)\n' % (pre, node.name, node.val)
         return s
 
-    def make_node(self, is_max, depth, move, parent, val):
+    def make_node(self, is_max, move, parent, val):
         name = '+' if is_max else '-'
         name += '{}{}'.format(parent.name[1:], move)
         return Node(name, parent=parent, val=val)

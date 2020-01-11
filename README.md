@@ -34,6 +34,7 @@ AI opponent is using MinMax algorithm.
 
 # Optimization
 
+- [ ] Generate moves available for a game position
 - [x] Connect Four: Compute end game only considering last move and its impact
 
 # Links
@@ -45,12 +46,15 @@ AI opponent is using MinMax algorithm.
 ## Minmax
 
 * https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/
+* http://www.pressibus.org/ataxx/autre/minimax/paper.html
 * https://github.com/Cledersonbc/tic-tac-toe-minimax
 * https://www.ntu.edu.sg/home/ehchua/programming/java/JavaGame_TicTacToe_AI.html
 * https://www.codeproject.com/Articles/43622/Solve-Tic-Tac-Toe-with-the-MiniMax-algorithm
 
 # Other board games
 
+* Gomoki (5 in row on 9*9 board)
+* Othello
 * Quixo / https://foxmind.co.il/uploads/70213732698722edfaf.pdf
 * Ultimate TicTacToe / https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe
 * [Hex](https://fr.wikipedia.org/wiki/Hex)
