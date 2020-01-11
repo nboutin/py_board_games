@@ -3,9 +3,9 @@
 
 import sys
 import time
+from threading import Thread
 
-
-class Minmax_AlphaBeta():
+class Minmax_AlphaBeta_Thread():
 
     WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
@@ -31,7 +31,14 @@ class Minmax_AlphaBeta():
         beta = sys.maxsize
 
         start = time.time()
-        _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
+        threads = list()
+
+#         for move in self._moves:        
+        for move in game.generate_moves():
+            
+            threads = Thread(target=self._)
+            
+#         _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
 
         end = time.time()
         self._computation_time = round(end - start, 3)
@@ -46,7 +53,7 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in game.generate_moves():
+        for move in self._moves:
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
                 if val > max:
@@ -70,7 +77,7 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth, self._player.token), best_move
 
-        for move in game.generate_moves():
+        for move in self._moves:
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
                 if val < min:
@@ -97,7 +104,7 @@ class Minmax_AlphaBeta():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AlphaBeta.WIN_POINT + depth
+                return Minmax_AlphaBeta_Thread.WIN_POINT + depth
             else:
-                return Minmax_AlphaBeta.LOOSE_POINT - depth
-        return Minmax_AlphaBeta.DRAW_POINT
+                return Minmax_AlphaBeta_Thread.LOOSE_POINT - depth
+        return Minmax_AlphaBeta_Thread.DRAW_POINT
