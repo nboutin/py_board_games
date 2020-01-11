@@ -15,10 +15,13 @@ def main():
 
     mode = input("Select mode (0:H_H, 1:AI_H, 2:H_AI, 3:AI_AI):")
     p1, p2 = select_mode(int(mode))
+    
+    level = input("Choose level (8):")
+    level = 8 if not level else int(level)
 
     game = ConnectFour(p1=p1, p2=p2)
 
-    depth = 8
+    depth = level
     if p1.is_ai:
         minmax1 = Minmax_AlphaBeta(p1, depth, ConnectFour._MOVES)
     if p2.is_ai:
