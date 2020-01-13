@@ -20,7 +20,7 @@ class TestMinmaxAlphaBetaTree(unittest.TestCase):
 
         depth = 4
         p1 = Player("AI_1", Token.BLUE, True)
-        minmax = Minmax_AlphaBeta_Tree(p1, depth, ConnectFour._MOVES)
+        minmax = Minmax_AlphaBeta_Tree(p1, depth, ConnectFour.MOVES)
         game = ConnectFour(p1=p1)
         minmax.compute(game)
 
@@ -28,7 +28,7 @@ class TestMinmaxAlphaBetaTree(unittest.TestCase):
 
     def test_print_and_export(self):
         p1 = Player("AI_1", Token.BLUE, True)
-        minmax = Minmax_AlphaBeta_Tree(p1, 3, ConnectFour._MOVES)
+        minmax = Minmax_AlphaBeta_Tree(p1, 3, ConnectFour.MOVES)
         game = ConnectFour(p1=p1)
         minmax.compute(game)
 

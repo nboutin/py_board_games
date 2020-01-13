@@ -110,7 +110,7 @@ class Board():
     def _check_line(self, line, start, end, pattern):
         '''
         @brief Check if line_test is present in row y between start and end
-               Python list split has auto bound checking.
+        @details Python list split has auto bound checking.
         '''
         length = len(pattern)
         for x in range(start, end):

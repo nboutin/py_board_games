@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import version
 from game_base.player import Player
 from game_base.board import (Point)
 from connect_four.connect_four import (ConnectFour, Token)
@@ -8,14 +9,12 @@ from connect_four.ascii_view import ASCII_View
 from ai.minmax import Minmax
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
-__VERSION = "1.2.0-dev"
-
 
 def main():
 
     mode = input("Select mode (0:H_H, 1:AI_H, 2:H_AI, 3:AI_AI):")
     p1, p2 = select_mode(int(mode))
-    
+
     level = input("Choose level (8):")
     level = 8 if not level else int(level)
 
@@ -23,12 +22,12 @@ def main():
 
     depth = level
     if p1.is_ai:
-        minmax1 = Minmax_AlphaBeta(p1, depth, ConnectFour._MOVES)
+        minmax1 = Minmax_AlphaBeta(p1, depth, ConnectFour.MOVES)
     if p2.is_ai:
-        minmax2 = Minmax_AlphaBeta(p2, depth, ConnectFour._MOVES)
+        minmax2 = Minmax_AlphaBeta(p2, depth, ConnectFour.MOVES)
 
     view = ASCII_View(game.grid)
-    view.welcome("Connect Four", __VERSION)
+    view.welcome("Connect Four", version.VERSION)
 
     while game.is_over == False:
         view.current_player = game.current_player
