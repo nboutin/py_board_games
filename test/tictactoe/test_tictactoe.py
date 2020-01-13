@@ -118,6 +118,12 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p2)
 
+    def test_generate_moves(self):
+        game = TicTacToe()
+        moves = game.generate_moves()
+        self.assertEqual(moves, [Point(0, 0), Point(1, 0), Point(2, 0), Point(
+            0, 1), Point(1, 1), Point(2, 1), Point(0, 2), Point(1, 2), Point(2, 2)])
+
 
 if __name__ == '__main__':
     unittest.main()

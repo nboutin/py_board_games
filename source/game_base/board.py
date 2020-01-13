@@ -23,6 +23,15 @@ class Point():
     def __str__(self):
         return "({},{})".format(self._x, self._y)
 
+    def __repr__(self):
+        return "({},{})".format(self._x, self._y)
+    
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+     
+    def __lt__(self, other):
+         return self.y < other.y or (self.y == other.y and self.x < other.x)
+
 
 class Board():
 

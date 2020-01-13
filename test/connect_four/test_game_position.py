@@ -49,7 +49,7 @@ class TestGamePosition(unittest.TestCase):
         game.undo()
         self.assertEqual(game.current_player, p2)
         depth = 2
-        minmax = Minmax_AlphaBeta(p2, depth, ConnectFour.MOVES)
+        minmax = Minmax_AlphaBeta(p2, depth)
         self.assertEqual(minmax.compute(game), 4)
 
     def test_pos1(self):
@@ -70,9 +70,9 @@ class TestGamePosition(unittest.TestCase):
             game.play(move)
 
         depth = 1
-        minmax = Minmax_AlphaBeta(p2, depth, ConnectFour.MOVES)
+        minmax = Minmax_AlphaBeta(p2, depth)
         self.assertEqual(minmax.compute(game), 0)
 
         depth = 2
-        minmax = Minmax_AlphaBeta(p2, depth, ConnectFour.MOVES)
+        minmax = Minmax_AlphaBeta(p2, depth)
         self.assertEqual(minmax.compute(game), 0)

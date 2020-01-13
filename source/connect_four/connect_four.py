@@ -4,8 +4,6 @@
 
 from game_base.board_drop import (BoardDrop)
 from game_base.player import Player
-
-
 from enum import (Enum, auto)
 
 
@@ -19,8 +17,6 @@ class ConnectFour():
     _COLUMN = 7  # X
     _ROW = 6  # Y
 
-    MOVES = [0, 1, 2, 3, 4, 5, 6]
-
     _LINE_WIN_LEN = 4
     _PATTERNS = [[token for i in range(4)]
                  for token in [Token.BLUE, Token.RED]]
@@ -33,6 +29,7 @@ class ConnectFour():
         self._winner_player = None
         self._is_over = False
         self._history = list()
+        self._moves = [i for i in range(ConnectFour._COLUMN)]
 
     @property
     def grid(self):
@@ -53,6 +50,12 @@ class ConnectFour():
     @property
     def history(self):
         return self._history
+
+    def generate_moves(self):
+        '''
+        @brief All legal moves minus already played moves
+        '''
+        return self._moves
 
     def play(self, move):
         if self._is_over:
