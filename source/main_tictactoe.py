@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tictactoe.tictactoe import TicTacToe
-from tictactoe.board import (Point, Token)
-from tictactoe.player import Player
-from view.ascii_view import ASCII_View
+import version
+from game_base.board import Point
+from game_base.player import Player
+from tictactoe.tictactoe import (TicTacToe, Token)
+from tictactoe.ascii_view import ASCII_View
 from ai.minmax import Minmax
-
-__VERSION = "1.1.0"
+from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 
 def main():
@@ -19,12 +19,12 @@ def main():
 
     depth = 9
     if p1.is_ai:
-        minmax1 = Minmax(p1, depth)
+        minmax1 = Minmax_AlphaBeta(p1, depth, TicTacToe.MOVES)
     if p2.is_ai:
-        minmax2 = Minmax(p2, depth)
+        minmax2 = Minmax_AlphaBeta(p2, depth, TicTacToe.MOVES)
 
     view = ASCII_View(game.grid)
-    view.welcome("TicTacToe", __VERSION)
+    view.welcome("TicTacToe", version.VERSION)
 
     while game.is_over == False:
         view.current_player = game.current_player
@@ -37,7 +37,7 @@ def main():
                 mm = minmax2
 
             p = mm.compute(game)
-            view.message("Time:{}".format(mm.computation_time))
+            view.message("Move: {} ({}s)".format(p, mm.computation_time))
         else:
             x, y = view.ask_input()
             p = Point(x, y)

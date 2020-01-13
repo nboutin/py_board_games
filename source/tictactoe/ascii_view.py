@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from tictactoe.board import Token
+from tictactoe.tictactoe import Token
 
 
 class ASCII_View():
@@ -11,15 +11,15 @@ class ASCII_View():
         self._grid = grid
         self._messages = list()
         self.current_player = None
-        
+
     def welcome(self, title, version):
         print('{} {}'.format(title, version))
 
     def display(self):
+        self._print_messages()
         print('-----')
         self._print_grid(self._grid)
         self._print_player(self.current_player)
-        self._print_messages()
 
     def ask_input(self):
         i = input("Enter (x,y): ")
@@ -29,7 +29,12 @@ class ASCII_View():
         self._messages.append(msg)
 
     def _print_grid(self, grid):
-        print ('  0 1 2')
+
+        print('  ', end='')
+        for i in range(len(grid[0])):
+            print('{} '.format(i), end='')
+        print()
+
         for i, row in enumerate(grid):
             print('{}|'.format(i), end='')
             for cell in row:
@@ -42,9 +47,9 @@ class ASCII_View():
     def _token_str(self, token):
         if token is None:
             return '-'
-        elif token == Token.CROSS:
+        elif token in [Token.CROSS]:
             return 'X'
-        elif token == Token.CIRCLE:
+        elif token in [Token.CIRCLE]:
             return 'O'
         else:
             assert False
