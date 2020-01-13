@@ -7,6 +7,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- MinMax AlphaBeta implementation
+- Game_base Player
+- Game_base Board and BoardDrop
+- Connect Four implementation using game_base
+- Connect Four implementation using MinMax AlphaBeta
+
+### Changed
+- Repository name from pytictactoe to py_board_games
+- TicTacToe use game_base module
+
 ## [1.1.0] - 2020-01-06
 
 ### Added

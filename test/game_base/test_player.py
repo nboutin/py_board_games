@@ -6,15 +6,14 @@ import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
-from tictactoe.player import Player
-from tictactoe.board import Token
+from game_base.player import Player
 
 
 class TestPlayer(unittest.TestCase):
 
     def test_name(self):
         name = "Player 1"
-        token = Token.CROSS
+        token = "X"
         player = Player(name, token)
         self.assertEqual(player.name, name)
         self.assertEqual(player.token, token)

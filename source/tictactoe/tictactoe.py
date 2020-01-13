@@ -1,14 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tictactoe.board import (Token, Board, Point)
-from tictactoe.player import Player
+from game_base.board import (Board, Point)
+from game_base.player import Player
+
+from enum import Enum
+
+
+class Token(Enum):
+    CROSS = 1
+    CIRCLE = 2
 
 
 class TicTacToe():
 
-    def __init__(self, p1 = None, p2 = None):
-        self._board = Board()
+    __COLUMN = 3
+    __ROW = 3
+    
+    MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
+           Point(0, 1), Point(1, 1), Point(2, 1),
+           Point(0, 2), Point(1, 2), Point(2, 2)]
+
+    def __init__(self, p1=None, p2=None):
+        self._board = Board(TicTacToe.__COLUMN, TicTacToe.__ROW)
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.CROSS)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.CIRCLE)
         self._current_player = self._p1
@@ -23,7 +37,7 @@ class TicTacToe():
     @property
     def is_over(self):
         return self._is_over
-    
+
     @property
     def current_player(self):
         return self._current_player
@@ -41,7 +55,7 @@ class TicTacToe():
             self._moves.append(None)    # bad move
             return False
 
-        if not self._board.play(point, self._current_player.token):
+        if not self._board.add_token(point, self._current_player.token):
             self._moves.append(None)    # bad move
             return False
 
@@ -50,7 +64,7 @@ class TicTacToe():
         self._compute_next_player()
 
         return True
-    
+
     def undo(self):
         move = self._moves.pop()
         if move:
@@ -71,16 +85,16 @@ class TicTacToe():
         '''
         Decide if a game is over
         '''
-        if self._board.played_cell_count < 5:
-            return False 
+        # todo: explain magic number
+        if self._board.cell_used_count < 5:
+            return False
 
         # Horizontal
         has_winner, token = self._has_winner_horizontal(self._board.grid)
 
         # Vertical
         if not has_winner:
-            grid_rotated = self._rotate(self._board.grid)
-            has_winner, token = self._has_winner_horizontal(grid_rotated)
+            has_winner, token = self._has_winner_vertical(self._board.grid)
 
         # Diagonal
         if not has_winner:
@@ -102,6 +116,10 @@ class TicTacToe():
                     return True, token
 
         return False, None
+
+    def _has_winner_vertical(self, grid):
+        grid_rotated = self._rotate(self._board.grid)
+        return self._has_winner_horizontal(grid_rotated)
 
     def _rotate(self, grid):
         return list(list(a) for a in zip(*reversed(grid)))
