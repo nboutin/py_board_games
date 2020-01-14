@@ -9,7 +9,7 @@ class Gomoku():
 
     _LINE_WIN_SIZE = 5
 
-    def __init__(self, p1=None, p2=None, column=7, row=7):
+    def __init__(self, p1=None, p2=None, column=9, row=9):
         self._board = Board(column, row)
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.A)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.B)

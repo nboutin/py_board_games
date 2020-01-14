@@ -7,7 +7,7 @@ AI opponent is using MinMax algorithm.
 
 - TicTacToe
 - Connect Four
-
+- Gomoku aka 5 in row
 
 # Test
 
@@ -27,10 +27,10 @@ AI opponent is using MinMax algorithm.
 - [x] Add AI using MinMax algorithm
 
 ## Design
-- [ ] Define Token in game_base module
-- [ ] Make ASCII_View a base class
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration
+- [x] Define Token in game_base module
+- [x] Make ASCII_View a base class
 - [x] Game implement generate_moves functions
 - [x] Add Board last_move function
 - [x] Factorize ressources between games

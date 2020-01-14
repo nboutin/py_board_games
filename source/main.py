@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from game_base.player import Player
-from game_base.board import Token
+from game_base.board import Token, Point
 from game_base.ascii_view import ASCII_View
 from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
@@ -44,7 +44,8 @@ def main(game_name, player_mode, level):
             view.add_message("Move: {} ({}s)".format(
                 move, ai.computation_time))
         else:
-            move = view.ask_input()
+            x,y = view.ask_input()
+            move = Point(x, y)
 
         if not game.play(move):
             view.add_message("Input is invalid")
@@ -109,8 +110,7 @@ def make_ai(mode, level, p1, p2):
     elif mode == 'AI_AI':
         ai1 = Minmax_AlphaBeta(p1, level)
         ai2 = Minmax_AlphaBeta(p2, level)
-    else:
-        assert(False)
+
     return ai1, ai2
 
 
