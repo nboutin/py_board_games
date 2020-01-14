@@ -9,7 +9,7 @@ class BoardDrop(Board):
     def __init__(self, column_count, row_count):
         super().__init__(column_count, row_count)
 
-        self._cell_free_column_count = [self._row for _ in range(self._column)]
+        self._cell_free_column_count = [row_count for _ in range(column_count)]
 
     def add_token(self, point, token):
         raise Exception("Not Implemented")
@@ -21,10 +21,10 @@ class BoardDrop(Board):
         @param[in] token to drop
         @warning Grid coordinate are reversed (y,x)
         '''
-        
-        if 0 > x or x >= self._column:
+
+        if 0 > x or x >= self._column_count:
             return False
-        
+
         y = self._cell_free_column_count[x] - 1
 
         if not super().add_token(Point(x, y), token):
@@ -35,11 +35,11 @@ class BoardDrop(Board):
         return True
 
     def undo(self, x=None):
-        
+
         point = None
         if x is not None:
             y = self._cell_free_column_count[x]
-            point = Point(x,y)
+            point = Point(x, y)
 
         if not super().undo(point):
             return False

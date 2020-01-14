@@ -16,8 +16,8 @@ AI opponent is using MinMax algorithm.
     
 # ToDo
 ## Feature
-- [ ] Add Gomoku game aka 5 in row
 - [ ] Print moves history
+- [x] Add Gomoku game aka 5 in row
 - [x] Add user input to select Ai vs Human
 - [x] Measure time needed to evaluate next move with Minmax
 - [x] Add Connect Four game
