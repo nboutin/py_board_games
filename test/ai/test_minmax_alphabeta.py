@@ -9,16 +9,16 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 
-from game_base.board import (Point, Board)
+from game_base.board import (Point, Board, Token)
 from game_base.player import Player
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
-from tictactoe.tictactoe import (TicTacToe, Token)
+from game.tictactoe import TicTacToe
 
 
 class TestMinmaxAlphaBeta(unittest.TestCase):
 
     def test_is_leaf(self):
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax_AlphaBeta(ai_player, 7)
 
@@ -40,15 +40,15 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         -|-|-
         '''
 
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax_AlphaBeta(ai_player, 7)
         depth = 0
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax_AlphaBeta.DRAW_POINT)
+            game, depth, Token.A), Minmax_AlphaBeta.DRAW_POINT)
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax_AlphaBeta.DRAW_POINT)
+            game, depth, Token.B), Minmax_AlphaBeta.DRAW_POINT)
 
         game.play(Point(0, 0))
         game.play(Point(0, 1))
@@ -57,10 +57,10 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax_AlphaBeta.WIN_POINT)
+            game, depth, Token.A), Minmax_AlphaBeta.WIN_POINT)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax_AlphaBeta.LOOSE_POINT)
+            game, depth, Token.B), Minmax_AlphaBeta.LOOSE_POINT)
 
     def test_evaluate_d1(self):
         '''
@@ -68,16 +68,16 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         O|O|-
         -|-|-
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax_AlphaBeta(ai_player, 7)
         depth = 10
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax_AlphaBeta.DRAW_POINT)
+            game, depth, Token.A), Minmax_AlphaBeta.DRAW_POINT)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax_AlphaBeta.DRAW_POINT)
+            game, depth, Token.B), Minmax_AlphaBeta.DRAW_POINT)
 
         game.play(Point(0, 0))
         game.play(Point(0, 1))
@@ -86,10 +86,10 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax_AlphaBeta.WIN_POINT + depth)
+            game, depth, Token.A), Minmax_AlphaBeta.WIN_POINT + depth)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax_AlphaBeta.LOOSE_POINT - depth)
+            game, depth, Token.B), Minmax_AlphaBeta.LOOSE_POINT - depth)
 
     def test_minmax_d1(self):
         '''
@@ -98,7 +98,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         XO-
         Simulate max loop and calling min evaluation
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         depth = 1
         minmax = Minmax_AlphaBeta(ai_player, depth)
@@ -131,7 +131,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         X|X|O
         O|-|-
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         depth = 2
         minmax = Minmax_AlphaBeta(ai_player, depth)

@@ -10,14 +10,14 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from game_base.board import Point
 from game_base.player import Player
-from tictactoe.tictactoe import (TicTacToe, Token)
+from game.tictactoe import (TicTacToe, Token)
 from ai.minmax import Minmax
 
 
 class TestMinmax(unittest.TestCase):
 
     def test_is_leaf(self):
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax(ai_player, 7)
 
@@ -39,15 +39,15 @@ class TestMinmax(unittest.TestCase):
         -|-|-
         '''
 
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax(ai_player, 7)
         depth = 0
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax.DRAW_POINT)
+            game, depth, Token.A), Minmax.DRAW_POINT)
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax.DRAW_POINT)
+            game, depth, Token.B), Minmax.DRAW_POINT)
 
         game.play(Point(0, 0))
         game.play(Point(0, 1))
@@ -56,10 +56,10 @@ class TestMinmax(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax.WIN_POINT)
+            game, depth, Token.A), Minmax.WIN_POINT)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax.LOOSE_POINT)
+            game, depth, Token.B), Minmax.LOOSE_POINT)
 
     def test_evaluate_d1(self):
         '''
@@ -67,16 +67,16 @@ class TestMinmax(unittest.TestCase):
         O|O|-
         -|-|-
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         minmax = Minmax(ai_player, 7)
         depth = 10
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax.DRAW_POINT)
+            game, depth, Token.A), Minmax.DRAW_POINT)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax.DRAW_POINT)
+            game, depth, Token.B), Minmax.DRAW_POINT)
 
         game.play(Point(0, 0))
         game.play(Point(0, 1))
@@ -85,10 +85,10 @@ class TestMinmax(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CROSS), Minmax.WIN_POINT + depth)
+            game, depth, Token.A), Minmax.WIN_POINT + depth)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.CIRCLE), Minmax.LOOSE_POINT - depth)
+            game, depth, Token.B), Minmax.LOOSE_POINT - depth)
 
     def test_minmax_d1(self):
         '''
@@ -97,7 +97,7 @@ class TestMinmax(unittest.TestCase):
         XO-
         Simulate max loop and calling min evaluation
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         depth = 1
         minmax = Minmax(ai_player, depth)
@@ -130,7 +130,7 @@ class TestMinmax(unittest.TestCase):
         X|X|O
         O|-|-
         '''
-        ai_player = Player("AI_1", Token.CROSS, True)
+        ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         depth = 2
         minmax = Minmax(ai_player, depth)

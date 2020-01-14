@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from gomoku.gomoku import Token
+from game_base.board import Token
 
 
 class ASCII_View():
@@ -52,9 +52,9 @@ class ASCII_View():
     def _token_str(self, token):
         if token is None:
             return '-'
-        elif token in [Token.CROSS]:
+        elif token in [Token.A]:
             return 'X'
-        elif token in [Token.CIRCLE]:
+        elif token in [Token.B]:
             return 'O'
         else:
             assert False

@@ -7,9 +7,10 @@ import os
 # sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
-from connect_four.connect_four import (ConnectFour, Token)
+from game.connect_four import ConnectFour
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 from game_base.player import Player
+from game_base.board import Token
 
 
 class TestGamePosition(unittest.TestCase):
@@ -24,7 +25,7 @@ class TestGamePosition(unittest.TestCase):
         4|O|X|X|X|O|-|-|
         5|O|X|O|X|X|-|-|
         '''
-        p2 = Player("AI_2", Token.RED, True)
+        p2 = Player("AI_2", Token.B, True)
         game = ConnectFour(p2=p2)
 
         moves = [3, 0, 4, 2, 3, 0, 2, 0, 0, 4, 1,
@@ -62,7 +63,7 @@ class TestGamePosition(unittest.TestCase):
         4|O|-|O|X|X|X|O|
         5|O|-|O|X|X|X|O|
         '''
-        p2 = Player("AI_2", Token.RED, True)
+        p2 = Player("AI_2", Token.B, True)
         game = ConnectFour(p2=p2)
 
         moves = [3, 0, 4, 2, 5, 6, 4, 0, 3, 0, 0, 2, 2, 2, 5, 6, 4, 4, 3]

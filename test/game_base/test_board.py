@@ -76,15 +76,15 @@ class TestBoard(unittest.TestCase):
 #         x_max = Board._COLUMN - 1
 #         y_max = Board._ROW - 1
 #
-#         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
-#         self.assertTrue(board.play(0, Token.BLUE))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE]))
+#         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
+#         self.assertTrue(board.play(0, Token.A))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
 #
-#         self.assertTrue(board.play(1, Token.BLUE))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE]))
+#         self.assertTrue(board.play(1, Token.A))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A]))
 #
-#         self.assertTrue(board.play(2, Token.BLUE))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.BLUE, Token.BLUE, Token.BLUE]))
+#         self.assertTrue(board.play(2, Token.A))
+#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A, Token.A]))
 
     def test_get_diag_down(self):
         board = Board(5, 4)
