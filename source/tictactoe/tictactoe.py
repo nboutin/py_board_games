@@ -1,31 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from game_base.board import (Board, Point)
+from game_base.board import (Board, Point, Token)
 from game_base.player import Player
-
-from enum import Enum
-
-
-class Token(Enum):
-    CROSS = 1
-    CIRCLE = 2
 
 
 class TicTacToe():
 
     __COLUMN = 3
     __ROW = 3
+    _LINE_WIN_SIZE = 3
 
     def __init__(self, p1=None, p2=None):
         self._board = Board(TicTacToe.__COLUMN, TicTacToe.__ROW)
-        self._p1 = p1 if not p1 is None else Player("Player 1", Token.CROSS)
-        self._p2 = p2 if not p2 is None else Player("Player 2", Token.CIRCLE)
+        self._p1 = p1 if not p1 is None else Player("Player 1", Token.A)
+        self._p2 = p2 if not p2 is None else Player("Player 2", Token.B)
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
         self._history = list()
         self._moves = [Point(x, y) for y in range(3) for x in range(3)]
+        self._patterns = [[token for i in range(TicTacToe._LINE_WIN_SIZE)]
+                          for token in [Token.A, Token.B]]
 
     @property
     def grid(self):
@@ -112,17 +108,15 @@ class TicTacToe():
 
     def _has_winner_horizontal(self, grid):
 
-        for token in [Token.CROSS, Token.CIRCLE]:
-            test_line = [token for x in range(3)]
-
+        for pattern in self._patterns:
             for row in grid:
-                if row == test_line:
-                    return True, token
+                if row == pattern:
+                    return True, pattern[0]
 
         return False, None
 
     def _has_winner_vertical(self, grid):
-        grid_rotated = self._rotate(self._board.grid)
+        grid_rotated = self._rotate(grid)
         return self._has_winner_horizontal(grid_rotated)
 
     def _rotate(self, grid):

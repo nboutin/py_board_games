@@ -2,14 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-from game_base.board_drop import (BoardDrop)
+from game_base.board_drop import BoardDrop
+from game_base.board import Token
 from game_base.player import Player
-from enum import (Enum, auto)
-
-
-class Token(auto):
-    BLUE = 1
-    RED = 2
 
 
 class ConnectFour():
@@ -19,12 +14,12 @@ class ConnectFour():
 
     _LINE_WIN_LEN = 4
     _PATTERNS = [[token for i in range(4)]
-                 for token in [Token.BLUE, Token.RED]]
+                 for token in [Token.A, Token.B]]
 
     def __init__(self, p1=None, p2=None):
         self._board = BoardDrop(ConnectFour._COLUMN, ConnectFour._ROW)
-        self._p1 = p1 if not p1 is None else Player("Player 1", Token.BLUE)
-        self._p2 = p2 if not p2 is None else Player("Player 2", Token.RED)
+        self._p1 = p1 if not p1 is None else Player("Player 1", Token.A)
+        self._p2 = p2 if not p2 is None else Player("Player 2", Token.B)
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False

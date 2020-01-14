@@ -5,6 +5,8 @@ from game_base.player import Player
 from game_base.board import Token
 from game_base.ascii_view import ASCII_View
 from tictactoe.tictactoe import TicTacToe
+from connect_four.connect_four import ConnectFour
+from gomoku.gomoku import Gomoku
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 VERSION = "1.3.0-dev"
@@ -15,7 +17,7 @@ def main(game_name, player_mode, level):
     if not game_name or not player_mode or not level:
         game_name = menu_list(
             'Select game', ['TicTacToe', 'Connect Four', 'Gomoku'], 0)
-        player_mode = menu_list('Select player_mode', [
+        player_mode = menu_list('Select player mode', [
                                 'H_H', 'AI_H', 'H_AI', 'AI_AI'], 3)
         level = select_level(game_name) if not (player_mode == 'H_H') else None
 
@@ -56,7 +58,7 @@ def main(game_name, player_mode, level):
 
 
 def menu_list(title, items, default):
-    print('{}:'.format(title))
+    print('{} ({}):'.format(title, default))
     for n, i in enumerate(items):
         print('  {} {}'.format(n, i))
     choice = input('Choice:')
@@ -68,7 +70,7 @@ def menu_list(title, items, default):
 
 
 def select_level(game_name):
-    game_level_default = {'TicTacToe': 9, 'Connect Four': 8, 'Gomoku': 6}
+    game_level_default = {'TicTacToe': 9, 'Connect Four': 8, 'Gomoku': 4}
     level_default = game_level_default[game_name]
     level = input('Level ({}):'.format(level_default))
     print()
