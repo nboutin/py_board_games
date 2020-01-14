@@ -13,14 +13,13 @@ class Minmax_AlphaBeta_Tree():
     LOOSE_POINT = -WIN_POINT
     DRAW_POINT = 0
 
-    def __init__(self, player, depth, moves):
+    def __init__(self, player, depth):
         '''
         @param player: AI player
         @param depth: explore tree moves until depth value (min:1)
         '''
         self._player = player
         self._depth_max = depth
-        self._moves = moves
         self._computation_time = 0.0
         self._root = Node("r", val=0)
 
@@ -51,7 +50,7 @@ class Minmax_AlphaBeta_Tree():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 node = self.make_node(True, move, parent, 0)
 
@@ -80,7 +79,7 @@ class Minmax_AlphaBeta_Tree():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth, self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 node = self.make_node(False, move, parent, 0)
 

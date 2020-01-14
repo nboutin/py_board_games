@@ -19,9 +19,9 @@ def main():
 
     depth = 9
     if p1.is_ai:
-        minmax1 = Minmax_AlphaBeta(p1, depth, TicTacToe.MOVES)
+        minmax1 = Minmax_AlphaBeta(p1, depth)
     if p2.is_ai:
-        minmax2 = Minmax_AlphaBeta(p2, depth, TicTacToe.MOVES)
+        minmax2 = Minmax_AlphaBeta(p2, depth)
 
     view = ASCII_View(game.grid)
     view.welcome("TicTacToe", version.VERSION)

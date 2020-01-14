@@ -30,6 +30,8 @@ AI opponent is using MinMax algorithm.
 - [ ] Define Token in game_base module
 - [ ] Make ASCII_View a base class
 - [ ] Define base class Game
+- [ ] Construct TicTacToe game from Gomoku with configuration
+- [x] Game implement generate_moves functions
 - [x] Add Board last_move function
 - [x] Factorize ressources between games
 

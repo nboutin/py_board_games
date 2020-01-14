@@ -16,10 +16,6 @@ class TicTacToe():
 
     __COLUMN = 3
     __ROW = 3
-    
-    MOVES = [Point(0, 0), Point(1, 0), Point(2, 0),
-           Point(0, 1), Point(1, 1), Point(2, 1),
-           Point(0, 2), Point(1, 2), Point(2, 2)]
 
     def __init__(self, p1=None, p2=None):
         self._board = Board(TicTacToe.__COLUMN, TicTacToe.__ROW)
@@ -29,6 +25,7 @@ class TicTacToe():
         self._winner_player = None
         self._is_over = False
         self._history = list()
+        self._moves = [Point(x, y) for y in range(3) for x in range(3)]
 
     @property
     def grid(self):
@@ -49,6 +46,13 @@ class TicTacToe():
     @property
     def history(self):
         return self._history
+
+    def generate_moves(self):
+        '''
+        @brief All legal moves minus already played moves
+        '''
+#         moves = set(TicTacToe.__MOVES).difference(set(self._moves))
+        return self._moves
 
     def play(self, point):
         if self._is_over:

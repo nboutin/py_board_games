@@ -25,7 +25,7 @@ class Gomoku():
         self._winner_player = None
         self._is_over = False
         self._history = list()
-        self._moves = [Point(x, y) for x in range(column) for y in range(row)]
+        self._moves = [Point(x, y) for y in range(row) for x in range(column)]
         self._patterns = [[token for i in range(Gomoku._LINE_WIN_SIZE)]
                           for token in [Token.CROSS, Token.CIRCLE]]
 
@@ -48,6 +48,11 @@ class Gomoku():
     @property
     def history(self):
         return self._history
+
+    def generate_moves(self):
+        '''
+        @brief All legal moves minus already played moves'''
+        return self._moves
 
     def play(self, point):
         if self._is_over:

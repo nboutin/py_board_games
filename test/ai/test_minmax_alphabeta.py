@@ -20,7 +20,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
     def test_is_leaf(self):
         ai_player = Player("AI_1", Token.CROSS, True)
         game = TicTacToe(p1=ai_player)
-        minmax = Minmax_AlphaBeta(ai_player, 7, TicTacToe.MOVES)
+        minmax = Minmax_AlphaBeta(ai_player, 7)
 
         self.assertFalse(minmax._is_leaf(game, 1))
         self.assertTrue(minmax._is_leaf(game, 0))
@@ -42,7 +42,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
 
         ai_player = Player("AI_1", Token.CROSS, True)
         game = TicTacToe(p1=ai_player)
-        minmax = Minmax_AlphaBeta(ai_player, 7, TicTacToe.MOVES)
+        minmax = Minmax_AlphaBeta(ai_player, 7)
         depth = 0
 
         self.assertEqual(minmax._evaluate(
@@ -70,7 +70,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         '''
         ai_player = Player("AI_1", Token.CROSS, True)
         game = TicTacToe(p1=ai_player)
-        minmax = Minmax_AlphaBeta(ai_player, 7, TicTacToe.MOVES)
+        minmax = Minmax_AlphaBeta(ai_player, 7)
         depth = 10
 
         self.assertEqual(minmax._evaluate(
@@ -101,7 +101,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         ai_player = Player("AI_1", Token.CROSS, True)
         game = TicTacToe(p1=ai_player)
         depth = 1
-        minmax = Minmax_AlphaBeta(ai_player, depth, TicTacToe.MOVES)
+        minmax = Minmax_AlphaBeta(ai_player, depth)
 
         game.play(Point(0, 0))
         game.play(Point(0, 1))
@@ -134,7 +134,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         ai_player = Player("AI_1", Token.CROSS, True)
         game = TicTacToe(p1=ai_player)
         depth = 2
-        minmax = Minmax_AlphaBeta(ai_player, depth, TicTacToe.MOVES)
+        minmax = Minmax_AlphaBeta(ai_player, depth)
 
         game.play(Point(2, 0))
         game.play(Point(0, 0))
