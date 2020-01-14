@@ -90,12 +90,12 @@ class Gomoku():
 
         # Horizontal
         has_winner, token = self._has_winner_horizontal(
-            self._board, self._board.moves[-1].y)
+            self._board, self._board.last_move.y)
 
         # Vertical
         if not has_winner:
             has_winner, token = self._has_winner_vertical(
-                self._board, self._board.moves[-1].x)
+                self._board, self._board.last_move.x)
 
         # Diagonal
         if not has_winner:

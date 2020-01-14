@@ -53,8 +53,8 @@ class Board():
         return self._grid
 
     @property
-    def moves(self):
-        return self._moves
+    def last_move(self):
+        return self._moves[-1]
 
     def has_free_cell(self):
         return self._cell_free_count > 0

@@ -27,10 +27,10 @@ AI opponent is using MinMax algorithm.
 - [x] Add AI using MinMax algorithm
 
 ## Design
-- [ ] Add Board last_move function
 - [ ] Define Token in game_base module
 - [ ] Make ASCII_View a base class
 - [ ] Define base class Game
+- [x] Add Board last_move function
 - [x] Factorize ressources between games
 
 ## Tests

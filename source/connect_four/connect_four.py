@@ -32,7 +32,7 @@ class ConnectFour():
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
-        self._moves = list()
+        self._history = list()
 
     @property
     def grid(self):
@@ -52,25 +52,25 @@ class ConnectFour():
 
     @property
     def history(self):
-        return self._moves
+        return self._history
 
     def play(self, move):
         if self._is_over:
-            self._moves.append(None)    # bad move
+            self._history.append(None)    # bad move
             return False
 
         if not self._board.drop_token(move, self._current_player.token):
-            self._moves.append(None)    # bad move
+            self._history.append(None)    # bad move
             return False
 
-        self._moves.append(move)
+        self._history.append(move)
         self._compute_ending()
         self._compute_next_player()
 
         return True
 
     def undo(self):
-        move = self._moves.pop()
+        move = self._history.pop()
         if not move is None:
             self._board.undo(move)
             self._compute_next_player()
@@ -96,12 +96,12 @@ class ConnectFour():
 
         # Horizontal
         has_winner, token = self._has_winner_horizontal(
-            self._board, self._board.moves[-1].y)
+            self._board, self._board.last_move.y)
 
         # Vertical
         if not has_winner:
             has_winner, token = self._has_winner_vertical(
-                self._board, self._board.moves[-1].x)
+                self._board, self._board.last_move.x)
 
         # Diagonal
         if not has_winner:
