@@ -28,7 +28,7 @@ class TicTacToe():
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
-        self._moves = list()
+        self._history = list()
 
     @property
     def grid(self):
@@ -48,25 +48,25 @@ class TicTacToe():
 
     @property
     def history(self):
-        return self._moves
+        return self._history
 
     def play(self, point):
         if self._is_over:
-            self._moves.append(None)    # bad move
+            self._history.append(None)    # bad move
             return False
 
         if not self._board.add_token(point, self._current_player.token):
-            self._moves.append(None)    # bad move
+            self._history.append(None)    # bad move
             return False
 
-        self._moves.append(point)
+        self._history.append(point)
         self._compute_ending()
         self._compute_next_player()
 
         return True
 
     def undo(self):
-        move = self._moves.pop()
+        move = self._history.pop()
         if move:
             self._board.undo(move)
             self._compute_next_player()
