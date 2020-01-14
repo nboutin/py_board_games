@@ -20,6 +20,7 @@ class Gomoku():
         self._board = Board(column, row)
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.CROSS)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.CIRCLE)
+        assert(not(self._p1.token == self._p2.token))
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
