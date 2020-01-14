@@ -54,7 +54,7 @@ class TestTicTacToe(unittest.TestCase):
     def test_win_horizontal_all(self):
 
         for len in [7, 9, 11]:
-            for x in range(len - Gomoku._LINE_WIN_SIZE):
+            for x in range(len - Gomoku._LINE_WIN_SIZE + 1):
                 for y in range(len - 1):
                     game = Gomoku(column=len, row=len)
 
@@ -106,51 +106,121 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, None)
 
-#     def test_win_vertical_player1(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(0, 1)))
-#         self.assertTrue(game.play(Point(1, 1)))
-#         self.assertTrue(game.play(Point(0, 2)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, game._p1)
-#
-#     def test_win_vertical_player2(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(2, 0)))
-#         self.assertTrue(game.play(Point(0, 1)))
-#         self.assertTrue(game.play(Point(2, 1)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(2, 2)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, game._p2)
-#
-#     def test_win_diag_player1(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(1, 1)))
-#         self.assertTrue(game.play(Point(2, 0)))
-#         self.assertTrue(game.play(Point(2, 2)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, game._p1)
-#
-#     def test_win_diag_player2(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(0, 2)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(1, 1)))
-#         self.assertTrue(game.play(Point(0, 1)))
-#         self.assertTrue(game.play(Point(2, 0)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, game._p2)
+    def test_win_vertical_player1(self):
+        game = Gomoku()
+        self.assertTrue(game.play(Point(0, 0)))
+        self.assertTrue(game.play(Point(1, 0)))
+        self.assertTrue(game.play(Point(0, 1)))
+        self.assertTrue(game.play(Point(1, 1)))
+        self.assertTrue(game.play(Point(0, 2)))
+        self.assertTrue(game.play(Point(1, 2)))
+        self.assertTrue(game.play(Point(0, 3)))
+        self.assertTrue(game.play(Point(1, 3)))
+        self.assertTrue(game.play(Point(0, 4)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p1)
+
+    def test_win_vertical_all(self):
+        for len in [7, 9, 11]:
+            for x in range(len - 1):
+                for y in range(len - Gomoku._LINE_WIN_SIZE + 1):
+                    game = Gomoku(column=len, row=len)
+                    self.assertTrue(game.play(Point(x + 0, y + 0)))
+                    self.assertTrue(game.play(Point(x + 1, y + 0)))
+                    self.assertTrue(game.play(Point(x + 0, y + 1)))
+                    self.assertTrue(game.play(Point(x + 1, y + 1)))
+                    self.assertTrue(game.play(Point(x + 0, y + 2)))
+                    self.assertTrue(game.play(Point(x + 1, y + 2)))
+                    self.assertTrue(game.play(Point(x + 0, y + 3)))
+                    self.assertTrue(game.play(Point(x + 1, y + 3)))
+                    self.assertTrue(game.play(Point(x + 0, y + 4)))
+
+                    self.assertTrue(game.is_over)
+                    self.assertEqual(game.winner, game._p1)
+
+    def test_win_vertical_player2(self):
+        game = Gomoku()
+        self.assertTrue(game.play(Point(0, 0)))
+        self.assertTrue(game.play(Point(1, 0)))
+        self.assertTrue(game.play(Point(0, 1)))
+        self.assertTrue(game.play(Point(1, 1)))
+        self.assertTrue(game.play(Point(0, 2)))
+        self.assertTrue(game.play(Point(1, 2)))
+        self.assertTrue(game.play(Point(0, 3)))
+        self.assertTrue(game.play(Point(1, 3)))
+        self.assertTrue(game.play(Point(2, 4)))
+        self.assertTrue(game.play(Point(1, 4)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p2)
+
+    def test_win_diag_down_player1(self):
+        game = Gomoku()
+        self.assertTrue(game.play(Point(0, 0)))
+        self.assertTrue(game.play(Point(1, 0)))
+        self.assertTrue(game.play(Point(1, 1)))
+        self.assertTrue(game.play(Point(2, 0)))
+        self.assertTrue(game.play(Point(2, 2)))
+        self.assertTrue(game.play(Point(3, 0)))
+        self.assertTrue(game.play(Point(3, 3)))
+        self.assertTrue(game.play(Point(4, 0)))
+        self.assertTrue(game.play(Point(4, 4)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p1)
+
+    def test_win_diag_down_all(self):
+
+        for len in [7, 9, 11]:
+            for x in range(len - 5 + 1):
+                for y in range(len - 5 + 1):
+                    game = Gomoku(column=len, row=len)
+                    self.assertTrue(game.play(Point(x + 0, y + 0)))
+                    self.assertTrue(game.play(Point(x + 1, y + 0)))
+                    self.assertTrue(game.play(Point(x + 1, y + 1)))
+                    self.assertTrue(game.play(Point(x + 2, y + 0)))
+                    self.assertTrue(game.play(Point(x + 2, y + 2)))
+                    self.assertTrue(game.play(Point(x + 3, y + 0)))
+                    self.assertTrue(game.play(Point(x + 3, y + 3)))
+                    self.assertTrue(game.play(Point(x + 4, y + 0)))
+                    self.assertTrue(game.play(Point(x + 4, y + 4)))
+
+                    self.assertTrue(game.is_over)
+                    self.assertEqual(game.winner, game._p1)
+
+    def test_win_diag_up_player1(self):
+        game = Gomoku()
+        self.assertTrue(game.play(Point(4, 0)))
+        self.assertTrue(game.play(Point(0, 0)))
+        self.assertTrue(game.play(Point(3, 1)))
+        self.assertTrue(game.play(Point(1, 0)))
+        self.assertTrue(game.play(Point(2, 2)))
+        self.assertTrue(game.play(Point(2, 0)))
+        self.assertTrue(game.play(Point(1, 3)))
+        self.assertTrue(game.play(Point(0, 1)))
+        self.assertTrue(game.play(Point(0, 4)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p1)
+
+    def test_win_diag_up_all(self):
+        for len in [7, 9, 11]:
+            for x in range(len - 5 + 1):
+                for y in range(len - 5 + 1):
+                    game = Gomoku(column=len, row=len)
+                    self.assertTrue(game.play(Point(x + 4, y + 0)))
+                    self.assertTrue(game.play(Point(x + 0, y + 0)))
+                    self.assertTrue(game.play(Point(x + 3, y + 1)))
+                    self.assertTrue(game.play(Point(x + 1, y + 0)))
+                    self.assertTrue(game.play(Point(x + 2, y + 2)))
+                    self.assertTrue(game.play(Point(x + 2, y + 0)))
+                    self.assertTrue(game.play(Point(x + 1, y + 3)))
+                    self.assertTrue(game.play(Point(x + 0, y + 1)))
+                    self.assertTrue(game.play(Point(x + 0, y + 4)))
+
+                    self.assertTrue(game.is_over)
+                    self.assertEqual(game.winner, game._p1)
 
 
 if __name__ == '__main__':
