@@ -13,7 +13,7 @@ def main():
 
     mode = input("Select mode (0:H_H, 1:AI_H, 2:H_AI, 3:AI_AI):")
     p1, p2 = select_mode(int(mode))
-    
+
     level = input("Choose level (4):")
     level = 4 if not level else int(level)
 
@@ -38,7 +38,7 @@ def main():
                 mm = minmax2
 
             p = mm.compute(game)
-            view.message("Move: {} ({}s)".format(p, mm.computation_time))
+            view.add_message("Move: {} ({}s)".format(p, mm.computation_time))
         else:
             x, y = view.ask_input()
             p = Point(x, y)
@@ -46,10 +46,13 @@ def main():
         if not game.play(p):
             view.message("Input is invalid")
 
+
+    view.set_history(game.history)
     if game.winner is None:
-        view.message("Game is finished. Draw")
+        view.add_message("Game is finished. Draw")
     else:
-        view.message("Game is finished. Winner is {}".format(game.winner.name))
+        view.add_message(
+            "Game is finished. Winner is {}".format(game.winner.name))
     view.display()
 
 

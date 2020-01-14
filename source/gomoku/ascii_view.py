@@ -11,11 +11,13 @@ class ASCII_View():
         self._grid = grid
         self._messages = list()
         self.current_player = None
+        self._history = list()
 
     def welcome(self, title, version):
         print('{} {}'.format(title, version))
 
     def display(self):
+        self._print_history()
         self._print_messages()
         print('-----')
         self._print_grid(self._grid)
@@ -25,8 +27,11 @@ class ASCII_View():
         i = input("Enter (x,y): ")
         return int(i[0]), int(i[1])
 
-    def message(self, msg):
+    def add_message(self, msg):
         self._messages.append(msg)
+
+    def set_history(self, h):
+        self._history = h
 
     def _print_grid(self, grid):
 
@@ -59,3 +64,10 @@ class ASCII_View():
             print(msg)
 
         self._messages.clear()
+
+    def _print_history(self):
+        if self._history:
+            print('History:', end='')
+            for m in self._history:
+                print('{},'.format(m), end='')
+            print()
