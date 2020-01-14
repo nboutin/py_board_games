@@ -53,24 +53,25 @@ class TestTicTacToe(unittest.TestCase):
 
     def test_win_horizontal_all(self):
 
-        for x in range(7 - Gomoku._LINE_WIN_SIZE):
-            for y in range(7 - 1):
-                game = Gomoku()
+        for len in [7, 9, 11]:
+            for x in range(len - Gomoku._LINE_WIN_SIZE):
+                for y in range(len - 1):
+                    game = Gomoku(column=len, row=len)
 
-                self.assertTrue(game.play(Point(x + 0, y + 0)))
-                self.assertTrue(game.play(Point(x + 0, y + 1)))
-                self.assertTrue(game.play(Point(x + 1, y + 0)))
-                self.assertTrue(game.play(Point(x + 1, y + 1)))
-                self.assertTrue(game.play(Point(x + 2, y + 0)))
-                self.assertTrue(game.play(Point(x + 2, y + 1)))
-                self.assertTrue(game.play(Point(x + 3, y + 0)))
-                self.assertTrue(game.play(Point(x + 3, y + 1)))
-                self.assertTrue(game.play(Point(x + 4, y + 0)))
-                # Cannot play anymore, game is over
-                self.assertFalse(game.play(Point(4, 1)))
+                    self.assertTrue(game.play(Point(x + 0, y + 0)))
+                    self.assertTrue(game.play(Point(x + 0, y + 1)))
+                    self.assertTrue(game.play(Point(x + 1, y + 0)))
+                    self.assertTrue(game.play(Point(x + 1, y + 1)))
+                    self.assertTrue(game.play(Point(x + 2, y + 0)))
+                    self.assertTrue(game.play(Point(x + 2, y + 1)))
+                    self.assertTrue(game.play(Point(x + 3, y + 0)))
+                    self.assertTrue(game.play(Point(x + 3, y + 1)))
+                    self.assertTrue(game.play(Point(x + 4, y + 0)))
+                    # Cannot play anymore, game is over
+                    self.assertFalse(game.play(Point(4, 1)))
 
-                self.assertTrue(game.is_over)
-                self.assertEqual(game.winner, game._p1)
+                    self.assertTrue(game.is_over)
+                    self.assertEqual(game.winner, game._p1)
 
     def test_win_horizontal_player2(self):
         game = Gomoku()
@@ -89,21 +90,22 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p2)
 
-#     def test_draw(self):
-#         game = TicTacToe()
-#         self.assertTrue(game.play(Point(0, 0)))
-#         self.assertTrue(game.play(Point(1, 0)))
-#         self.assertTrue(game.play(Point(2, 0)))
-#         self.assertTrue(game.play(Point(0, 1)))
-#         self.assertTrue(game.play(Point(1, 1)))
-#         self.assertTrue(game.play(Point(2, 2)))
-#         self.assertTrue(game.play(Point(1, 2)))
-#         self.assertTrue(game.play(Point(0, 2)))
-#         self.assertTrue(game.play(Point(2, 1)))
-#
-#         self.assertTrue(game.is_over)
-#         self.assertEqual(game.winner, None)
-#
+    def test_draw(self):
+        history = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
+                   (1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
+                   (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (3, 2), (4, 1),
+                   (3, 3), (2, 5), (2, 6), (3, 0), (3, 1), (3, 4), (3, 5),
+                   (3, 6), (4, 0), (4, 2), (4, 3), (5, 4), (4, 4), (5, 3),
+                   (4, 5), (4, 6), (5, 0), (5, 1), (5, 2), (5, 5), (5, 6),
+                   (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)]
+        game = Gomoku()
+
+        for x, y in history:
+            self.assertTrue(game.play(Point(x, y)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, None)
+
 #     def test_win_vertical_player1(self):
 #         game = TicTacToe()
 #         self.assertTrue(game.play(Point(0, 0)))
