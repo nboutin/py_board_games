@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from enum import (Enum, auto)
+
 
 class Point():
 
@@ -25,12 +27,17 @@ class Point():
 
     def __repr__(self):
         return "({},{})".format(self._x, self._y)
-    
+
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
-     
+
     def __lt__(self, other):
-         return self.y < other.y or (self.y == other.y and self.x < other.x)
+        return self.y < other.y or (self.y == other.y and self.x < other.x)
+
+
+class Token(auto):
+    A = 1
+    B = 2
 
 
 class Board():
