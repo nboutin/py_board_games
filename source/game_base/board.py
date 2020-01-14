@@ -15,7 +15,7 @@ class Point():
     @property
     def y(self):
         return self._y
-    
+
     @property
     def point(self):
         return (self._x, self._y)
@@ -27,25 +27,26 @@ class Point():
 class Board():
 
     def __init__(self, column_count, row_count):
-        '''
-        @todo Try with Numpy array for better performance ?
-        '''
+        self._column_count = column_count  # X
+        self._row_count = row_count        # Y
 
-        self._column = column_count  # X
-        self._row = row_count        # Y
+        self._grid = [[None for x in range(self._column_count)]
+                      for y in range(self._row_count)]
 
-        self._grid = [[None for x in range(self._column)]
-                      for y in range(self._row)]
-
-        self._cell_free_count = self._column * self._row
+        self._cell_free_count = self._column_count * self._row_count
         self._moves = list()
 
-    def has_free_cell(self):
-        return self._cell_free_count > 0
+    @property
+    def column_count(self):
+        return self._column_count
+
+    @property
+    def row_count(self):
+        return self._row_count
 
     @property
     def cell_used_count(self):
-        return self._column * self._row - self._cell_free_count
+        return self._column_count * self._row_count - self._cell_free_count
 
     @property
     def grid(self):
@@ -54,6 +55,9 @@ class Board():
     @property
     def moves(self):
         return self._moves
+
+    def has_free_cell(self):
+        return self._cell_free_count > 0
 
     def add_token(self, point, token):
         '''
@@ -64,7 +68,7 @@ class Board():
         '''
         x, y = point.point
 
-        if 0 > x or x >= self._column or 0 > y or y >= self._row:
+        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
             return False
 
         # Check free cell
@@ -90,7 +94,7 @@ class Board():
 
         x, y = point.point
 
-        if 0 > x or x >= self._column or 0 > y or y >= self._row:
+        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
             return False
 
         self._grid[y][x] = None
@@ -104,7 +108,7 @@ class Board():
         return self._check_line(row, x_start, x_end, line_test)
 
     def check_line_vertical(self, y_start, y_end, x, line_test):
-        column = self.get_column(x, self._row)
+        column = self.get_column(x, self._row_count)
         return self._check_line(column, y_start, y_end, line_test)
 
     def _check_line(self, line, start, end, pattern):
