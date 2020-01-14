@@ -153,27 +153,6 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         self.assertEqual(val, Minmax_AlphaBeta.DRAW_POINT)
         game.undo()
 
-    @unittest.skip("perf")
-    def test_perf(self):
-
-        from connect_four.connect_four import (ConnectFour, Token)
-        
-        n = 10
-        depth = 8
-        p1 = Player("AI_1", Token.BLUE, True)
-        duration = 0
-        for i in range(n):
-            minmax = Minmax_AlphaBeta(p1, depth, ConnectFour.MOVES)
-            game = ConnectFour(p1=p1)
-
-            start = time.time()
-            minmax.compute(game)
-            duration += time.time() - start
-
-        excepted = 0.777
-        delta = excepted / 10  # 10%
-        self.assertAlmostEqual(duration / n, excepted, delta=delta)
-
 
 if __name__ == '__main__':
     unittest.main()
