@@ -15,27 +15,42 @@ AI opponent is using MinMax algorithm.
     $ python -m unittest -v
     
 # ToDo
-
-- [ ] Make ASCII_View a base class
-- [ ] Profile TicTacToe implementation for optimization
-- [ ] Setup Continuous Integration
-- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
-- [ ] Make Minmax using thread
-- [x] Add history to Board
-- [x] Evaluate leaf point in respect to current depth
-- [x] Add AI using MinMax algorithm
-- [x] Add unittest for Minmax
-- [x] Do not evaluate for winner when less than 5 token have been played
+## Feature
+- [ ] Add Gomoku game aka 5 in row
+- [ ] Print moves history
 - [x] Add user input to select Ai vs Human
 - [x] Measure time needed to evaluate next move with Minmax
-- [x] Add Minmax AlphaBeta
-- [x] Factorize ressources between games
 - [x] Add Connect Four game
+- [x] Add Minmax AlphaBeta
+- [x] Add history to Board
+- [x] Evaluate leaf point by taken into account current depth
+- [x] Add AI using MinMax algorithm
 
-# Optimization
+## Design
+- [ ] Add Board last_move function
+- [ ] Define Token in game_base module
+- [ ] Make ASCII_View a base class
+- [ ] Define base class Game
+- [x] Factorize ressources between games
+
+## Tests
+- [ ] Pass parameter to enable skipped perfo test
+- [ ] Setup Continuous Integration
+- [x] Add unittest for Minmax
+
+## Fix
+- [ ] Handle bad user input
+
+## Optimization
 
 - [ ] Generate moves available for a game position
+- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
+- [ ] Make Minmax using thread
+- [ ] Profile TicTacToe implementation for optimization
+- [ ] Try numpy Array for Board to improve performance
+- [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
 - [x] Connect Four: Compute end game only considering last move and its impact
+
 
 # Links
 
