@@ -4,9 +4,9 @@
 from game_base.player import Player
 from game_base.board import Token
 from game_base.ascii_view import ASCII_View
-from tictactoe.tictactoe import TicTacToe
-from connect_four.connect_four import ConnectFour
-from gomoku.gomoku import Gomoku
+from game.tictactoe import TicTacToe
+from game.connect_four import ConnectFour
+from game.gomoku import Gomoku
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 VERSION = "1.3.0-dev"

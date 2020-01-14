@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
-from gomoku.gomoku import (Gomoku, Token)
+from game.gomoku import (Gomoku, Token)
 from game_base.board import (Point)
 
 

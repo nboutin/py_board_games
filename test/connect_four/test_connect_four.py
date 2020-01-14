@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 
-from connect_four.connect_four import (ConnectFour, Token)
+from game.connect_four import (ConnectFour, Token)
 from game_base.board import (Point, Board)
 
 
@@ -147,7 +147,7 @@ class TestConnectFour(unittest.TestCase):
 
     def test_has_winner_diag_down(self):
         board = Board(7, 6)
-        token = Token.BLUE
+        token = Token.A
 
         board.add_token(Point(0, 2), token)
         board.add_token(Point(1, 3), token)

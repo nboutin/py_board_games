@@ -19,11 +19,11 @@ class TestPerformance(unittest.TestCase):
     @unittest.skip("Performance")
     def test_connect_four(self):
 
-        from connect_four.connect_four import (ConnectFour, Token)
+        from game.connect_four import (ConnectFour, Token)
 
         n = 10
         depth = 8
-        p1 = Player("AI_1", Token.BLUE, True)
+        p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
             minmax = Minmax_AlphaBeta(p1, depth)
@@ -40,11 +40,11 @@ class TestPerformance(unittest.TestCase):
 
     @unittest.skip("Performance")
     def test_tictactoe(self):
-        from tictactoe.tictactoe import TicTacToe, Token
+        from game.tictactoe import TicTacToe, Token
 
         n = 10
         depth = 9
-        p1 = Player("AI_1", Token.CROSS, True)
+        p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
             minmax = Minmax_AlphaBeta(p1, depth)
@@ -61,11 +61,11 @@ class TestPerformance(unittest.TestCase):
 
     @unittest.skip("Performance")
     def test_gomoku(self):
-        from gomoku.gomoku import (Gomoku, Token)
+        from game.gomoku import (Gomoku, Token)
 
         n = 10
         depth = 6
-        p1 = Player("AI_1", Token.CROSS, True)
+        p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
             game = Gomoku(p1=p1)
