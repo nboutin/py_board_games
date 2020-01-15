@@ -90,12 +90,12 @@ class Gomoku():
 
         # Horizontal
         has_winner, token = self._has_winner_horizontal(
-            self._board, self._board.last_move.y)
+            self._board, self._board.last_move)
 
         # Vertical
         if not has_winner:
             has_winner, token = self._has_winner_vertical(
-                self._board, self._board.last_move.x)
+                self._board, self._board.last_move)
 
         # Diagonal
         if not has_winner:
@@ -107,22 +107,22 @@ class Gomoku():
         self._is_over = not self._board.has_free_cell() or has_winner
         return self._is_over
 
-    def _has_winner_horizontal(self, board, y_last):
-        x_min = 0
-        x_max = self._board.column_count
+    def _has_winner_horizontal(self, board, move):
+        x_min = max(0, move.x - self._line_win_size - 1)
+        x_max = min(self._board.column_count, move.x + self._line_win_size - 1)
 
         for pattern in self._patterns:
-            if board.check_line_horizontal(x_min, x_max, y_last, pattern):
+            if board.check_line_horizontal(x_min, x_max, move.y, pattern):
                 return True, pattern[0]
 
         return False, None
 
-    def _has_winner_vertical(self, board, x_last):
-        y_min = 0
-        y_max = self._board.row_count
+    def _has_winner_vertical(self, board, move):
+        y_min = max(0, move.y - self._line_win_size - 1)
+        y_max = min(self._board.row_count, move.y + self._line_win_size - 1)
 
         for pattern in self._patterns:
-            if board.check_line_vertical(y_min, y_max, x_last, pattern):
+            if board.check_line_vertical(y_min, y_max, move.x, pattern):
                 return True, pattern[0]
 
         return False, None

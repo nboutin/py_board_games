@@ -61,26 +61,31 @@ class TestPerformance(unittest.TestCase):
         print("Duration {}".format(duration / n))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
-    @unittest.skip("Performance")
+#     @unittest.skip("Performance")
     def test_gomoku(self):
         from game.gomoku import (Gomoku, Token)
 
-        n = 15
-        depth = 6
+        n = 7
+        depth = 4
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            game = Gomoku(p1=p1, size=7)
+            game = Gomoku(p1=p1, size=9)
             minmax = Minmax_AlphaBeta(p1, depth)
+
+            moves = [Point(4, 4), Point(3, 3), Point(4, 3),
+                     Point(3, 4), Point(3, 2), Point(4, 5)]
+            for m in moves:
+                game.play(m)
 
             start = time.time()
             minmax.compute(game)
             duration += time.time() - start
 
 #         excepted = 2.573 # H
-        excepted = 1.336  # W
-        print('Duration {}'.format(duration / n))
-        delta = excepted * 5 / 100
+        excepted = 2.734  # W
+        delta = excepted * 3 / 100
+        print('Duration {}, delta {}'.format(duration / n, delta))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
 
