@@ -48,8 +48,8 @@ class ConnectFour():
 
     def generate_moves(self):
         '''
-        @brief All legal moves minus already played moves
-        '''
+        @brief All legal moves
+        @details Removing move from full column does not improve performances'''
         return self._moves
 
     def play(self, move):
@@ -69,9 +69,10 @@ class ConnectFour():
 
     def undo(self):
         move = self._history.pop()
-        if not move is None:
+        if move is not None:
             self._board.undo(move)
             self._compute_next_player()
+
         self._winner_player = None
         self._is_over = False
 

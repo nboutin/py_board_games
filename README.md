@@ -28,11 +28,13 @@ AI opponent is using MinMax algorithm.
 
 ## Optimization
 
-- [ ] Generate moves available for a game position
+- [ ] Check line should take into account line_win_size
+- [ ] Improve check diag line by using last move value
 - [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
 - [ ] Make Minmax using thread
 - [ ] Profile TicTacToe implementation for optimization
 - [ ] Try numpy Array for Board to improve performance
+- [x] Generate moves available for a game position
 - [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
 - [x] Connect Four: Compute end game only considering last move and its impact
 
