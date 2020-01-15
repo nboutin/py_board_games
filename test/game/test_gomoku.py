@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 from game.gomoku import (Gomoku, Token)
 from game_base.board import (Point)
 
+GOMOKU_LINE_WIN_SIZE = 5
 
 class TestGomoku(unittest.TestCase):
 
@@ -54,9 +55,9 @@ class TestGomoku(unittest.TestCase):
     def test_win_horizontal_all(self):
 
         for len in [7, 9, 11]:
-            for x in range(len - Gomoku._LINE_WIN_SIZE + 1):
+            for x in range(len - GOMOKU_LINE_WIN_SIZE + 1):
                 for y in range(len - 1):
-                    game = Gomoku(column=len, row=len)
+                    game = Gomoku(size=len)
 
                     self.assertTrue(game.play(Point(x + 0, y + 0)))
                     self.assertTrue(game.play(Point(x + 0, y + 1)))
@@ -98,7 +99,7 @@ class TestGomoku(unittest.TestCase):
                    (3, 6), (4, 0), (4, 2), (4, 3), (5, 4), (4, 4), (5, 3),
                    (4, 5), (4, 6), (5, 0), (5, 1), (5, 2), (5, 5), (5, 6),
                    (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)]
-        game = Gomoku(column=7, row=7)
+        game = Gomoku(size=7)
 
         for x, y in history:
             self.assertTrue(game.play(Point(x, y)))
@@ -124,8 +125,8 @@ class TestGomoku(unittest.TestCase):
     def test_win_vertical_all(self):
         for len in [7, 9, 11]:
             for x in range(len - 1):
-                for y in range(len - Gomoku._LINE_WIN_SIZE + 1):
-                    game = Gomoku(column=len, row=len)
+                for y in range(len - GOMOKU_LINE_WIN_SIZE + 1):
+                    game = Gomoku(size=len)
                     self.assertTrue(game.play(Point(x + 0, y + 0)))
                     self.assertTrue(game.play(Point(x + 1, y + 0)))
                     self.assertTrue(game.play(Point(x + 0, y + 1)))
@@ -175,7 +176,7 @@ class TestGomoku(unittest.TestCase):
         for len in [7, 9, 11]:
             for x in range(len - 5 + 1):
                 for y in range(len - 5 + 1):
-                    game = Gomoku(column=len, row=len)
+                    game = Gomoku(size=len)
                     self.assertTrue(game.play(Point(x + 0, y + 0)))
                     self.assertTrue(game.play(Point(x + 1, y + 0)))
                     self.assertTrue(game.play(Point(x + 1, y + 1)))
@@ -208,7 +209,7 @@ class TestGomoku(unittest.TestCase):
         for len in [7, 9, 11]:
             for x in range(len - 5 + 1):
                 for y in range(len - 5 + 1):
-                    game = Gomoku(column=len, row=len)
+                    game = Gomoku(size=len)
                     self.assertTrue(game.play(Point(x + 4, y + 0)))
                     self.assertTrue(game.play(Point(x + 0, y + 0)))
                     self.assertTrue(game.play(Point(x + 3, y + 1)))

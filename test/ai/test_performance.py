@@ -70,7 +70,7 @@ class TestPerformance(unittest.TestCase):
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            game = Gomoku(column=7, row=7, p1=p1)
+            game = Gomoku(p1=p1, size=7)
             minmax = Minmax_AlphaBeta(p1, depth)
 
             start = time.time()

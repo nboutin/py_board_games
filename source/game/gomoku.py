@@ -7,20 +7,19 @@ from game_base.player import Player
 
 class Gomoku():
 
-    _LINE_WIN_SIZE = 5
-
-    def __init__(self, p1=None, p2=None, column=9, row=9):
-        self._board = Board(column, row)
+    def __init__(self, p1=None, p2=None, size=9, line_win_size=5):
+        self._board = Board(size, size)
+        self._line_win_size = line_win_size
         self._p1 = p1 if not p1 is None else Player("Player 1", Token.A)
         self._p2 = p2 if not p2 is None else Player("Player 2", Token.B)
         assert(not(self._p1.token == self._p2.token))
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
-        self._history = list()  # use set()
-        self._moves_remaining = set([Point(x, y) for y in range(row)
-                           for x in range(column)])
-        self._patterns = [[token for i in range(Gomoku._LINE_WIN_SIZE)]
+        self._history = list()
+        self._moves_remaining = set([Point(x, y) for y in range(size)
+                                     for x in range(size)])
+        self._patterns = [[token for i in range(self._line_win_size)]
                           for token in [Token.A, Token.B]]
 
     @property
@@ -86,7 +85,7 @@ class Gomoku():
         Decide if a game is over
         '''
         # todo: why minus 1 ?
-        if self._board.cell_used_count < (Gomoku._LINE_WIN_SIZE * 2) - 1:
+        if self._board.cell_used_count < (self._line_win_size * 2) - 1:
             return False
 
         # Horizontal
@@ -141,13 +140,13 @@ class Gomoku():
         '''
         @brief '\'
         '''
-        x_max = self._board.column_count - Gomoku._LINE_WIN_SIZE + 1
-        y_max = self._board.row_count - Gomoku._LINE_WIN_SIZE + 1
+        x_max = self._board.column_count - self._line_win_size + 1
+        y_max = self._board.row_count - self._line_win_size + 1
 
         for x in range(0, x_max):
             for y in range(0, y_max):
                 for pattern in self._patterns:
-                    line = board.get_diag_down(x, y, Gomoku._LINE_WIN_SIZE)
+                    line = board.get_diag_down(x, y, self._line_win_size)
                     if line == pattern:
                         return True, pattern[0]
 
@@ -157,14 +156,14 @@ class Gomoku():
         '''
         @brief '/'
         '''
-        x_min = Gomoku._LINE_WIN_SIZE - 1
+        x_min = self._line_win_size - 1
         x_max = self._board.column_count
-        y_max = self._board.row_count - Gomoku._LINE_WIN_SIZE + 1
+        y_max = self._board.row_count - self._line_win_size + 1
 
         for x in range(x_min, x_max):
             for y in range(0, y_max):
                 for pattern in self._patterns:
-                    if board.get_diag_up(x, y, Gomoku._LINE_WIN_SIZE) == pattern:
+                    if board.get_diag_up(x, y, self._line_win_size) == pattern:
                         return True, pattern[0]
 
         return False, None
