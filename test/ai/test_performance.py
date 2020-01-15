@@ -33,8 +33,8 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-        excepted = 1.027 # H
-#         excepted = 0.658  # W
+#         excepted = 1.027 # H
+        excepted = 0.658  # W
         delta = excepted * 5 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
@@ -54,8 +54,8 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-        excepted = 0.422 # H
-#         excepted = 0.266 # W
+#         excepted = 0.422 # H
+        excepted = 0.219  # W
         delta = excepted * 5 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
@@ -68,15 +68,15 @@ class TestPerformance(unittest.TestCase):
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            game = Gomoku(p1=p1)
+            game = Gomoku(column=7, row=7, p1=p1)
             minmax = Minmax_AlphaBeta(p1, depth)
 
             start = time.time()
             minmax.compute(game)
             duration += time.time() - start
 
-        excepted = 2.573 # H
-#         excepted = 1.336 # W
+#         excepted = 2.573 # H
+        excepted = 1.336  # W
         delta = excepted * 5 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 

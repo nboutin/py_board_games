@@ -52,6 +52,7 @@ AI opponent is using MinMax algorithm.
 - [x] Add unittest for Minmax
 
 ## Fix
+- [ ] Handle multiple user input types
 - [ ] Handle bad user input
 
 
