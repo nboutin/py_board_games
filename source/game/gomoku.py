@@ -99,7 +99,8 @@ class Gomoku():
 
         # Diagonal
         if not has_winner:
-            has_winner, token = self._has_winner_diagonal(self._board)
+            has_winner, token = self._has_winner_diagonal(
+                self._board, self._board.last_move)
 
         if has_winner:
             self._winner_player = self._p1 if token == self._p1.token else self._p2
@@ -127,32 +128,37 @@ class Gomoku():
 
         return False, None
 
-    def _has_winner_diagonal(self, board):
+    def _has_winner_diagonal(self, board, move):
 
-        has_winner, token = self._has_winner_diag_down(board)
+        has_winner, token = self._has_winner_diag_down(board, move)
 
         if has_winner:
             return has_winner, token
         else:
-            return self._has_winner_diag_up(board)
+            return self._has_winner_diag_up(board, move)
 
-    def _has_winner_diag_down(self, board):
+    def _has_winner_diag_down(self, board, move):
         '''
         @brief '\'
         '''
+        x, y = move.point
+        x, y = (x - y, 0) if x >= y else (0, y - x)
+
         x_max = self._board.column_count - self._line_win_size + 1
         y_max = self._board.row_count - self._line_win_size + 1
+        if x > x_max or y > y_max:
+            return False, None
+        r = min(x_max - x, y_max - y)
 
-        for x in range(0, x_max):
-            for y in range(0, y_max):
-                for pattern in self._patterns:
-                    line = board.get_diag_down(x, y, self._line_win_size)
-                    if line == pattern:
-                        return True, pattern[0]
+        for i in range(r):
+            for pattern in self._patterns:
+                line = board.get_diag_down(x + i, y + i, self._line_win_size)
+                if line == pattern:
+                    return True, pattern[0]
 
         return False, None
 
-    def _has_winner_diag_up(self, board):
+    def _has_winner_diag_up(self, board, move):
         '''
         @brief '/'
         '''

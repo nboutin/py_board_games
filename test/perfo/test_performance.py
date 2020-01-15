@@ -83,7 +83,7 @@ class TestPerformance(unittest.TestCase):
             duration += time.time() - start
 
 #         excepted = 2.573 # H
-        excepted = 2.734  # W
+        excepted = 1.630  # W
         delta = excepted * 3 / 100
         print('Duration {}, delta {}'.format(duration / n, delta))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
