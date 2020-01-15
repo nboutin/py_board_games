@@ -6,7 +6,7 @@ from enum import (Enum, auto)
 
 class Point():
 
-    def __init__(self, x, y):
+    def __init__(self, x=0, y=0):
         self._x = x
         self._y = y
 
@@ -29,10 +29,11 @@ class Point():
         return "({},{})".format(self._x, self._y)
 
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+        return (self._x == other._x) and (self._y == other._y)
 
-    def __lt__(self, other):
-        return self.y < other.y or (self.y == other.y and self.x < other.x)
+    def __hash__(self):
+        '''necessary for instances to behave sanely in dicts and sets'''
+        return hash((self._x, self._y))
 
 
 class Token(auto):

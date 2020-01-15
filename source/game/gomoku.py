@@ -17,8 +17,9 @@ class Gomoku():
         self._current_player = self._p1
         self._winner_player = None
         self._is_over = False
-        self._history = list()
-        self._moves = [Point(x, y) for y in range(row) for x in range(column)]
+        self._history = list()  # use set()
+        self._moves_remaining = set([Point(x, y) for y in range(row)
+                           for x in range(column)])
         self._patterns = [[token for i in range(Gomoku._LINE_WIN_SIZE)]
                           for token in [Token.A, Token.B]]
 
@@ -45,7 +46,7 @@ class Gomoku():
     def generate_moves(self):
         '''
         @brief All legal moves minus already played moves'''
-        return self._moves
+        return self._moves_remaining
 
     def play(self, point):
         if self._is_over:
@@ -57,6 +58,7 @@ class Gomoku():
             return False
 
         self._history.append(point)
+        self._moves_remaining.remove(point)
         self._compute_ending()
         self._compute_next_player()
 
@@ -67,6 +69,7 @@ class Gomoku():
         if move:
             self._board.undo(move)
             self._compute_next_player()
+            self._moves_remaining.add(move)
         self._winner_player = None
         self._is_over = False
 
