@@ -28,11 +28,11 @@ AI opponent is using MinMax algorithm.
 
 ## Optimization
 
-- [ ] Profile Gomoku implementation for optimization
 - [ ] Make Minmax using thread
 - [ ] Improve check diag line by using last move value
 - [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
 - [ ] Try numpy Array for Board to improve performance
+- [x] Profile Gomoku implementation for optimization
 - [x] Check line should take into account line_win_size
 - [x] Generate moves available for a game position
 - [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
