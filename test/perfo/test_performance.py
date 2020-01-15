@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 
-from game_base.board import (Point, Board)
+from game_base.board import (Point, Board, Token)
 from game_base.player import Player
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
@@ -18,7 +18,7 @@ class TestPerformance(unittest.TestCase):
 
     @unittest.skip("Performance")
     def test_tictactoe(self):
-        from game.tictactoe import TicTacToe, Token
+        from game.tictactoe import TicTacToe
 
         n = 10
         depth = 9
@@ -41,7 +41,7 @@ class TestPerformance(unittest.TestCase):
     @unittest.skip("Performance")
     def test_connect_four(self):
 
-        from game.connect_four import (ConnectFour, Token)
+        from game.connect_four import ConnectFour
 
         n = 20
         depth = 8
@@ -63,7 +63,7 @@ class TestPerformance(unittest.TestCase):
 
 #     @unittest.skip("Performance")
     def test_gomoku(self):
-        from game.gomoku import (Gomoku, Token)
+        from game.gomoku import Gomoku
 
         n = 7
         depth = 4
