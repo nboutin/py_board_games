@@ -10,7 +10,7 @@ from game.gomoku import (Gomoku, Token)
 from game_base.board import (Point)
 
 
-class TestTicTacToe(unittest.TestCase):
+class TestGomoku(unittest.TestCase):
 
     def test_init(self):
         game = Gomoku()
@@ -98,7 +98,7 @@ class TestTicTacToe(unittest.TestCase):
                    (3, 6), (4, 0), (4, 2), (4, 3), (5, 4), (4, 4), (5, 3),
                    (4, 5), (4, 6), (5, 0), (5, 1), (5, 2), (5, 5), (5, 6),
                    (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)]
-        game = Gomoku()
+        game = Gomoku(column=7, row=7)
 
         for x, y in history:
             self.assertTrue(game.play(Point(x, y)))

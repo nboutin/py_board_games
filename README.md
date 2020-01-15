@@ -26,6 +26,16 @@ AI opponent is using MinMax algorithm.
 - [x] Evaluate leaf point by taken into account current depth
 - [x] Add AI using MinMax algorithm
 
+## Optimization
+
+- [ ] Generate moves available for a game position
+- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
+- [ ] Make Minmax using thread
+- [ ] Profile TicTacToe implementation for optimization
+- [ ] Try numpy Array for Board to improve performance
+- [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
+- [x] Connect Four: Compute end game only considering last move and its impact
+
 ## Design
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration
@@ -36,6 +46,7 @@ AI opponent is using MinMax algorithm.
 - [x] Factorize ressources between games
 
 ## Tests
+- [ ] Add unittest for game selection/configuration in main
 - [ ] Pass parameter to enable skipped perfo test
 - [ ] Setup Continuous Integration
 - [x] Add unittest for Minmax
@@ -43,15 +54,6 @@ AI opponent is using MinMax algorithm.
 ## Fix
 - [ ] Handle bad user input
 
-## Optimization
-
-- [ ] Generate moves available for a game position
-- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
-- [ ] Make Minmax using thread
-- [ ] Profile TicTacToe implementation for optimization
-- [ ] Try numpy Array for Board to improve performance
-- [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
-- [x] Connect Four: Compute end game only considering last move and its impact
 
 
 # Links
