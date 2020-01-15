@@ -11,6 +11,9 @@ class BoardDrop(Board):
 
         self._cell_free_column_count = [row_count for _ in range(column_count)]
 
+    def is_column_full(self, x):
+        return self._cell_free_column_count[x] <= 0
+
     def add_token(self, point, token):
         raise Exception("Not Implemented")
 

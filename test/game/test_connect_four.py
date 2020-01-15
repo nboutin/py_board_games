@@ -204,7 +204,16 @@ class TestConnectFour(unittest.TestCase):
 #
 #         self.assertTrue(game.is_over)
 #         self.assertEqual(game.winner, None)
-#
+
+    def test_generate_moves(self):
+        game = ConnectFour()
+        self.assertEqual(game.generate_moves(), [0, 1, 2, 3, 4, 5, 6])
+
+#         for i in range(ConnectFour._ROW):
+#             game.play(0)
+#         for i in range(ConnectFour._ROW):
+#             game.play(4)
+#         self.assertEqual(game.generate_moves(), [1, 2, 3, 5, 6])
 
 
 if __name__ == '__main__':
