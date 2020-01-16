@@ -152,19 +152,29 @@ class Gomoku():
 
         for i in range(r):
             for pattern in self._patterns:
-                line = board.get_diag_down(x + i, y + i, self._line_win_size)
-                if line == pattern:
+                if board.get_diag_down(x + i, y + i, self._line_win_size) == pattern:
                     return True, pattern[0]
 
         return False, None
+
+    def _rotate(self, grid):
+        return list(list(a) for a in zip(*reversed(grid)))
 
     def _has_winner_diag_up(self, board, move):
         '''
         @brief '/'
         '''
+#         x, y = move.point
+#         x, y = (x + y, 0) if x >= y else (0, x + y)
+
         x_min = self._line_win_size - 1
         x_max = self._board.column_count
         y_max = self._board.row_count - self._line_win_size + 1
+
+#         for i in range(r):
+#             for pattern in self._patterns:
+#                 if board.get_diag_up(x - i, y + i, self._line_win_size) == pattern:
+#                     return True, pattern[0]
 
         for x in range(x_min, x_max):
             for y in range(0, y_max):
