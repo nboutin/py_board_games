@@ -113,17 +113,71 @@ class Board():
 
         return True
 
-    def check_line_horizontal(self, x_start, x_end, y, line_test):
-        row = self._grid[y]
-        return self._check_line(row, x_start, x_end, line_test)
+#     a[start:stop]  # items start through stop-1
+#     a[start:]      # items start through the rest of the array
+#     a[:stop]       # items from the beginning through stop-1
+#     a[:]           # a copy of the whole array
 
-    def check_line_vertical(self, y_start, y_end, x, line_test):
-        column = self.get_column(x, self._row_count)
-        return self._check_line(column, y_start, y_end, line_test)
+    def get_row(self, y):
+        return self._grid[y, :]
 
-    def _check_line(self, line, start, end, pattern):
+    def get_column(self, x):
+        return self._grid[:, x]
+
+#     def get_line_h(self, y, x_start, len):
+#         return self._grid[y, x_start:len]
+#
+#     def get_line_v(self, x, y_start, len):
+#         return self._grid[y_start:len, x]
+
+    def get_diag_down(self, x, y):
+        x, y = (x - y, 0) if x >= y else (0, y - x)
+        return self._grid.diagonal(x)
+#         return [self._grid[y + i][x + i] for i in range(len)]
+
+    def get_diag_up(self, x, y):
+        x, y = (x - y, 0) if x >= y else (0, y - x)
+        return np.flipud(a).diagonal(x)
+#         return [self._grid[y + i][x - i] for i in range(len)]
+
+    def check_line_all(self, x, y, pattern):
         '''
-        @brief Check if line_test is present in row y between start and end
+        @todo call check_line_h/l/dd/du
+        '''
+        pass
+
+    def check_line_horizontal(self, x_start, x_end, y, pattern):
+        '''
+        @brief Look for pattern in row y from x_start to x_end positions
+        @return True if pattern found otherwise False
+        @todo update param to use x,y and deduce start and end from len(pattern)
+        '''
+        return Board.check_line(self.get_row(y), x_start, x_end, pattern)
+
+    def check_line_vertical(self, y_start, y_end, x, pattern):
+        '''
+        @brief Look for pattern in column x from y_start to y_end positions
+        @return True if pattern found otherwise False
+        '''
+        return Board.check_line(self.get_column(x), y_start, y_end, pattern)
+
+    def check_line_diag_down(self, x, y, pattern):
+        '''
+        @todo to finish
+        '''
+#         return Board.check_line(self.get_diag_down(x, y), )
+        pass
+
+    def check_line_diag_up(self, x, y, pattern):
+        pass
+
+    @staticmethod
+    def check_line(line, start, end, pattern):
+        '''
+        @brief Check if pattern is present in line between start and end positions
+        @param line: array to search into
+        @param pattern: array to find
+        @return True if pattern found otherwise False
         @details Python list split has auto bound checking.
         '''
         length = len(pattern)
@@ -131,15 +185,6 @@ class Board():
             if line[x:x + length] == pattern:
                 return True
         return False
-
-    def get_column(self, x, len):
-        return [self._grid[y][x] for y in range(len)]
-
-    def get_diag_down(self, x, y, len):
-        return [self._grid[y + i][x + i] for i in range(len)]
-
-    def get_diag_up(self, x, y, len):
-        return [self._grid[y + i][x - i] for i in range(len)]
 
     def __str__(self):
         '''

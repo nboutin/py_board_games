@@ -82,6 +82,56 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[0][0], token)
         self.assertEqual(board.grid[0][1], None)
 
+    def test_get_row(self):
+        import numpy as np
+        w, h = 5, 3
+        board = Board(w, h)
+        # len
+        self.assertEqual(len(board.get_row(0)), w)
+
+        # Default to None
+        a = [None for i in range(w)]
+        self.assertTrue(np.array_equal(board.get_row(0), a))
+
+        # Insert
+        a[4] = 'x'
+        board.add_token(Point(4, 0), 'x')
+        self.assertTrue(np.array_equal(board.get_row(0), a))
+
+        # Exception
+        board.get_row(0)
+        board.get_row(1)
+        board.get_row(2)
+
+        with self.assertRaises(IndexError):
+            board.get_row(3)
+
+    def test_get_column(self):
+        import numpy as np
+        w, h = 5, 3
+        board = Board(w, h)
+        # Len
+        self.assertEqual(len(board.get_column(0)), h)
+
+        # Default to None
+        a = [None for i in range(h)]
+        self.assertTrue(np.array_equal(board.get_column(0), a))
+
+        # Insert
+        a[2] = 'x'
+        board.add_token(Point(0, 2), 'x')
+        self.assertTrue(np.array_equal(board.get_column(0), a))
+
+        # Exception
+        board.get_column(0)
+        board.get_column(1)
+        board.get_column(2)
+        board.get_column(3)
+        board.get_column(4)
+
+        with self.assertRaises(IndexError):
+            board.get_row(5)
+
 # #     def test_check_line_horizontal(self):
 # #         board = Board()
 # #
