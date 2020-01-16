@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from enum import (Enum, auto)
+import numpy as np
 
 
 class Point():
@@ -42,28 +43,26 @@ class Token(auto):
 
 
 class Board():
+    '''
+    https://docs.scipy.org/doc/numpy/reference/arrays.html
+    '''
 
-    def __init__(self, column_count, row_count):
-        self._column_count = column_count  # X
-        self._row_count = row_count        # Y
-
-        self._grid = [[None for x in range(self._column_count)]
-                      for y in range(self._row_count)]
-
-        self._cell_free_count = self._column_count * self._row_count
+    def __init__(self, width, height):
+        self._grid = np.full((height, width), None)
+        self._cell_free_count = self._grid.size
         self._moves = list()
 
     @property
     def column_count(self):
-        return self._column_count
+        return self._grid.shape[0]
 
     @property
     def row_count(self):
-        return self._row_count
+        return self._grid.shape[1]
 
     @property
     def cell_used_count(self):
-        return self._column_count * self._row_count - self._cell_free_count
+        return self._grid.size - self._cell_free_count
 
     @property
     def grid(self):
@@ -85,7 +84,7 @@ class Board():
         '''
         x, y = point.point
 
-        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
+        if x < 0 or y < 0:
             return False
 
         # Check free cell
@@ -99,19 +98,13 @@ class Board():
 
         return True
 
-    def drop_token(self, x, token):
-        pass
-
-    def undo(self, point=None):
+    def undo(self, point):
         '''
-        @param[in] point to undo, if None last point
+        @param[in] point to undo
         '''
-        if point is None:
-            point = self._moves.pop()
-
         x, y = point.point
 
-        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
+        if x < 0 or y < 0:
             return False
 
         self._grid[y][x] = None

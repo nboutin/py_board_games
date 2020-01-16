@@ -11,13 +11,21 @@ from game_base.board import (Board, Point)
 
 class TestBoard(unittest.TestCase):
 
+    def test_x_y_order(self):
+        board = Board(5, 3)
+        self.assertTrue(board.add_token(Point(2, 1), 'x'))
+        self.assertTrue(board.add_token(Point(4, 0), 'x'))
+        self.assertTrue(board.add_token(Point(4, 2), 'o'))
+        self.assertTrue(board.add_token(Point(0, 2), 'u'))
+#         print(board)
+
     def test_init_1_1(self):
         '''
         Test construction parameter and consistency with properties
         '''
         board = Board(1, 1)
         self.assertEqual(board._cell_free_count, 1)
-        self.assertTrue(board.has_free_cell)
+        self.assertTrue(board.has_free_cell())
         self.assertEqual(board.cell_used_count, 0)
 
     def test_has_free_cell(self):
@@ -47,69 +55,73 @@ class TestBoard(unittest.TestCase):
         self.assertFalse(board.add_token(Point(-1, 0), "X"))
         self.assertFalse(board.add_token(Point(-2, -3), "X"))
         self.assertFalse(board.add_token(Point(0, -4), "X"))
-        self.assertFalse(board.add_token(Point(3, 0), "X"))
-        self.assertFalse(board.add_token(Point(3, 5), "X"))
-        self.assertFalse(board.add_token(Point(0, 5), "X"))
+
+        with self.assertRaises(IndexError):
+            board.add_token(Point(3, 0), "X")
+
+        with self.assertRaises(IndexError):
+            board.add_token(Point(3, 5), "X")
+
+        with self.assertRaises(IndexError):
+            board.add_token(Point(0, 5), "X")
 
     def test_undo(self):
         board = Board(4, 2)
         token = "X"
+
+        # Add 2 token
         self.assertTrue(board.add_token(Point(0, 0), token))
         self.assertTrue(board.add_token(Point(1, 0), token))
-
         self.assertEqual(board.cell_used_count, 2)
-#         self.assertEqual(board._cell_free_column_count[0], Board._ROW - 1)
-#         self.assertEqual(board._cell_free_column_count[1], Board._ROW - 1)
-#         self.assertEqual(board.grid[5][0], token)
-#         self.assertEqual(board.grid[5][1], token)
 
+        # Undo last one
         board.undo(Point(1, 0))
         self.assertEqual(board.cell_used_count, 1)
-#         self.assertEqual(board._cell_free_column_count[1], Board._ROW)
 
+        # Check value in grid
         self.assertEqual(board.grid[0][0], token)
         self.assertEqual(board.grid[0][1], None)
 
-#     def test_check_line_horizontal(self):
-#         board = Board()
+# #     def test_check_line_horizontal(self):
+# #         board = Board()
+# #
+# #         x_max = Board._COLUMN - 1
+# #         y_max = Board._ROW - 1
+# #
+# #         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
+# #         self.assertTrue(board.play(0, Token.A))
+# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
+# #
+# #         self.assertTrue(board.play(1, Token.A))
+# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A]))
+# #
+# #         self.assertTrue(board.play(2, Token.A))
+# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A, Token.A]))
 #
-#         x_max = Board._COLUMN - 1
-#         y_max = Board._ROW - 1
+#     def test_get_diag_down(self):
+#         board = Board(5, 4)
+#         token = 'x'
 #
-#         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
-#         self.assertTrue(board.play(0, Token.A))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
+#         # diag start at 0,0
+#         board.add_token(Point(0, 0), token)
+#         board.add_token(Point(1, 1), token)
+#         board.add_token(Point(2, 2), token)
+#         board.add_token(Point(3, 3), token)
 #
-#         self.assertTrue(board.play(1, Token.A))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A]))
+#         self.assertEqual(board.get_diag_down(0, 0, 1), [token])
+#         self.assertEqual(board.get_diag_down(0, 0, 2), [token, token])
+#         self.assertEqual(board.get_diag_down(0, 0, 3), [token, token, token])
+#         self.assertEqual(board.get_diag_down(0, 0, 4),
+#                          [token, token, token, token])
 #
-#         self.assertTrue(board.play(2, Token.A))
-#         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A, Token.A]))
-
-    def test_get_diag_down(self):
-        board = Board(5, 4)
-        token = 'x'
-
-        # diag start at 0,0
-        board.add_token(Point(0, 0), token)
-        board.add_token(Point(1, 1), token)
-        board.add_token(Point(2, 2), token)
-        board.add_token(Point(3, 3), token)
-
-        self.assertEqual(board.get_diag_down(0, 0, 1), [token])
-        self.assertEqual(board.get_diag_down(0, 0, 2), [token, token])
-        self.assertEqual(board.get_diag_down(0, 0, 3), [token, token, token])
-        self.assertEqual(board.get_diag_down(0, 0, 4),
-                         [token, token, token, token])
-
-        # diag start at 1,2
-        board = Board(5, 4)
-        board.add_token(Point(1, 2), token)
-        board.add_token(Point(2, 3), token)
-        board.add_token(Point(3, 4), token)
-        self.assertEqual(board.get_diag_down(1, 2, 1), [token])
-        self.assertEqual(board.get_diag_down(1, 2, 2), [token, token])
-        self.assertEqual(board.get_diag_down(2, 3, 1), [token])
+#         # diag start at 1,2
+#         board = Board(5, 4)
+#         board.add_token(Point(1, 2), token)
+#         board.add_token(Point(2, 3), token)
+#         board.add_token(Point(3, 4), token)
+#         self.assertEqual(board.get_diag_down(1, 2, 1), [token])
+#         self.assertEqual(board.get_diag_down(1, 2, 2), [token, token])
+#         self.assertEqual(board.get_diag_down(2, 3, 1), [token])
 
 
 if __name__ == '__main__':

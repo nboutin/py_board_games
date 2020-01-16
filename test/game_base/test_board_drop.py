@@ -19,14 +19,17 @@ class TestBoard(unittest.TestCase):
 
         board = BoardDrop(col, row)
         self.assertFalse(board.drop_token(-1, token))
-        self.assertFalse(board.drop_token(col, token))
-        self.assertFalse(board.drop_token(col + 1, token))
+        with self.assertRaises(IndexError):
+            board.drop_token(col, token)
+        with self.assertRaises(IndexError):
+            board.drop_token(col + 1, token)
 
     def test_drop(self):
         board = BoardDrop(2, 3)
         token = "X"
 
         self.assertTrue(board.drop_token(0, token))
+
         self.assertTrue(board.has_free_cell)
         self.assertEqual(board.cell_used_count, 1)
         self.assertEqual(board._cell_free_column_count[0], 3 - 1)

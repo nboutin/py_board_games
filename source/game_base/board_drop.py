@@ -25,7 +25,7 @@ class BoardDrop(Board):
         @warning Grid coordinate are reversed (y,x)
         '''
 
-        if 0 > x or x >= self._column_count:
+        if x < 0:
             return False
 
         y = self._cell_free_column_count[x] - 1
