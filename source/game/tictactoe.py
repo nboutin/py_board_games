@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import numpy as np
 from game_base.board import (Board, Point, Token)
 from game_base.player import Player
 
@@ -20,8 +21,7 @@ class TicTacToe():
         self._is_over = False
         self._history = list()
         self._moves = [Point(x, y) for y in range(3) for x in range(3)]
-        self._patterns = [[token for i in range(TicTacToe._LINE_WIN_SIZE)]
-                          for token in [Token.A, Token.B]]
+        self._patterns = [np.full(3, token) for token in [Token.A, Token.B]]
 
     @property
     def grid(self):

@@ -118,6 +118,25 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p2)
 
+    def test_win_diag_up_p1(self):
+        '''
+          0 1 2
+        0|X|O|X|
+        1|O|X|O|
+        2|X|-|-|
+        '''
+        game = TicTacToe()
+        self.assertTrue(game.play(Point(0, 0)))
+        self.assertTrue(game.play(Point(1, 0)))
+        self.assertTrue(game.play(Point(2, 0)))
+        self.assertTrue(game.play(Point(0, 1)))
+        self.assertTrue(game.play(Point(1, 1)))
+        self.assertTrue(game.play(Point(2, 1)))
+        self.assertTrue(game.play(Point(0, 2)))
+
+        self.assertTrue(game.is_over)
+        self.assertEqual(game.winner, game._p1)
+
     def test_generate_moves(self):
         game = TicTacToe()
         moves = game.generate_moves()

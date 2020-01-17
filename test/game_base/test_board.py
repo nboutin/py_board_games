@@ -146,11 +146,9 @@ class TestBoard(unittest.TestCase):
                 board.add_token(Point(x, y), str(x) + str(y))
 
         line = board.get_diag_up(0, 2)
-        print(line)
         self.assertTrue(np.array_equal(line, ['02', '11', '20']))
 
         line = board.get_diag_up(0, 1)
-        print(line)
         self.assertTrue(np.array_equal(line, ['01', '10']))
 
     def test_anti_diag(self):
@@ -190,6 +188,16 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(get_origin(0, 0), (0, 0))
         self.assertEqual(get_origin(3, 1), (2, 2))
         self.assertEqual(get_origin(2, 2), (2, 2))
+
+    def test_equal_array(self):
+        import numpy as np
+        a = [1, 1, 1]
+        b = [1, 1, 1]
+        c = [0, 0, 0]
+        d = np.full(3, 1)
+        self.assertTrue(Board.array_equal(a, b))
+        self.assertFalse(Board.array_equal(a, c))
+        self.assertTrue(Board.array_equal(a, d))
 
     def test_check_line_horizontal(self):
 

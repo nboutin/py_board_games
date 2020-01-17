@@ -3,6 +3,7 @@
 
 from enum import (Enum, auto)
 import numpy as np
+from builtins import staticmethod
 
 
 class Point():
@@ -148,9 +149,11 @@ class Board():
         '''
         @brief Look for pattern in row y from x - len(pattern) to x + len(pattern) positions
         @return True if pattern found otherwise False
+        @fixme Error with x=1, y=1
         '''
         l = len(pattern) - 1
-        return Board.check_line(self.get_row(y), x - l, x + l + 1, pattern)
+        x_min = min(0, x - l)
+        return Board.check_line(self.get_row(y), x_min, x + l + 1, pattern)
 
     def check_line_vertical(self, x, y, pattern):
         '''
@@ -179,9 +182,18 @@ class Board():
         '''
         length = len(pattern)
         for x in range(start, end):
-            if np.array_equal(line[x:x + length], pattern):
+            #             if np.array_equal(line[x:x + length], pattern):
+            if Board.array_equal(line[x:x + length], pattern):
                 return True
         return False
+
+    @staticmethod
+    def array_equal(a, b):
+        assert len(a) == len(b), (a, b)
+        for i in range(min(len(a), len(b))):
+            if a[i] != b[i]:
+                return False
+        return True
 
     def __str__(self):
         '''

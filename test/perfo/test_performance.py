@@ -16,7 +16,7 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 class TestPerformance(unittest.TestCase):
 
-    @unittest.skip("Performance")
+#     @unittest.skip("Performance")
     def test_tictactoe(self):
         from game.tictactoe import TicTacToe
 
@@ -33,9 +33,9 @@ class TestPerformance(unittest.TestCase):
             duration += time.time() - start
 
 #         excepted = 0.422 # H
-        excepted = 0.219  # W
+        excepted = 0.150  # W
         print("Duration {}".format(duration / n))
-        delta = excepted * 5 / 100
+        delta = excepted * 3 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
     @unittest.skip("Performance")
@@ -61,7 +61,7 @@ class TestPerformance(unittest.TestCase):
         print("Duration {}".format(duration / n))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
-#     @unittest.skip("Performance")
+    @unittest.skip("Performance")
     def test_gomoku(self):
         from game.gomoku import Gomoku
 
