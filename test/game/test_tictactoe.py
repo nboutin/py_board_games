@@ -95,7 +95,7 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p2)
 
-    def test_win_diag_player1(self):
+    def test_win_diag_down_player1(self):
         game = TicTacToe()
         self.assertTrue(game.play(Point(0, 0)))
         self.assertTrue(game.play(Point(1, 0)))
@@ -106,7 +106,7 @@ class TestTicTacToe(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p1)
 
-    def test_win_diag_player2(self):
+    def test_win_diag_up_player2(self):
         game = TicTacToe()
         self.assertTrue(game.play(Point(0, 0)))
         self.assertTrue(game.play(Point(0, 2)))

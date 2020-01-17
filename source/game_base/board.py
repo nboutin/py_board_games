@@ -113,11 +113,6 @@ class Board():
 
         return True
 
-#     a[start:stop]  # items start through stop-1
-#     a[start:]      # items start through the rest of the array
-#     a[:stop]       # items from the beginning through stop-1
-#     a[:]           # a copy of the whole array
-
     def get_row(self, y):
         return self._grid[y, :]
 
@@ -133,12 +128,15 @@ class Board():
     def get_diag_down(self, x, y):
         x, y = (x - y, 0) if x >= y else (0, y - x)
         return self._grid.diagonal(x)
-#         return [self._grid[y + i][x + i] for i in range(len)]
 
     def get_diag_up(self, x, y):
-        x, y = (x - y, 0) if x >= y else (0, y - x)
-        return np.flipud(a).diagonal(x)
-#         return [self._grid[y + i][x - i] for i in range(len)]
+        # Get diag up origin point (left, down)
+        h = self.column_count
+        while x >= 1 and y < h - 1:
+            x, y = x - 1, y + 1
+
+        k = x if y == h - 1 else -y
+        return np.flipud(self._grid).diagonal(k)
 
     def check_line_all(self, x, y, pattern):
         '''
@@ -146,28 +144,29 @@ class Board():
         '''
         pass
 
-    def check_line_horizontal(self, x_start, x_end, y, pattern):
+    def check_line_horizontal(self, x, y, pattern):
         '''
-        @brief Look for pattern in row y from x_start to x_end positions
+        @brief Look for pattern in row y from x - len(pattern) to x + len(pattern) positions
         @return True if pattern found otherwise False
-        @todo update param to use x,y and deduce start and end from len(pattern)
         '''
-        return Board.check_line(self.get_row(y), x_start, x_end, pattern)
+        l = len(pattern) - 1
+        return Board.check_line(self.get_row(y), x - l, x + l + 1, pattern)
 
-    def check_line_vertical(self, y_start, y_end, x, pattern):
+    def check_line_vertical(self, x, y, pattern):
         '''
-        @brief Look for pattern in column x from y_start to y_end positions
+        @brief Look for pattern in column x from y - len(pattern) to y + len(pattern) positions
         @return True if pattern found otherwise False
         '''
-        return Board.check_line(self.get_column(x), y_start, y_end, pattern)
+        l = len(pattern) - 1
+        return Board.check_line(self.get_column(x), y - l, y + l + 1, pattern)
 
     def check_line_diag_down(self, x, y, pattern):
-        len = len(pattern) - 1
-        return Board.check_line(self.get_diag_down(x, y), x - len, x + len, pattern)
+        l = len(pattern) - 1
+        return Board.check_line(self.get_diag_down(x, y), x - l, x + l + 1, pattern)
 
     def check_line_diag_up(self, x, y, pattern):
-        len = len(pattern) - 1
-        return Board.check_line(self.get_diag_up(x, y), x - len, x + len, pattern)
+        l = len(pattern) - 1
+        return Board.check_line(self.get_diag_up(x, y), x - l, x + l + 1, pattern)
 
     @staticmethod
     def check_line(line, start, end, pattern):
@@ -180,7 +179,6 @@ class Board():
         '''
         length = len(pattern)
         for x in range(start, end):
-            #             if line[x:x + length] == pattern:
             if np.array_equal(line[x:x + length], pattern):
                 return True
         return False

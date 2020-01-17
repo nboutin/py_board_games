@@ -132,37 +132,98 @@ class TestBoard(unittest.TestCase):
         with self.assertRaises(IndexError):
             board.get_row(5)
 
+    def test_get_diag_up(self):
+        '''
+        00|10|20|
+        01|11|21|
+        02|12|22|
+        '''
+        import numpy as np
+        w, h = 3, 3
+        board = Board(w, h)
+        for y in range(h):
+            for x in range(w):
+                board.add_token(Point(x, y), str(x) + str(y))
+
+        line = board.get_diag_up(0, 2)
+        print(line)
+        self.assertTrue(np.array_equal(line, ['02', '11', '20']))
+
+        line = board.get_diag_up(0, 1)
+        print(line)
+        self.assertTrue(np.array_equal(line, ['01', '10']))
+
+    def test_anti_diag(self):
+        import numpy as np
+        w, h = 5, 3
+        board = Board(w, h)
+        for y in range(h):
+            for x in range(w):
+                board.add_token(Point(x, y), str(x) + str(y))
+
+        line = np.flipud(board._grid).diagonal(0)
+        self.assertTrue(np.array_equal(line, ['02', '11', '20']))
+
+        line = np.flipud(board._grid).diagonal(1)
+        self.assertTrue(np.array_equal(line, ['12', '21', '30']))
+
+        line = np.flipud(board._grid).diagonal(-1)
+        self.assertTrue(np.array_equal(line, ['01', '10']))
+
+    def test_diag_coordinate(self):
+        '''
+        00|10|20|30|40|
+        01|11|21|31|41|
+        02|12|22|32|42|
+        '''
+        h = 3
+
+        def get_origin(x, y):
+            while x >= 1 and y < h - 1:
+                x, y = x - 1, y + 1
+            return x, y
+
+        self.assertEqual(get_origin(1, 0), (0, 1))
+        self.assertEqual(get_origin(2, 1), (1, 2))
+        self.assertEqual(get_origin(4, 1), (3, 2))
+        self.assertEqual(get_origin(4, 2), (4, 2))
+        self.assertEqual(get_origin(0, 0), (0, 0))
+        self.assertEqual(get_origin(3, 1), (2, 2))
+        self.assertEqual(get_origin(2, 2), (2, 2))
+
     def test_check_line_horizontal(self):
 
         w, h = 5, 3
         board = Board(w, h)
         token = 'x'
 
-        x_max = w - 1
-        y_max = h - 1
-
         # Check empty row
         for y in range(h):
-            self.assertTrue(board.check_line_horizontal(0, x_max, y, [None]))
-            self.assertTrue(board.check_line_horizontal(
-                0, x_max, y, [None, None]))
-            self.assertFalse(board.check_line_horizontal(0, x_max, y, [token]))
+            self.assertTrue(board.check_line_horizontal(0, y, [None]))
+            self.assertTrue(board.check_line_horizontal(1, y, [None, None]))
+            self.assertFalse(board.check_line_horizontal(2, y, [token]))
 
         # |-|x|-|x|-|
         self.assertTrue(board.add_token(Point(1, 1), token))
         self.assertTrue(board.add_token(Point(3, 1), token))
-        self.assertTrue(board.check_line_horizontal(0, x_max, 1, [token]))
+        self.assertTrue(board.check_line_horizontal(1, 1, [token]))
+        self.assertTrue(board.check_line_horizontal(3, 1, [token]))
         self.assertTrue(board.check_line_horizontal(
-            0, x_max, 1, [token, None, token]))
-        self.assertFalse(board.check_line_horizontal(
-            0, x_max, 1, [token, token]))
+            1, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(
+            2, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(
+            3, 1, [token, None, token]))
+        self.assertFalse(board.check_line_horizontal(2, 1, [token, token]))
 
         # |-|x|x|x|-|
         self.assertTrue(board.add_token(Point(2, 1), token))
         self.assertTrue(board.check_line_horizontal(
-            0, x_max, 1, [token, token, token]))
+            2, 1, [token, token, token]))
         self.assertTrue(board.check_line_horizontal(
-            1, 3, 1, [token, token, token]))
+            3, 1, [token, token, token]))
+        self.assertTrue(board.check_line_horizontal(
+            1, 1, [token, token, token]))
 
 #     def test_get_diag_down(self):
 #         board = Board(5, 4)
