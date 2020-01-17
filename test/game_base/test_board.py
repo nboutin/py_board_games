@@ -132,22 +132,38 @@ class TestBoard(unittest.TestCase):
         with self.assertRaises(IndexError):
             board.get_row(5)
 
-# #     def test_check_line_horizontal(self):
-# #         board = Board()
-# #
-# #         x_max = Board._COLUMN - 1
-# #         y_max = Board._ROW - 1
-# #
-# #         self.assertFalse(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
-# #         self.assertTrue(board.play(0, Token.A))
-# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A]))
-# #
-# #         self.assertTrue(board.play(1, Token.A))
-# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A]))
-# #
-# #         self.assertTrue(board.play(2, Token.A))
-# #         self.assertTrue(board.check_line_horizontal(0, x_max, y_max, [Token.A, Token.A, Token.A]))
-#
+    def test_check_line_horizontal(self):
+
+        w, h = 5, 3
+        board = Board(w, h)
+        token = 'x'
+
+        x_max = w - 1
+        y_max = h - 1
+
+        # Check empty row
+        for y in range(h):
+            self.assertTrue(board.check_line_horizontal(0, x_max, y, [None]))
+            self.assertTrue(board.check_line_horizontal(
+                0, x_max, y, [None, None]))
+            self.assertFalse(board.check_line_horizontal(0, x_max, y, [token]))
+
+        # |-|x|-|x|-|
+        self.assertTrue(board.add_token(Point(1, 1), token))
+        self.assertTrue(board.add_token(Point(3, 1), token))
+        self.assertTrue(board.check_line_horizontal(0, x_max, 1, [token]))
+        self.assertTrue(board.check_line_horizontal(
+            0, x_max, 1, [token, None, token]))
+        self.assertFalse(board.check_line_horizontal(
+            0, x_max, 1, [token, token]))
+
+        # |-|x|x|x|-|
+        self.assertTrue(board.add_token(Point(2, 1), token))
+        self.assertTrue(board.check_line_horizontal(
+            0, x_max, 1, [token, token, token]))
+        self.assertTrue(board.check_line_horizontal(
+            1, 3, 1, [token, token, token]))
+
 #     def test_get_diag_down(self):
 #         board = Board(5, 4)
 #         token = 'x'

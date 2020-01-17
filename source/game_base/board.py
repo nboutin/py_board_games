@@ -162,14 +162,12 @@ class Board():
         return Board.check_line(self.get_column(x), y_start, y_end, pattern)
 
     def check_line_diag_down(self, x, y, pattern):
-        '''
-        @todo to finish
-        '''
-#         return Board.check_line(self.get_diag_down(x, y), )
-        pass
+        len = len(pattern) - 1
+        return Board.check_line(self.get_diag_down(x, y), x - len, x + len, pattern)
 
     def check_line_diag_up(self, x, y, pattern):
-        pass
+        len = len(pattern) - 1
+        return Board.check_line(self.get_diag_up(x, y), x - len, x + len, pattern)
 
     @staticmethod
     def check_line(line, start, end, pattern):
@@ -182,7 +180,8 @@ class Board():
         '''
         length = len(pattern)
         for x in range(start, end):
-            if line[x:x + length] == pattern:
+            #             if line[x:x + length] == pattern:
+            if np.array_equal(line[x:x + length], pattern):
                 return True
         return False
 
