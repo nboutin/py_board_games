@@ -55,11 +55,11 @@ class Board():
 
     @property
     def column_count(self):
-        return self._grid.shape[0]
+        return self._grid.shape[1]
 
     @property
     def row_count(self):
-        return self._grid.shape[1]
+        return self._grid.shape[0]
 
     @property
     def cell_used_count(self):
@@ -151,9 +151,12 @@ class Board():
         @return True if pattern found otherwise False
         @fixme Error with x=1, y=1
         '''
+#         print(x,y,pattern)
         l = len(pattern) - 1
-        x_min = min(0, x - l)
-        return Board.check_line(self.get_row(y), x_min, x + l + 1, pattern)
+        x_min = max(0, x - l)
+#         print(self.column_count, x + l + 1)
+        x_max = min(self.column_count, x + l + 1)
+        return Board.check_line(self.get_row(y), x_min, x_max, pattern)
 
     def check_line_vertical(self, x, y, pattern):
         '''
@@ -161,15 +164,22 @@ class Board():
         @return True if pattern found otherwise False
         '''
         l = len(pattern) - 1
-        return Board.check_line(self.get_column(x), y - l, y + l + 1, pattern)
+        y_min = max(0, y - l)
+        y_max = min(self.row_count, y + l + 1)
+        return Board.check_line(self.get_column(x), y_min, y_max, pattern)
 
     def check_line_diag_down(self, x, y, pattern):
-        l = len(pattern) - 1
-        return Board.check_line(self.get_diag_down(x, y), x - l, x + l + 1, pattern)
+#         l = len(pattern) - 1
+#         x_min = max(0, x - l)
+#         x_max = x + l + 1
+        line = self.get_diag_down(x, y)
+        return Board.check_line(line, 0, len(line), pattern)
 
     def check_line_diag_up(self, x, y, pattern):
-        l = len(pattern) - 1
-        return Board.check_line(self.get_diag_up(x, y), x - l, x + l + 1, pattern)
+#         l = len(pattern) - 1
+#         x_min = max(0, x - l)
+        line = self.get_diag_up(x, y)
+        return Board.check_line(line, 0, len(line), pattern)
 
     @staticmethod
     def check_line(line, start, end, pattern):
@@ -180,17 +190,21 @@ class Board():
         @return True if pattern found otherwise False
         @details Python list split has auto bound checking.
         '''
-        length = len(pattern)
+#         print(line, start, end, pattern)
+        l = len(pattern)
         for x in range(start, end):
-            #             if np.array_equal(line[x:x + length], pattern):
-            if Board.array_equal(line[x:x + length], pattern):
+            if (end - x) < l:
+                return False
+#             if np.array_equal(line[x:x + l], pattern):
+            if Board.array_equal(line[x:x + l], pattern):
                 return True
         return False
 
     @staticmethod
     def array_equal(a, b):
-        assert len(a) == len(b), (a, b)
-        for i in range(min(len(a), len(b))):
+#         assert len(a) == len(b), (a, b)
+#         for i in range(min(len(a), len(b))):
+        for i in range(len(a)):
             if a[i] != b[i]:
                 return False
         return True

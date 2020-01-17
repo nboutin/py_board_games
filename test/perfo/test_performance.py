@@ -15,6 +15,9 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 
 class TestPerformance(unittest.TestCase):
+    '''
+    @todo add test for tictactoe play and compute_ending
+    '''
 
 #     @unittest.skip("Performance")
     def test_tictactoe(self):
@@ -32,8 +35,8 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 0.422 # H
-        excepted = 0.150  # W
+        excepted = 0.422 # H
+#         excepted = 0.150  # W
         print("Duration {}".format(duration / n))
         delta = excepted * 3 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)

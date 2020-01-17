@@ -12,12 +12,16 @@ from game_base.board import (Board, Point)
 class TestBoard(unittest.TestCase):
 
     def test_x_y_order(self):
-        board = Board(5, 3)
+        w, h = 5, 3
+        board = Board(w, h)
         self.assertTrue(board.add_token(Point(2, 1), 'x'))
         self.assertTrue(board.add_token(Point(4, 0), 'x'))
         self.assertTrue(board.add_token(Point(4, 2), 'o'))
         self.assertTrue(board.add_token(Point(0, 2), 'u'))
 #         print(board)
+        self.assertEqual(board.column_count, w)
+        self.assertEqual(board.row_count, h)
+
 
     def test_init_1_1(self):
         '''
@@ -210,18 +214,16 @@ class TestBoard(unittest.TestCase):
             self.assertTrue(board.check_line_horizontal(0, y, [None]))
             self.assertTrue(board.check_line_horizontal(1, y, [None, None]))
             self.assertFalse(board.check_line_horizontal(2, y, [token]))
+            self.assertTrue(board.check_line_horizontal(3, y, [None, None]))
 
         # |-|x|-|x|-|
         self.assertTrue(board.add_token(Point(1, 1), token))
         self.assertTrue(board.add_token(Point(3, 1), token))
         self.assertTrue(board.check_line_horizontal(1, 1, [token]))
         self.assertTrue(board.check_line_horizontal(3, 1, [token]))
-        self.assertTrue(board.check_line_horizontal(
-            1, 1, [token, None, token]))
-        self.assertTrue(board.check_line_horizontal(
-            2, 1, [token, None, token]))
-        self.assertTrue(board.check_line_horizontal(
-            3, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(1, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(2, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(3, 1, [token, None, token]))
         self.assertFalse(board.check_line_horizontal(2, 1, [token, token]))
 
         # |-|x|x|x|-|
