@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import numpy as np
 from game_base.board import (Board, Point, Token)
 from game_base.player import Player
 
@@ -19,7 +20,7 @@ class Gomoku():
         self._history = list()
         self._moves_remaining = set([Point(x, y) for y in range(size)
                                      for x in range(size)])
-        self._patterns = [[token for i in range(self._line_win_size)]
+        self._patterns = [np.full(self._line_win_size, token) 
                           for token in [Token.A, Token.B]]
 
     @property
@@ -109,33 +110,42 @@ class Gomoku():
         return self._is_over
 
     def _has_winner_horizontal(self, board, move):
-        x_min = max(0, move.x - self._line_win_size - 1)
-        x_max = min(self._board.column_count, move.x + self._line_win_size - 1)
+#         x_min = max(0, move.x - self._line_win_size - 1)
+#         x_max = min(self._board.column_count, move.x + self._line_win_size - 1)
 
+        x,y = move.point
         for pattern in self._patterns:
-            if board.check_line_horizontal(x_min, x_max, move.y, pattern):
+            if board.check_line_horizontal(x, y, pattern):
                 return True, pattern[0]
 
         return False, None
 
     def _has_winner_vertical(self, board, move):
-        y_min = max(0, move.y - self._line_win_size - 1)
-        y_max = min(self._board.row_count, move.y + self._line_win_size - 1)
+#         y_min = max(0, move.y - self._line_win_size - 1)
+#         y_max = min(self._board.row_count, move.y + self._line_win_size - 1)
 
+        x, y = move.point
         for pattern in self._patterns:
-            if board.check_line_vertical(y_min, y_max, move.x, pattern):
+            if board.check_line_vertical(x, y, pattern):
                 return True, pattern[0]
 
         return False, None
 
     def _has_winner_diagonal(self, board, move):
-
-        has_winner, token = self._has_winner_diag_down(board, move)
-
-        if has_winner:
-            return has_winner, token
-        else:
-            return self._has_winner_diag_up(board, move)
+        x, y = move.point
+        for pattern in self._patterns:
+            if board.check_line_diag_down(x, y, pattern):
+                return True, pattern[0]
+            elif board.check_line_diag_up(x, y, pattern):
+                return True, pattern[0]
+        return False, None
+    
+#         has_winner, token = self._has_winner_diag_down(board, move)
+# 
+#         if has_winner:
+#             return has_winner, token
+#         else:
+#             return self._has_winner_diag_up(board, move)
 
     def _has_winner_diag_down(self, board, move):
         '''

@@ -173,9 +173,9 @@ class Board():
 #         l = len(pattern) - 1
 #         x_min = max(0, x - l)
 #         x_max = x + l + 1
-        print("ldd", x,y,pattern)
+#         print("ldd", x,y,pattern)
         line = self.get_diag_down(x, y)
-        print(line)
+#         print(line)
         return Board.check_line(line, 0, len(line), pattern)
 
     def check_line_diag_up(self, x, y, pattern):
