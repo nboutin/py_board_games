@@ -133,11 +133,14 @@ class Board():
 
     def get_diag_up(self, x, y):
         # Get diag up origin point (left, down)
+        print(x,y)
+        
         h = self.column_count
         while x >= 1 and y < h - 1:
             x, y = x - 1, y + 1
 
         k = x if y == h - 1 else -y
+        print(x,y,h,k)
         return np.flipud(self._grid).diagonal(k)
 
     def check_line_all(self, x, y, pattern):
@@ -181,7 +184,9 @@ class Board():
     def check_line_diag_up(self, x, y, pattern):
 #         l = len(pattern) - 1
 #         x_min = max(0, x - l)
+        print("diag_up", x, y, pattern)
         line = self.get_diag_up(x, y)
+        print(line)
         return Board.check_line(line, 0, len(line), pattern)
 
     @staticmethod
