@@ -128,7 +128,8 @@ class Board():
 
     def get_diag_down(self, x, y):
         x, y = (x - y, 0) if x >= y else (0, y - x)
-        return self._grid.diagonal(x)
+        k = x if y == 0 else -y
+        return self._grid.diagonal(k)
 
     def get_diag_up(self, x, y):
         # Get diag up origin point (left, down)
@@ -172,7 +173,9 @@ class Board():
 #         l = len(pattern) - 1
 #         x_min = max(0, x - l)
 #         x_max = x + l + 1
+        print("ldd", x,y,pattern)
         line = self.get_diag_down(x, y)
+        print(line)
         return Board.check_line(line, 0, len(line), pattern)
 
     def check_line_diag_up(self, x, y, pattern):
@@ -216,6 +219,7 @@ class Board():
         s = '\n'
         for row in self._grid:
             for cell in row:
+                cell = cell if cell is not None else '-'
                 s += "{}|".format(cell)
             s += '\n'
         return s

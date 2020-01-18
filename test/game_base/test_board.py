@@ -136,6 +136,34 @@ class TestBoard(unittest.TestCase):
         with self.assertRaises(IndexError):
             board.get_row(5)
 
+    def test_get_diag_down(self):
+        '''
+        00|10|20|30|40|
+        01|11|21|31|41|
+        02|12|22|32|42|
+        '''
+        import numpy as np
+        w, h = 5, 3
+        board = Board(w, h)
+        for y in range(h):
+            for x in range(w):
+                board.add_token(Point(x, y), str(x) + str(y))
+
+        line = board.get_diag_down(0, 0)
+        self.assertTrue(np.array_equal(line, ['00','11','22']))
+
+        line = board.get_diag_down(3, 0)
+        self.assertTrue(np.array_equal(line, ['30','41']))
+
+        line = board.get_diag_down(4, 2)
+        self.assertTrue(np.array_equal(line, ['20','31','42']))
+
+        line = board.get_diag_down(0, 1)
+        self.assertTrue(np.array_equal(line, ['01','12']))
+
+        line = board.get_diag_down(1, 2)
+        self.assertTrue(np.array_equal(line, ['01','12']))
+
     def test_get_diag_up(self):
         '''
         00|10|20|
