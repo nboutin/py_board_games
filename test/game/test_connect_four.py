@@ -155,7 +155,7 @@ class TestConnectFour(unittest.TestCase):
         board.add_token(Point(3, 5), token)
 
         game = ConnectFour()
-        self.assertEqual(game._has_winner_diag_down(board), (True, token))
+        self.assertEqual(game._has_winner_diagonal(board,Point(3,5)), (True, token))
 
     def test_win_diag_down_player1(self):
         game = ConnectFour()
