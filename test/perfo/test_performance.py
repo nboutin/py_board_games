@@ -46,7 +46,7 @@ class TestPerformance(unittest.TestCase):
 
         from game.connect_four import ConnectFour
 
-        n = 20
+        n = 10
         depth = 8
         p1 = Player("AI_1", Token.A, True)
         duration = 0
@@ -58,9 +58,9 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 1.027 # H
-        excepted = 0.685  # W
-        delta = excepted * 5 / 100
+        excepted = 0.813 # H
+#         excepted = 0.685  # W
+        delta = excepted * 3 / 100
         print("Duration {}".format(duration / n))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
