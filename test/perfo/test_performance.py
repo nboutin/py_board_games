@@ -19,7 +19,7 @@ class TestPerformance(unittest.TestCase):
     @todo add test for tictactoe play and compute_ending
     '''
 
-#     @unittest.skip("Performance")
+    @unittest.skip("Performance")
     def test_tictactoe(self):
         from game.tictactoe import TicTacToe
 
@@ -85,8 +85,8 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 2.573 # H
-        excepted = 1.630  # W
+        excepted = 1.701 # H
+#         excepted = 1.630  # W
         delta = excepted * 3 / 100
         print('Duration {}, delta {}'.format(duration / n, delta))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
