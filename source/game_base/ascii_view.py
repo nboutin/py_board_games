@@ -23,9 +23,13 @@ class ASCII_View():
         self._print_grid(self._grid)
         self._print_player(self.current_player)
 
-    def ask_input(self):
-        i = input("Enter (x,y): ")
-        return int(i[0]), int(i[1])
+    def ask_input(self, n):
+        if n == 1:
+            i = input("Enter (x): ")
+            return int(i)
+        else:
+            i = input("Enter (x,y): ")
+            return int(i[0]), int(i[1])
 
     def add_message(self, msg):
         self._messages.append(msg)

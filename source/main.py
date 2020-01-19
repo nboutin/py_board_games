@@ -44,8 +44,11 @@ def main(game_name, player_mode, level):
             view.add_message("Move: {} ({}s)".format(
                 move, ai.computation_time))
         else:
-            x,y = view.ask_input()
-            move = Point(x, y)
+            if game_name == "Connect Four":
+                move = view.ask_input(1)
+            else:    
+                x,y = view.ask_input(2)
+                move = Point(x, y)
 
         if not game.play(move):
             view.add_message("Input is invalid")

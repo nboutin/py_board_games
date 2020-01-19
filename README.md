@@ -29,9 +29,8 @@ AI opponent is using MinMax algorithm.
 ## Optimization
 
 - [ ] Make Minmax using thread
-- [ ] Improve check diag line by using last move value
-- [ ] Speed up computation by removing bound checking and use exception, IndexError: out of range
-- [ ] Try numpy Array for Board to improve performance
+- [x] Improve check diag line by using last move value
+- [x] Try numpy Array for Board to improve performance
 - [x] Profile Gomoku implementation for optimization
 - [x] Check line should take into account line_win_size
 - [x] Generate moves available for a game position
@@ -54,8 +53,8 @@ AI opponent is using MinMax algorithm.
 - [x] Add unittest for Minmax
 
 ## Fix
-- [ ] Handle multiple user input types
 - [ ] Handle bad user input
+- [x] Handle multiple user input types
 
 
 
