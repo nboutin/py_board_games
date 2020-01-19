@@ -157,26 +157,28 @@ class TestGomoku(unittest.TestCase):
         self.assertEqual(game.winner, game._p2)
 
     def test_win_diag_down_player1(self):
+        x, y = 0, 1
         game = Gomoku()
-        self.assertTrue(game.play(Point(0, 0)))
-        self.assertTrue(game.play(Point(1, 0)))
-        self.assertTrue(game.play(Point(1, 1)))
-        self.assertTrue(game.play(Point(2, 0)))
-        self.assertTrue(game.play(Point(2, 2)))
-        self.assertTrue(game.play(Point(3, 0)))
-        self.assertTrue(game.play(Point(3, 3)))
-        self.assertTrue(game.play(Point(4, 0)))
-        self.assertTrue(game.play(Point(4, 4)))
-
+        self.assertTrue(game.play(Point(x + 0, y + 0)))
+        self.assertTrue(game.play(Point(x + 1, y + 0)))
+        self.assertTrue(game.play(Point(x + 1, y + 1)))
+        self.assertTrue(game.play(Point(x + 2, y + 0)))
+        self.assertTrue(game.play(Point(x + 2, y + 2)))
+        self.assertTrue(game.play(Point(x + 3, y + 0)))
+        self.assertTrue(game.play(Point(x + 3, y + 3)))
+        self.assertTrue(game.play(Point(x + 4, y + 0)))
+        self.assertTrue(game.play(Point(x + 4, y + 4)))
+#         print(game._board)
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p1)
 
     def test_win_diag_down_all(self):
 
-        for len in [7, 9, 11]:
-            for x in range(len - 5 + 1):
-                for y in range(len - 5 + 1):
-                    game = Gomoku(size=len)
+        pattern = [Token.A for i in range(5)]
+        for l in [7, 9, 11]:
+            for x in range(l - 5 + 1):
+                for y in range(l - 5 + 1):
+                    game = Gomoku(size=l)
                     self.assertTrue(game.play(Point(x + 0, y + 0)))
                     self.assertTrue(game.play(Point(x + 1, y + 0)))
                     self.assertTrue(game.play(Point(x + 1, y + 1)))
@@ -186,7 +188,11 @@ class TestGomoku(unittest.TestCase):
                     self.assertTrue(game.play(Point(x + 3, y + 3)))
                     self.assertTrue(game.play(Point(x + 4, y + 0)))
                     self.assertTrue(game.play(Point(x + 4, y + 4)))
-
+                    
+                    self.assertTrue(game._board.check_line_diag_down(x, y, pattern))
+                    
+#                     print(l, x, y)
+#                     print(game._board)
                     self.assertTrue(game.is_over)
                     self.assertEqual(game.winner, game._p1)
 

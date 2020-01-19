@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import numpy as np
 from game_base.board import (Board, Point, Token)
 from game_base.player import Player
 
@@ -19,7 +20,7 @@ class Gomoku():
         self._history = list()
         self._moves_remaining = set([Point(x, y) for y in range(size)
                                      for x in range(size)])
-        self._patterns = [[token for i in range(self._line_win_size)]
+        self._patterns = [np.full(self._line_win_size, token) 
                           for token in [Token.A, Token.B]]
 
     @property
@@ -99,7 +100,8 @@ class Gomoku():
 
         # Diagonal
         if not has_winner:
-            has_winner, token = self._has_winner_diagonal(self._board)
+            has_winner, token = self._has_winner_diagonal(
+                self._board, self._board.last_move)
 
         if has_winner:
             self._winner_player = self._p1 if token == self._p1.token else self._p2
@@ -108,57 +110,81 @@ class Gomoku():
         return self._is_over
 
     def _has_winner_horizontal(self, board, move):
-        x_min = max(0, move.x - self._line_win_size - 1)
-        x_max = min(self._board.column_count, move.x + self._line_win_size - 1)
+#         x_min = max(0, move.x - self._line_win_size - 1)
+#         x_max = min(self._board.column_count, move.x + self._line_win_size - 1)
 
+        x,y = move.point
         for pattern in self._patterns:
-            if board.check_line_horizontal(x_min, x_max, move.y, pattern):
+            if board.check_line_horizontal(x, y, pattern):
                 return True, pattern[0]
 
         return False, None
 
     def _has_winner_vertical(self, board, move):
-        y_min = max(0, move.y - self._line_win_size - 1)
-        y_max = min(self._board.row_count, move.y + self._line_win_size - 1)
+#         y_min = max(0, move.y - self._line_win_size - 1)
+#         y_max = min(self._board.row_count, move.y + self._line_win_size - 1)
 
+        x, y = move.point
         for pattern in self._patterns:
-            if board.check_line_vertical(y_min, y_max, move.x, pattern):
+            if board.check_line_vertical(x, y, pattern):
                 return True, pattern[0]
 
         return False, None
 
-    def _has_winner_diagonal(self, board):
+    def _has_winner_diagonal(self, board, move):
+        x, y = move.point
+        for pattern in self._patterns:
+            if board.check_line_diag_down(x, y, pattern):
+                return True, pattern[0]
+            elif board.check_line_diag_up(x, y, pattern):
+                return True, pattern[0]
+        return False, None
+    
+#         has_winner, token = self._has_winner_diag_down(board, move)
+# 
+#         if has_winner:
+#             return has_winner, token
+#         else:
+#             return self._has_winner_diag_up(board, move)
 
-        has_winner, token = self._has_winner_diag_down(board)
-
-        if has_winner:
-            return has_winner, token
-        else:
-            return self._has_winner_diag_up(board)
-
-    def _has_winner_diag_down(self, board):
+    def _has_winner_diag_down(self, board, move):
         '''
         @brief '\'
         '''
+        x, y = move.point
+        x, y = (x - y, 0) if x >= y else (0, y - x)
+
         x_max = self._board.column_count - self._line_win_size + 1
         y_max = self._board.row_count - self._line_win_size + 1
+        if x > x_max or y > y_max:
+            return False, None
+        r = min(x_max - x, y_max - y)
 
-        for x in range(0, x_max):
-            for y in range(0, y_max):
-                for pattern in self._patterns:
-                    line = board.get_diag_down(x, y, self._line_win_size)
-                    if line == pattern:
-                        return True, pattern[0]
+        for i in range(r):
+            for pattern in self._patterns:
+                if board.get_diag_down(x + i, y + i, self._line_win_size) == pattern:
+                    return True, pattern[0]
 
         return False, None
 
-    def _has_winner_diag_up(self, board):
+    def _rotate(self, grid):
+        return list(list(a) for a in zip(*reversed(grid)))
+
+    def _has_winner_diag_up(self, board, move):
         '''
         @brief '/'
         '''
+#         x, y = move.point
+#         x, y = (x + y, 0) if x >= y else (0, x + y)
+
         x_min = self._line_win_size - 1
         x_max = self._board.column_count
         y_max = self._board.row_count - self._line_win_size + 1
+
+#         for i in range(r):
+#             for pattern in self._patterns:
+#                 if board.get_diag_up(x - i, y + i, self._line_win_size) == pattern:
+#                     return True, pattern[0]
 
         for x in range(x_min, x_max):
             for y in range(0, y_max):

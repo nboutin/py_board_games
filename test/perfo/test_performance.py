@@ -15,6 +15,9 @@ from ai.minmax_alpha_beta import Minmax_AlphaBeta
 
 
 class TestPerformance(unittest.TestCase):
+    '''
+    @todo add test for tictactoe play and compute_ending
+    '''
 
     @unittest.skip("Performance")
     def test_tictactoe(self):
@@ -32,10 +35,10 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 0.422 # H
-        excepted = 0.219  # W
+        excepted = 0.422 # H
+#         excepted = 0.150  # W
         print("Duration {}".format(duration / n))
-        delta = excepted * 5 / 100
+        delta = excepted * 3 / 100
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
     @unittest.skip("Performance")
@@ -43,7 +46,7 @@ class TestPerformance(unittest.TestCase):
 
         from game.connect_four import ConnectFour
 
-        n = 20
+        n = 10
         depth = 8
         p1 = Player("AI_1", Token.A, True)
         duration = 0
@@ -55,13 +58,13 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 1.027 # H
-        excepted = 0.685  # W
-        delta = excepted * 5 / 100
+        excepted = 0.813 # H
+#         excepted = 0.685  # W
+        delta = excepted * 3 / 100
         print("Duration {}".format(duration / n))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)
 
-#     @unittest.skip("Performance")
+    @unittest.skip("Performance")
     def test_gomoku(self):
         from game.gomoku import Gomoku
 
@@ -82,8 +85,8 @@ class TestPerformance(unittest.TestCase):
             minmax.compute(game)
             duration += time.time() - start
 
-#         excepted = 2.573 # H
-        excepted = 2.734  # W
+        excepted = 1.701 # H
+#         excepted = 1.630  # W
         delta = excepted * 3 / 100
         print('Duration {}, delta {}'.format(duration / n, delta))
         self.assertAlmostEqual(duration / n, excepted, delta=delta)

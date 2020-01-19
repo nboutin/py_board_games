@@ -34,7 +34,9 @@ class TestGamePosition(unittest.TestCase):
             game.play(move)
 
         # test p1 win position
-        self.assertEqual(game._board.get_diag_up(4, 2, 4), [1, 1, 1, 1])
+        import numpy as np
+        self.assertTrue(np.array_equal(game._board.get_diag_up(4, 2), 
+                                        [1, 1, 1, 1, None, None]))
         self.assertTrue(game.is_over)
         game.undo()
         game.undo()

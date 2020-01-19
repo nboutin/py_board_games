@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import numpy as np
 from game_base.board import (Board, Point, Token)
 from game_base.player import Player
 
@@ -20,8 +21,7 @@ class TicTacToe():
         self._is_over = False
         self._history = list()
         self._moves = [Point(x, y) for y in range(3) for x in range(3)]
-        self._patterns = [[token for i in range(TicTacToe._LINE_WIN_SIZE)]
-                          for token in [Token.A, Token.B]]
+        self._patterns = [np.full(3, token) for token in [Token.A, Token.B]]
 
     @property
     def grid(self):
@@ -47,7 +47,6 @@ class TicTacToe():
         '''
         @brief All legal moves minus already played moves
         '''
-#         moves = set(TicTacToe.__MOVES).difference(set(self._moves))
         return self._moves
 
     def play(self, point):
@@ -90,15 +89,18 @@ class TicTacToe():
             return False
 
         # Horizontal
-        has_winner, token = self._has_winner_horizontal(self._board.grid)
+        has_winner, token = self._has_winner_horizontal(
+            self._board, self._board.last_move)
 
         # Vertical
         if not has_winner:
-            has_winner, token = self._has_winner_vertical(self._board.grid)
+            has_winner, token = self._has_winner_vertical(
+                self._board, self._board.last_move)
 
         # Diagonal
         if not has_winner:
-            has_winner, token = self._has_winner_diagonal(self._board.grid)
+            has_winner, token = self._has_winner_diagonal(
+                self._board, self._board.last_move)
 
         if has_winner:
             self._winner_player = self._p1 if token == self._p1.token else self._p2
@@ -106,28 +108,27 @@ class TicTacToe():
         self._is_over = not self._board.has_free_cell() or has_winner
         return self._is_over
 
-    def _has_winner_horizontal(self, grid):
+    def _has_winner_horizontal(self, board, move):
 
+        x, y = move.point
         for pattern in self._patterns:
-            for row in grid:
-                if row == pattern:
-                    return True, pattern[0]
-
+            if board.check_line_horizontal(x, y, pattern):
+                return True, pattern[0]
         return False, None
 
-    def _has_winner_vertical(self, grid):
-        grid_rotated = self._rotate(grid)
-        return self._has_winner_horizontal(grid_rotated)
+    def _has_winner_vertical(self, board, move):
+        x, y = move.point
+        for pattern in self._patterns:
+            if board.check_line_vertical(x, y, pattern):
+                return True, pattern[0]
+        return False, None
 
-    def _rotate(self, grid):
-        return list(list(a) for a in zip(*reversed(grid)))
+    def _has_winner_diagonal(self, board, move):
 
-    def _has_winner_diagonal(self, grid):
-
-        if not grid[0][0] is None and grid[0][0] == grid[1][1] and grid[0][0] == grid[2][2]:
-            return True, grid[0][0]
-
-        if not grid[0][2] is None and grid[0][2] == grid[1][1] and grid[0][2] == grid[2][0]:
-            return True, grid[0][2]
-
+        x, y = move.point
+        for pattern in self._patterns:
+            if board.check_line_diag_down(x, y, pattern):
+                return True, pattern[0]
+            elif board.check_line_diag_up(x, y, pattern):
+                return True, pattern[0]
         return False, None

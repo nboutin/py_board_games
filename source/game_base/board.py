@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from enum import (Enum, auto)
+import numpy as np
+from builtins import staticmethod
 
 
 class Point():
@@ -42,28 +44,26 @@ class Token(auto):
 
 
 class Board():
+    '''
+    https://docs.scipy.org/doc/numpy/reference/arrays.html
+    '''
 
-    def __init__(self, column_count, row_count):
-        self._column_count = column_count  # X
-        self._row_count = row_count        # Y
-
-        self._grid = [[None for x in range(self._column_count)]
-                      for y in range(self._row_count)]
-
-        self._cell_free_count = self._column_count * self._row_count
+    def __init__(self, width, height):
+        self._grid = np.full((height, width), None)
+        self._cell_free_count = self._grid.size
         self._moves = list()
 
     @property
     def column_count(self):
-        return self._column_count
+        return self._grid.shape[1]
 
     @property
     def row_count(self):
-        return self._row_count
+        return self._grid.shape[0]
 
     @property
     def cell_used_count(self):
-        return self._column_count * self._row_count - self._cell_free_count
+        return self._grid.size - self._cell_free_count
 
     @property
     def grid(self):
@@ -85,7 +85,7 @@ class Board():
         '''
         x, y = point.point
 
-        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
+        if x < 0 or y < 0:
             return False
 
         # Check free cell
@@ -99,19 +99,13 @@ class Board():
 
         return True
 
-    def drop_token(self, x, token):
-        pass
-
-    def undo(self, point=None):
+    def undo(self, point):
         '''
-        @param[in] point to undo, if None last point
+        @param[in] point to undo
         '''
-        if point is None:
-            point = self._moves.pop()
-
         x, y = point.point
 
-        if 0 > x or x >= self._column_count or 0 > y or y >= self._row_count:
+        if x < 0 or y < 0:
             return False
 
         self._grid[y][x] = None
@@ -120,33 +114,109 @@ class Board():
 
         return True
 
-    def check_line_horizontal(self, x_start, x_end, y, line_test):
-        row = self._grid[y]
-        return self._check_line(row, x_start, x_end, line_test)
+    def get_row(self, y):
+        return self._grid[y, :]
 
-    def check_line_vertical(self, y_start, y_end, x, line_test):
-        column = self.get_column(x, self._row_count)
-        return self._check_line(column, y_start, y_end, line_test)
+    def get_column(self, x):
+        return self._grid[:, x]
 
-    def _check_line(self, line, start, end, pattern):
+#     def get_line_h(self, y, x_start, len):
+#         return self._grid[y, x_start:len]
+#
+#     def get_line_v(self, x, y_start, len):
+#         return self._grid[y_start:len, x]
+
+    def get_diag_down(self, x, y):
+        x, y = (x - y, 0) if x >= y else (0, y - x)
+        k = x if y == 0 else -y
+        return self._grid.diagonal(k)
+
+    def get_diag_up(self, x, y):
+        # Get diag up origin point (left, down)
+#         print("get",x,y)
+        
+        h = self.row_count
+        while x >= 1 and y < h - 1:
+            x, y = x - 1, y + 1
+        
+        k = -(h-y-1) if x == 0 else x
+#         k = x if y == h - 1 else -h + y
+#         print(x,y,k)
+        return np.flipud(self._grid).diagonal(k)
+
+    def check_line_all(self, x, y, pattern):
         '''
-        @brief Check if line_test is present in row y between start and end
+        @todo call check_line_h/l/dd/du
+        '''
+        pass
+
+    def check_line_horizontal(self, x, y, pattern):
+        '''
+        @brief Look for pattern in row y from x - len(pattern) to x + len(pattern) positions
+        @return True if pattern found otherwise False
+        @fixme Error with x=1, y=1
+        '''
+#         print(x,y,pattern)
+        l = len(pattern) - 1
+        x_min = max(0, x - l)
+#         print(self.column_count, x + l + 1)
+        x_max = min(self.column_count, x + l + 1)
+        return Board.check_line(self.get_row(y), x_min, x_max, pattern)
+
+    def check_line_vertical(self, x, y, pattern):
+        '''
+        @brief Look for pattern in column x from y - len(pattern) to y + len(pattern) positions
+        @return True if pattern found otherwise False
+        '''
+        l = len(pattern) - 1
+        y_min = max(0, y - l)
+        y_max = min(self.row_count, y + l + 1)
+        return Board.check_line(self.get_column(x), y_min, y_max, pattern)
+
+    def check_line_diag_down(self, x, y, pattern):
+#         l = len(pattern) - 1
+#         x_min = max(0, x - l)
+#         x_max = x + l + 1
+#         print("ldd", x,y,pattern)
+        line = self.get_diag_down(x, y)
+#         print(line)
+        return Board.check_line(line, 0, len(line), pattern)
+
+    def check_line_diag_up(self, x, y, pattern):
+#         l = len(pattern) - 1
+#         x_min = max(0, x - l)
+#         print("diag_up", x, y, pattern)
+        line = self.get_diag_up(x, y)
+#         print(line)
+        return Board.check_line(line, 0, len(line), pattern)
+
+    @staticmethod
+    def check_line(line, start, end, pattern):
+        '''
+        @brief Check if pattern is present in line between start and end positions
+        @param line: array to search into
+        @param pattern: array to find
+        @return True if pattern found otherwise False
         @details Python list split has auto bound checking.
         '''
-        length = len(pattern)
+#         print(line, start, end, pattern)
+        l = len(pattern)
         for x in range(start, end):
-            if line[x:x + length] == pattern:
+            if (end - x) < l:
+                return False
+#             if np.array_equal(line[x:x + l], pattern):
+            if Board.array_equal(line[x:x + l], pattern):
                 return True
         return False
 
-    def get_column(self, x, len):
-        return [self._grid[y][x] for y in range(len)]
-
-    def get_diag_down(self, x, y, len):
-        return [self._grid[y + i][x + i] for i in range(len)]
-
-    def get_diag_up(self, x, y, len):
-        return [self._grid[y + i][x - i] for i in range(len)]
+    @staticmethod
+    def array_equal(a, b):
+#         assert len(a) == len(b), (a, b)
+#         for i in range(min(len(a), len(b))):
+        for i in range(len(a)):
+            if a[i] != b[i]:
+                return False
+        return True
 
     def __str__(self):
         '''
@@ -155,6 +225,7 @@ class Board():
         s = '\n'
         for row in self._grid:
             for cell in row:
+                cell = cell if cell is not None else '-'
                 s += "{}|".format(cell)
             s += '\n'
         return s
