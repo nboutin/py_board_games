@@ -27,6 +27,7 @@ class Minmax_AlphaBeta_Thread():
         return self._computation_time
 
     def compute(self, game):
+        max = -sys.maxsize - 1
         best_move = None
         depth = self._depth
         alpha = -sys.maxsize - 1
@@ -34,8 +35,6 @@ class Minmax_AlphaBeta_Thread():
 
         start = time.time()
         futures = list()
-
-#         _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
 
         moves = game.generate_moves()
         with cf.ThreadPoolExecutor(max_workers=len(moves)) as executor:
@@ -49,11 +48,15 @@ class Minmax_AlphaBeta_Thread():
                     f = executor.submit(cminmax._min_alpha_beta,
                                         cgame, cdepth, calpha, cbeta)
                     futures.append(f)
-                
+
                 game.undo()
-                
+
         for f in futures:
             print(f.result())
+            val, move = f.result()
+            if val > max:
+                max = val
+                best_move = move
 
         end = time.time()
         self._computation_time = round(end - start, 3)
