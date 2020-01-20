@@ -3,7 +3,9 @@
 
 import sys
 import time
-from threading import Thread
+import copy
+import concurrent.futures as cf
+
 
 class Minmax_AlphaBeta_Thread():
 
@@ -31,14 +33,27 @@ class Minmax_AlphaBeta_Thread():
         beta = sys.maxsize
 
         start = time.time()
-        threads = list()
+        futures = list()
 
-#         for move in self._moves:        
-        for move in game.generate_moves():
-            
-            threads = Thread(target=self._)
-            
 #         _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
+
+        moves = game.generate_moves()
+        with cf.ThreadPoolExecutor(max_workers=len(moves)) as executor:
+            for move in moves:
+                if game.play(move):
+                    cminmax = copy.deepcopy(self)
+                    cgame = copy.deepcopy(game)
+                    cdepth = copy.deepcopy(depth)
+                    calpha = copy.deepcopy(alpha)
+                    cbeta = copy.deepcopy(beta)
+                    f = executor.submit(cminmax._min_alpha_beta,
+                                        cgame, cdepth, calpha, cbeta)
+                    futures.append(f)
+                
+                game.undo()
+                
+        for f in futures:
+            print(f.result())
 
         end = time.time()
         self._computation_time = round(end - start, 3)
@@ -53,7 +68,7 @@ class Minmax_AlphaBeta_Thread():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
                 if val > max:
@@ -77,7 +92,7 @@ class Minmax_AlphaBeta_Thread():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth, self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
                 if val < min:
