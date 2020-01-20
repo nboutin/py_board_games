@@ -24,7 +24,7 @@ class ConnectFour():
         self._is_over = False
         self._history = list()
         self._moves = [i for i in range(ConnectFour._COLUMN)]
-        self._patterns = [np.full(4,token) for token in [Token.A, Token.B]]
+        self._patterns = [np.full(4, token) for token in [Token.A, Token.B]]
 
     @property
     def grid(self):
@@ -114,8 +114,6 @@ class ConnectFour():
         return self._is_over
 
     def _has_winner_horizontal(self, board, move):
-#         x_min = 0
-#         x_max = ConnectFour._COLUMN
         x, y = move.point
         for pattern in self._patterns:
             if board.check_line_horizontal(x, y, pattern):
@@ -124,8 +122,6 @@ class ConnectFour():
         return False, None
 
     def _has_winner_vertical(self, board, move):
-#         y_min = 0
-#         y_max = ConnectFour._ROW
         x, y = move.point
         for pattern in self._patterns:
             if board.check_line_vertical(x, y, pattern):
@@ -141,42 +137,3 @@ class ConnectFour():
             elif board.check_line_diag_up(x, y, pattern):
                 return True, pattern[0]
         return False, None
-    
-#         has_winner, token = self._has_winner_diag_down(board)
-# 
-#         if has_winner:
-#             return has_winner, token
-#         else:
-#             return self._has_winner_diag_up(board)
-
-#     def _has_winner_diag_down(self, board):
-#         '''
-#         @brief '\'
-#         '''
-#         x_max = self._COLUMN - self._LINE_WIN_LEN + 1
-#         y_max = self._ROW - self._LINE_WIN_LEN + 1
-# 
-#         for x in range(0, x_max):
-#             for y in range(0, y_max):
-#                 for pattern in ConnectFour._PATTERNS:
-#                     line = board.get_diag_down(x, y, self._LINE_WIN_LEN)
-#                     if line == pattern:
-#                         return True, pattern[0]
-# 
-#         return False, None
-# 
-#     def _has_winner_diag_up(self, board):
-#         '''
-#         @brief '/'
-#         '''
-#         x_min = self._LINE_WIN_LEN - 1
-#         x_max = self._COLUMN
-#         y_max = self._ROW - self._LINE_WIN_LEN + 1
-# 
-#         for x in range(x_min, x_max):
-#             for y in range(0, y_max):
-#                 for pattern in ConnectFour._PATTERNS:
-#                     if board.get_diag_up(x, y, self._LINE_WIN_LEN) == pattern:
-#                         return True, pattern[0]
-# 
-#         return False, None

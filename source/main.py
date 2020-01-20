@@ -46,8 +46,8 @@ def main(game_name, player_mode, level):
         else:
             if game_name == "Connect Four":
                 move = view.ask_input(1)
-            else:    
-                x,y = view.ask_input(2)
+            else:
+                x, y = view.ask_input(2)
                 move = Point(x, y)
 
         if not game.play(move):

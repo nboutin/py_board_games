@@ -37,7 +37,8 @@ AI opponent is using MinMax algorithm.
 - [x] Do not evaluate for TicTacToe winner when less than 5 token have been played
 - [x] Connect Four: Compute end game only considering last move and its impact
 
-## Design
+## Design / Technical choice
+- [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration
 - [x] Define Token in game_base module
