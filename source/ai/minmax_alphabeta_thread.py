@@ -5,6 +5,7 @@ import sys
 import time
 import copy
 import concurrent.futures as cf
+import multiprocessing as mp
 
 
 class Minmax_AlphaBeta_Thread():
@@ -37,7 +38,7 @@ class Minmax_AlphaBeta_Thread():
         futures = list()
 
         moves = game.generate_moves()
-        with cf.ProcessPoolExecutor(max_workers=len(moves)) as executor:
+        with cf.ProcessPoolExecutor(max_workers=min(len(moves), mp.cpu_count() * 2 )) as executor:
             for move in moves:
                 if game.play(move):
                     cminmax = copy.deepcopy(self)
@@ -52,7 +53,7 @@ class Minmax_AlphaBeta_Thread():
                 game.undo()
 
         for f in futures:
-            print(f.result())
+#             print(f.result())
             val, move = f.result()
             if val > max:
                 max = val

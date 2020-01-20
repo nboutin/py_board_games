@@ -14,6 +14,7 @@ from game_base.player import Player
 from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
 from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
+from game.gomoku import Gomoku
 
 
 class TestMinmaxAlphaBeta(unittest.TestCase):
@@ -27,10 +28,20 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
 
         minmax.compute(game)
 
+    @unittest.skip("")
     def test_connect_four(self):
         ai_player = Player("AI_1", Token.A, True)
         game = ConnectFour(p1=ai_player)
         depth = 10
+        minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
+
+        minmax.compute(game)
+
+    @unittest.skip("")
+    def test_gomoku(self):
+        ai_player = Player("AI_1", Token.A, True)
+        game = Gomoku(p1=ai_player)
+        depth = 5
         minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
 
         minmax.compute(game)
