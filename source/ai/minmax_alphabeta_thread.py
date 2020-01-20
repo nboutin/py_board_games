@@ -37,7 +37,7 @@ class Minmax_AlphaBeta_Thread():
         futures = list()
 
         moves = game.generate_moves()
-        with cf.ThreadPoolExecutor(max_workers=len(moves)) as executor:
+        with cf.ProcessPoolExecutor(max_workers=len(moves)) as executor:
             for move in moves:
                 if game.play(move):
                     cminmax = copy.deepcopy(self)
