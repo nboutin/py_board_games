@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import copy
 import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
@@ -20,6 +21,12 @@ class TestConnectFour(unittest.TestCase):
         self.assertEqual(game.winner, None)
         self.assertEqual(len(game.history), 0)
         self.assertEqual(game._current_player, game._p1)
+
+    def test_deepcopy(self):
+        game = ConnectFour()
+        cgame = copy.deepcopy(game)
+        
+        self.assertFalse(game is cgame)
 
     def test_next_player(self):
         game = ConnectFour()
@@ -155,7 +162,8 @@ class TestConnectFour(unittest.TestCase):
         board.add_token(Point(3, 5), token)
 
         game = ConnectFour()
-        self.assertEqual(game._has_winner_diagonal(board,Point(3,5)), (True, token))
+        self.assertEqual(game._has_winner_diagonal(
+            board, Point(3, 5)), (True, token))
 
     def test_win_diag_down_player1(self):
         game = ConnectFour()

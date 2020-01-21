@@ -38,7 +38,8 @@ class Minmax_AlphaBeta_Thread():
         futures = list()
 
         moves = game.generate_moves()
-        with cf.ProcessPoolExecutor(max_workers=min(len(moves), mp.cpu_count() * 2 )) as executor:
+        print(moves)
+        with cf.ProcessPoolExecutor(max_workers=min(len(moves), mp.cpu_count() * 2)) as executor:
             for move in moves:
                 if game.play(move):
                     cminmax = copy.deepcopy(self)
@@ -47,14 +48,14 @@ class Minmax_AlphaBeta_Thread():
                     calpha = copy.deepcopy(alpha)
                     cbeta = copy.deepcopy(beta)
                     f = executor.submit(cminmax._min_alpha_beta,
-                                        cgame, cdepth, calpha, cbeta)
-                    futures.append(f)
+                                        cgame, cdepth - 1, calpha, cbeta)
+                    futures.append([move, f])
 
                 game.undo()
 
-        for f in futures:
-#             print(f.result())
-            val, move = f.result()
+        for move, f in futures:
+            print(move, f.result())
+            val, _ = f.result()
             if val > max:
                 max = val
                 best_move = move

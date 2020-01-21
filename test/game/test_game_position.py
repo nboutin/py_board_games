@@ -28,14 +28,15 @@ class TestGamePosition(unittest.TestCase):
         Player_1(X) to play
         '''
         p1 = Player("AI_1", Token.A, True)
-        game = ConnectFour(p1=p1)
+        p2 = Player("AI_2", Token.B, True)
+        game = ConnectFour(p1=p1, p2=p2)
 
         moves = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2]
         for m in moves:
             game.play(m)
 
-        depth = 4
-        ai = Minmax_AlphaBeta_Thread(p1, depth)
+        depth = 1
+        ai = Minmax_AlphaBeta_Thread(p2, depth)
 
         self.assertEqual(ai.compute(game), 3)
 

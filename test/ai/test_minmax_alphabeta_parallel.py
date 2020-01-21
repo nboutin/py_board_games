@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import copy
 import sys
 import os
 import time
@@ -18,6 +19,36 @@ from game.gomoku import Gomoku
 
 
 class TestMinmaxAlphaBeta(unittest.TestCase):
+
+    def test_pos(self):
+        p1 = Player("AI_1", Token.A, True)
+        p2 = Player("AI_2", Token.B, True)
+        game = ConnectFour(p1=p1, p2=p2)
+
+        moves = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2]
+        for m in moves:
+            game.play(m)
+
+        #Todo: check board configuration
+        #Todo: go to p2 turn, and call ai.compute
+
+        depth = 1
+        ai = Minmax_AlphaBeta_Thread(p1, depth)
+
+        self.assertEqual(ai.compute(game), 3)
+
+    def test_deepcopy(self):
+        depth = 4
+        p1 = Player("AI_1", Token.A, True)
+        ai = Minmax_AlphaBeta_Thread(p1, depth)
+
+        cai = copy.deepcopy(ai)
+
+        self.assertFalse(ai is cai)
+        self.assertFalse(ai._player is cai._player)
+        ai._depth = 5
+        self.assertFalse(ai._depth is cai._depth)
+        self.assertNotEqual(ai._depth, cai._depth)
 
     @unittest.skip("")
     def test_tictactoe(self):
@@ -45,6 +76,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
 
         minmax.compute(game)
+
 
 if __name__ == "__main__":
     unittest.main()
