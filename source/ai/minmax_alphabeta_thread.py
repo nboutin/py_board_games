@@ -38,7 +38,7 @@ class Minmax_AlphaBeta_Thread():
         futures = list()
 
         moves = game.generate_moves()
-        print(moves)
+#         print(moves)
         with cf.ProcessPoolExecutor(max_workers=min(len(moves), mp.cpu_count() * 2)) as executor:
             for move in moves:
                 if game.play(move):
@@ -54,7 +54,7 @@ class Minmax_AlphaBeta_Thread():
                 game.undo()
 
         for move, f in futures:
-            print(move, f.result())
+#             print(move, f.result())
             val, _ = f.result()
             if val > max:
                 max = val

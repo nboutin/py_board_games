@@ -75,7 +75,7 @@ def menu_list(title, items, default):
 
 
 def select_level(game_name):
-    game_level_default = {'TicTacToe': 9, 'Connect Four': 8, 'Gomoku': 4}
+    game_level_default = {'TicTacToe': 9, 'Connect Four': 9, 'Gomoku': 4}
     level_default = game_level_default[game_name]
     level = input('Level ({}):'.format(level_default))
     print()

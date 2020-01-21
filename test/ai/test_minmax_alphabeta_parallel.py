@@ -6,8 +6,8 @@ import copy
 import sys
 import os
 import time
-sys.path.insert(0, os.path.join(sys.path[0], 'source'))
-# sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
+# sys.path.insert(0, os.path.join(sys.path[0], 'source'))
+sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 
 from game_base.board import (Point, Board, Token)
@@ -28,11 +28,10 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         moves = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2]
         for m in moves:
             game.play(m)
+            
+        self.assertEqual(game.current_player, p1)
 
-        #Todo: check board configuration
-        #Todo: go to p2 turn, and call ai.compute
-
-        depth = 1
+        depth = 2
         ai = Minmax_AlphaBeta_Thread(p1, depth)
 
         self.assertEqual(ai.compute(game), 3)
@@ -68,7 +67,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
 
         minmax.compute(game)
 
-    @unittest.skip("")
+#     @unittest.skip("")
     def test_gomoku(self):
         ai_player = Player("AI_1", Token.A, True)
         game = Gomoku(p1=ai_player)
