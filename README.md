@@ -28,6 +28,7 @@ AI opponent is using MinMax algorithm.
 
 ## Optimization
 
+- [ ] Rework skip compute_ending
 - [x] Make Minmax using thread
 - [x] Improve check diag line by using last move value
 - [x] Try numpy Array for Board to improve performance

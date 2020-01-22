@@ -32,6 +32,12 @@ class TestTicTacToe(unittest.TestCase):
         self.assertFalse(game.play(Point(1, 0)))
         self.assertEqual(game._current_player, game._p1)
 
+    def test_compute_ending(self):
+        game = TicTacToe()
+        self.assertEqual(game._board.cell_used_count, 0)
+        game.play(Point(0, 0))
+        self.assertEqual(game._board.cell_used_count, 1)
+
     def test_win_horizontal_player1(self):
         game = TicTacToe()
 

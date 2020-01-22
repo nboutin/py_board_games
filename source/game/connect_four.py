@@ -13,7 +13,7 @@ class ConnectFour():
     _COLUMN = 7  # X
     _ROW = 6  # Y
 
-    _LINE_WIN_LEN = 4
+    _LINE_WIN_SIZE = 4
 
     def __init__(self, p1=None, p2=None):
         self._board = BoardDrop(ConnectFour._COLUMN, ConnectFour._ROW)
@@ -89,8 +89,7 @@ class ConnectFour():
         Decide if a game is over
         '''
 
-        # todo: explain magic number
-        if self._board.cell_used_count < 7:
+        if self._board.cell_used_count < (ConnectFour._LINE_WIN_SIZE * 2) - 1:
             return False
 
         # Horizontal

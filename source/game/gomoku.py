@@ -85,7 +85,7 @@ class Gomoku():
         '''
         Decide if a game is over
         '''
-        # todo: why minus 1 ?
+        # First player need 5 turn to win
         if self._board.cell_used_count < (self._line_win_size * 2) - 1:
             return False
 

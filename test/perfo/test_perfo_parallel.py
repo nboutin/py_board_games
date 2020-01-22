@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from game_base.board import (Point, Board, Token)
 from game_base.player import Player
-from ai.minmax_ab import Minmax_AB
+from ai.minmax_ab_parallel import Minmax_AB_Parallel
 
 # Enable
 all = False
@@ -22,10 +22,10 @@ gomoku = False
 # Home
 # expected = {'tictactoe': 0.422, 'connect_four': 0.813, 'gomoku': 1.701}
 # Work
-expected = {'tictactoe': 0.52, 'connect_four': 0.55, 'gomoku': 0.77}
+expected = {'tictactoe': 0.61, 'connect_four': 0.65, 'gomoku': 7.08}
 
 
-class TestPerformance(unittest.TestCase):
+class TestPerfoParallel(unittest.TestCase):
     '''
     @todo add test for tictactoe play and compute_ending
     '''
@@ -39,7 +39,7 @@ class TestPerformance(unittest.TestCase):
         duration = 0
         p1 = Player("AI_1", Token.A, True)
         for i in range(n):
-            minmax = Minmax_AB(p1, depth)
+            minmax = Minmax_AB_Parallel(p1, depth)
             game = TicTacToe(p1=p1)
 
             start = time.time()
@@ -62,7 +62,7 @@ class TestPerformance(unittest.TestCase):
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            minmax = Minmax_AB(p1, depth)
+            minmax = Minmax_AB_Parallel(p1, depth)
             game = ConnectFour(p1=p1)
             for m in [3, 4, 3, 4, 3, 4, 0]:
                 game.play(m)
@@ -80,13 +80,13 @@ class TestPerformance(unittest.TestCase):
     def test_gomoku(self):
         from game.gomoku import Gomoku
 
-        n = 15
+        n = 2
         depth = 4
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
             game = Gomoku(p1=p1, size=9)
-            minmax = Minmax_AB(p1, depth)
+            minmax = Minmax_AB_Parallel(p1, depth)
 
             moves = [Point(4, 4), Point(3, 3), Point(4, 3),
                      Point(3, 4), Point(3, 2), Point(4, 5)]

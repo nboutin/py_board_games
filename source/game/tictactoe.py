@@ -84,8 +84,9 @@ class TicTacToe():
         '''
         Decide if a game is over
         '''
-        # todo: explain magic number
-        if self._board.cell_used_count < 5:
+
+        # First player need 3 turn to win
+        if self._board.cell_used_count < (TicTacToe._LINE_WIN_SIZE * 2) - 1:
             return False
 
         # Horizontal
