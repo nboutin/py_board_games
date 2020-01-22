@@ -7,7 +7,6 @@ from game_base.ascii_view import ASCII_View
 from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
-from ai.minmax_alpha_beta import Minmax_AlphaBeta
 from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
 
 VERSION = "1.3.0-dev"

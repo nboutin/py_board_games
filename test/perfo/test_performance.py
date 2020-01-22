@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 from game_base.board import (Point, Board, Token)
 from game_base.player import Player
-from ai.minmax_alpha_beta import Minmax_AlphaBeta
+from ai.minmax_ab import Minmax_AB
 
 
 class TestPerformance(unittest.TestCase):
@@ -28,7 +28,7 @@ class TestPerformance(unittest.TestCase):
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            minmax = Minmax_AlphaBeta(p1, depth)
+            minmax = Minmax_AB(p1, depth)
             game = TicTacToe(p1=p1)
 
             start = time.time()
@@ -51,7 +51,7 @@ class TestPerformance(unittest.TestCase):
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
-            minmax = Minmax_AlphaBeta(p1, depth)
+            minmax = Minmax_AB(p1, depth)
             game = ConnectFour(p1=p1)
 
             start = time.time()
@@ -74,7 +74,7 @@ class TestPerformance(unittest.TestCase):
         duration = 0
         for i in range(n):
             game = Gomoku(p1=p1, size=9)
-            minmax = Minmax_AlphaBeta(p1, depth)
+            minmax = Minmax_AB(p1, depth)
 
             moves = [Point(4, 4), Point(3, 3), Point(4, 3),
                      Point(3, 4), Point(3, 2), Point(4, 5)]

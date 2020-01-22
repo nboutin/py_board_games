@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 from game.connect_four import ConnectFour
-from ai.minmax_alpha_beta import Minmax_AlphaBeta
+from ai.minmax_ab import Minmax_AB
 from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
 from game_base.player import Player
 from game_base.board import Token
@@ -35,8 +35,8 @@ class TestGamePosition(unittest.TestCase):
         for m in moves:
             game.play(m)
 
-        depth = 1
-        ai = Minmax_AlphaBeta_Thread(p2, depth)
+        depth = 2
+        ai = Minmax_AlphaBeta_Thread(p1, depth)
 
         self.assertEqual(ai.compute(game), 3)
 
@@ -77,7 +77,7 @@ class TestGamePosition(unittest.TestCase):
         game.undo()
         self.assertEqual(game.current_player, p2)
         depth = 2
-        minmax = Minmax_AlphaBeta(p2, depth)
+        minmax = Minmax_AB(p2, depth)
         self.assertEqual(minmax.compute(game), 4)
 
     def test_pos1(self):
@@ -98,9 +98,9 @@ class TestGamePosition(unittest.TestCase):
             game.play(move)
 
         depth = 1
-        minmax = Minmax_AlphaBeta(p2, depth)
+        minmax = Minmax_AB(p2, depth)
         self.assertEqual(minmax.compute(game), 0)
 
         depth = 2
-        minmax = Minmax_AlphaBeta(p2, depth)
+        minmax = Minmax_AB(p2, depth)
         self.assertEqual(minmax.compute(game), 0)

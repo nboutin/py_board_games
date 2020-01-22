@@ -5,7 +5,7 @@ import sys
 import time
 
 
-class Minmax_AlphaBeta():
+class Minmax_AB():
 
     WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
@@ -97,7 +97,7 @@ class Minmax_AlphaBeta():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AlphaBeta.WIN_POINT + depth
+                return Minmax_AB.WIN_POINT + depth
             else:
-                return Minmax_AlphaBeta.LOOSE_POINT - depth
-        return Minmax_AlphaBeta.DRAW_POINT
+                return Minmax_AB.LOOSE_POINT - depth
+        return Minmax_AB.DRAW_POINT
