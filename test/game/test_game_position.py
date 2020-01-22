@@ -4,16 +4,41 @@
 import unittest
 import sys
 import os
-# sys.path.insert(0, os.path.join(sys.path[0], 'source'))
-sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
+sys.path.insert(0, os.path.join(sys.path[0], 'source'))
+# sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 from game.connect_four import ConnectFour
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
+from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
 from game_base.player import Player
 from game_base.board import Token
 
 
 class TestGamePosition(unittest.TestCase):
+
+    def test_pos3(self):
+        '''
+          0 1 2 3 4 5 6
+        0|X|X|-|-|-|-|-|
+        1|X|O|-|-|-|-|-|
+        2|O|X|-|-|-|-|-|
+        3|X|O|-|-|-|-|-|
+        4|O|X|O|-|-|-|-|
+        5|X|O|O|-|-|-|-|
+        Player_1(X) to play
+        '''
+        p1 = Player("AI_1", Token.A, True)
+        p2 = Player("AI_2", Token.B, True)
+        game = ConnectFour(p1=p1, p2=p2)
+
+        moves = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2]
+        for m in moves:
+            game.play(m)
+
+        depth = 1
+        ai = Minmax_AlphaBeta_Thread(p2, depth)
+
+        self.assertEqual(ai.compute(game), 3)
 
     def test_pos2(self):
         '''
@@ -35,8 +60,8 @@ class TestGamePosition(unittest.TestCase):
 
         # test p1 win position
         import numpy as np
-        self.assertTrue(np.array_equal(game._board.get_diag_up(4, 2), 
-                                        [1, 1, 1, 1, None, None]))
+        self.assertTrue(np.array_equal(game._board.get_diag_up(4, 2),
+                                       [1, 1, 1, 1, None, None]))
         self.assertTrue(game.is_over)
         game.undo()
         game.undo()

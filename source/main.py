@@ -8,6 +8,7 @@ from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
 from ai.minmax_alpha_beta import Minmax_AlphaBeta
+from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
 
 VERSION = "1.3.0-dev"
 
@@ -74,7 +75,7 @@ def menu_list(title, items, default):
 
 
 def select_level(game_name):
-    game_level_default = {'TicTacToe': 9, 'Connect Four': 8, 'Gomoku': 4}
+    game_level_default = {'TicTacToe': 9, 'Connect Four': 9, 'Gomoku': 4}
     level_default = game_level_default[game_name]
     level = input('Level ({}):'.format(level_default))
     print()
@@ -107,12 +108,12 @@ def make_ai(mode, level, p1, p2):
 
     ai1, ai2 = None, None
     if mode == 'AI_H':
-        ai1 = Minmax_AlphaBeta(p1, level)
+        ai1 = Minmax_AlphaBeta_Thread(p1, level)
     elif mode == 'H_AI':
-        ai2 = Minmax_AlphaBeta(p2, level)
+        ai2 = Minmax_AlphaBeta_Thread(p2, level)
     elif mode == 'AI_AI':
-        ai1 = Minmax_AlphaBeta(p1, level)
-        ai2 = Minmax_AlphaBeta(p2, level)
+        ai1 = Minmax_AlphaBeta_Thread(p1, level)
+        ai2 = Minmax_AlphaBeta_Thread(p2, level)
 
     return ai1, ai2
 

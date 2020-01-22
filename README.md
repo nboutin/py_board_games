@@ -38,6 +38,7 @@ AI opponent is using MinMax algorithm.
 - [x] Connect Four: Compute end game only considering last move and its impact
 
 ## Design / Technical choice
+- [ ] Rename file and class Minmax using AB and parallel wording
 - [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration

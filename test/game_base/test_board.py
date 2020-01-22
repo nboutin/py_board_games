@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import copy
 import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
@@ -10,6 +11,16 @@ from game_base.board import (Board, Point)
 
 
 class TestBoard(unittest.TestCase):
+
+    def test_deepcopy(self):
+        w, h = 5, 3
+        b = Board(w, h)
+
+        cb = copy.deepcopy(b)
+
+        self.assertFalse(b is cb)
+        self.assertFalse(b._grid is cb._grid)
+        self.assertFalse(b._moves is cb._moves)
 
     def test_x_y_order(self):
         w, h = 5, 3
@@ -21,7 +32,6 @@ class TestBoard(unittest.TestCase):
 #         print(board)
         self.assertEqual(board.column_count, w)
         self.assertEqual(board.row_count, h)
-
 
     def test_init_1_1(self):
         '''
@@ -150,19 +160,19 @@ class TestBoard(unittest.TestCase):
                 board.add_token(Point(x, y), str(x) + str(y))
 
         line = board.get_diag_down(0, 0)
-        self.assertTrue(np.array_equal(line, ['00','11','22']))
+        self.assertTrue(np.array_equal(line, ['00', '11', '22']))
 
         line = board.get_diag_down(3, 0)
-        self.assertTrue(np.array_equal(line, ['30','41']))
+        self.assertTrue(np.array_equal(line, ['30', '41']))
 
         line = board.get_diag_down(4, 2)
-        self.assertTrue(np.array_equal(line, ['20','31','42']))
+        self.assertTrue(np.array_equal(line, ['20', '31', '42']))
 
         line = board.get_diag_down(0, 1)
-        self.assertTrue(np.array_equal(line, ['01','12']))
+        self.assertTrue(np.array_equal(line, ['01', '12']))
 
         line = board.get_diag_down(1, 2)
-        self.assertTrue(np.array_equal(line, ['01','12']))
+        self.assertTrue(np.array_equal(line, ['01', '12']))
 
     def test_get_diag_up(self):
         '''
@@ -187,24 +197,24 @@ class TestBoard(unittest.TestCase):
 
         line = board.get_diag_up(0, 4)
         self.assertTrue(np.array_equal(line, ['04', '13', '22']))
- 
+
         line = board.get_diag_up(0, 3)
-        self.assertTrue(np.array_equal(line, ['03', '12','21']))
+        self.assertTrue(np.array_equal(line, ['03', '12', '21']))
 
         line = board.get_diag_up(0, 2)
-        self.assertTrue(np.array_equal(line, ['02','11','20']))
+        self.assertTrue(np.array_equal(line, ['02', '11', '20']))
 
         line = board.get_diag_up(0, 1)
-        self.assertTrue(np.array_equal(line, ['01','10']))
+        self.assertTrue(np.array_equal(line, ['01', '10']))
 
         line = board.get_diag_up(1, 4)
-        self.assertTrue(np.array_equal(line, ['14','23']))
+        self.assertTrue(np.array_equal(line, ['14', '23']))
 
         line = board.get_diag_up(2, 4)
         self.assertTrue(np.array_equal(line, ['24']))
 
         line = board.get_diag_up(1, 1)
-        self.assertTrue(np.array_equal(line, ['02','11','20']))
+        self.assertTrue(np.array_equal(line, ['02', '11', '20']))
 
     def test_anti_diag(self):
         import numpy as np
@@ -272,9 +282,12 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(board.add_token(Point(3, 1), token))
         self.assertTrue(board.check_line_horizontal(1, 1, [token]))
         self.assertTrue(board.check_line_horizontal(3, 1, [token]))
-        self.assertTrue(board.check_line_horizontal(1, 1, [token, None, token]))
-        self.assertTrue(board.check_line_horizontal(2, 1, [token, None, token]))
-        self.assertTrue(board.check_line_horizontal(3, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(
+            1, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(
+            2, 1, [token, None, token]))
+        self.assertTrue(board.check_line_horizontal(
+            3, 1, [token, None, token]))
         self.assertFalse(board.check_line_horizontal(2, 1, [token, token]))
 
         # |-|x|x|x|-|

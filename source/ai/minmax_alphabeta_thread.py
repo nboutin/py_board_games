@@ -3,9 +3,12 @@
 
 import sys
 import time
+import copy
+import concurrent.futures as cf
+import multiprocessing as mp
 
 
-class Minmax_AlphaBeta():
+class Minmax_AlphaBeta_Thread():
 
     WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
@@ -25,13 +28,37 @@ class Minmax_AlphaBeta():
         return self._computation_time
 
     def compute(self, game):
+        max = -sys.maxsize - 1
         best_move = None
         depth = self._depth
         alpha = -sys.maxsize - 1
         beta = sys.maxsize
 
         start = time.time()
-        _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
+        futures = list()
+
+        moves = game.generate_moves()
+#         print(moves)
+        with cf.ProcessPoolExecutor(max_workers=min(len(moves), mp.cpu_count() * 2)) as executor:
+            for move in moves:
+                if game.play(move):
+                    cminmax = copy.deepcopy(self)
+                    cgame = copy.deepcopy(game)
+                    cdepth = copy.deepcopy(depth)
+                    calpha = copy.deepcopy(alpha)
+                    cbeta = copy.deepcopy(beta)
+                    f = executor.submit(cminmax._min_alpha_beta,
+                                        cgame, cdepth - 1, calpha, cbeta)
+                    futures.append([move, f])
+
+                game.undo()
+
+        for move, f in futures:
+#             print(move, f.result())
+            val, _ = f.result()
+            if val > max:
+                max = val
+                best_move = move
 
         end = time.time()
         self._computation_time = round(end - start, 3)
@@ -97,7 +124,7 @@ class Minmax_AlphaBeta():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AlphaBeta.WIN_POINT + depth
+                return Minmax_AlphaBeta_Thread.WIN_POINT + depth
             else:
-                return Minmax_AlphaBeta.LOOSE_POINT - depth
-        return Minmax_AlphaBeta.DRAW_POINT
+                return Minmax_AlphaBeta_Thread.LOOSE_POINT - depth
+        return Minmax_AlphaBeta_Thread.DRAW_POINT
