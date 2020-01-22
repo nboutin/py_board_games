@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from game.connect_four import ConnectFour
 from ai.minmax_ab import Minmax_AB
-from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
+from ai.minmax_ab_parallel import Minmax_AB_Parallel
 from game_base.player import Player
 from game_base.board import Token
 
@@ -36,7 +36,7 @@ class TestGamePosition(unittest.TestCase):
             game.play(m)
 
         depth = 2
-        ai = Minmax_AlphaBeta_Thread(p1, depth)
+        ai = Minmax_AB_Parallel(p1, depth)
 
         self.assertEqual(ai.compute(game), 3)
 

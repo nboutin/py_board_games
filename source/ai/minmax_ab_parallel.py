@@ -8,7 +8,7 @@ import concurrent.futures as cf
 import multiprocessing as mp
 
 
-class Minmax_AlphaBeta_Thread():
+class Minmax_AB_Parallel():
 
     WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
@@ -124,7 +124,7 @@ class Minmax_AlphaBeta_Thread():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AlphaBeta_Thread.WIN_POINT + depth
+                return Minmax_AB_Parallel.WIN_POINT + depth
             else:
-                return Minmax_AlphaBeta_Thread.LOOSE_POINT - depth
-        return Minmax_AlphaBeta_Thread.DRAW_POINT
+                return Minmax_AB_Parallel.LOOSE_POINT - depth
+        return Minmax_AB_Parallel.DRAW_POINT

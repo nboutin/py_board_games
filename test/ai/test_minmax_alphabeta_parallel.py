@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 from game_base.board import (Point, Board, Token)
 from game_base.player import Player
-from ai.minmax_alphabeta_thread import Minmax_AlphaBeta_Thread
+from ai.minmax_ab_parallel import Minmax_AB_Parallel
 from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
@@ -32,14 +32,14 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         self.assertEqual(game.current_player, p1)
 
         depth = 2
-        ai = Minmax_AlphaBeta_Thread(p1, depth)
+        ai = Minmax_AB_Parallel(p1, depth)
 
         self.assertEqual(ai.compute(game), 3)
 
     def test_deepcopy(self):
         depth = 4
         p1 = Player("AI_1", Token.A, True)
-        ai = Minmax_AlphaBeta_Thread(p1, depth)
+        ai = Minmax_AB_Parallel(p1, depth)
 
         cai = copy.deepcopy(ai)
 
@@ -54,7 +54,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         ai_player = Player("AI_1", Token.A, True)
         game = TicTacToe(p1=ai_player)
         depth = 9
-        minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
+        minmax = Minmax_AB_Parallel(ai_player, depth)
 
         minmax.compute(game)
 
@@ -63,7 +63,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         ai_player = Player("AI_1", Token.A, True)
         game = ConnectFour(p1=ai_player)
         depth = 10
-        minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
+        minmax = Minmax_AB_Parallel(ai_player, depth)
 
         minmax.compute(game)
 
@@ -72,7 +72,7 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         ai_player = Player("AI_1", Token.A, True)
         game = Gomoku(p1=ai_player)
         depth = 5
-        minmax = Minmax_AlphaBeta_Thread(ai_player, depth)
+        minmax = Minmax_AB_Parallel(ai_player, depth)
 
         minmax.compute(game)
 
