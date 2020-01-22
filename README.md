@@ -28,6 +28,8 @@ AI opponent is using MinMax algorithm.
 
 ## Optimization
 
+- [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
+- [x] Rework skip compute_ending
 - [x] Make Minmax using thread
 - [x] Improve check diag line by using last move value
 - [x] Try numpy Array for Board to improve performance
@@ -58,6 +60,10 @@ AI opponent is using MinMax algorithm.
 - [ ] Handle bad user input
 - [x] Handle multiple user input types
 
+## Documentation to read
+- [ ] https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md
+- [ ] https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0
+- [ ] https://github.com/aimacode/aima-python/blob/master/games.py
 
 
 # Links
