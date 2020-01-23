@@ -46,15 +46,33 @@ class BitBoard():
         move = 1 << self._height[col]
         self._bitboard[self._counter & 1] ^= move
 
-    def isWin(self):
+    def isWin(self, bb):
         '''
         @brief Check whether there are four in row
         '''
-        pass
+        # diagonal \
+        if (bb & (bb >> 6) & (bb >> 12) & (bb >> 18) != 0):
+            return True
+        # diagonal /
+        if (bb & (bb >> 8) & (bb >> 16) & (bb >> 24) != 0):
+            return True
+        # horizontal
+        if (bb & (bb >> 7) & (bb >> 14) & (bb >> 21) != 0):
+            return True
+        # vertical
+        if (bb & (bb >> 1) & (bb >> 2) & (bb >> 3) != 0):
+            return True
+        return False
 
     def listMoves(self):
         '''
         @brief List all possible moves in a given situation
+        int[] moves;
+        long TOP = 1000000_1000000_1000000_1000000_1000000_1000000_1000000L;
+        for(int col = 0; col <= 6; col++) {
+            if ((TOP & (1L << height[col])) == 0) moves.push(col);
+        }
+        return moves;
         '''
         pass
 

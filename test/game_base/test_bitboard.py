@@ -27,3 +27,8 @@ class TestBoard(unittest.TestCase):
         bb.makeMove(1)
         bb.undoMove()
         print(bb)
+
+    def test_isWin(self):
+        bb = BitBoard()
+        self.assertFalse(bb.isWin(bb._bitboard[0]))
+        self.assertFalse(bb.isWin(bb._bitboard[1]))
