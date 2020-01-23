@@ -5,20 +5,19 @@ import sys
 import time
 
 
-class Minmax_AlphaBeta():
+class Minmax_AB():
 
-    WIN_POINT = 10
+    WIN_POINT = 100
     LOOSE_POINT = -WIN_POINT
     DRAW_POINT = 0
 
-    def __init__(self, player, depth, moves):
+    def __init__(self, player, depth):
         '''
         @param player: AI player
         @param depth: explore tree moves until depth value (min:1)
         '''
         self._player = player
         self._depth = depth
-        self._moves = moves
         self._computation_time = 0.0
 
     @property
@@ -47,12 +46,9 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
-#                 print("max {} {} {}".format(depth, move, val))
-#                 if depth == self._depth:
-#                     print()
                 if val > max:
                     max = val
                     best_move = move
@@ -74,10 +70,9 @@ class Minmax_AlphaBeta():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth, self._player.token), best_move
 
-        for move in self._moves:
+        for move in game.generate_moves():
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
-#                 print("min {} {} {}".format(depth, move, val))
                 if val < min:
                     min = val
                     best_move = move
@@ -102,7 +97,7 @@ class Minmax_AlphaBeta():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AlphaBeta.WIN_POINT + depth
+                return Minmax_AB.WIN_POINT + depth
             else:
-                return Minmax_AlphaBeta.LOOSE_POINT - depth
-        return Minmax_AlphaBeta.DRAW_POINT
+                return Minmax_AB.LOOSE_POINT - depth
+        return Minmax_AB.DRAW_POINT

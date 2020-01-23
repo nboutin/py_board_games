@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import unittest
+import sys
+import os
+import time
+sys.path.insert(0, os.path.join(sys.path[0], 'source'))
+# sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
+
+
+from game_base.board import (Point, Board, Token)
+from game_base.player import Player
+from ai.minmax_ab_parallel import Minmax_AB_Parallel
+
+# Enable
+all = False
+tictactoe = False
+connect_four = False
+gomoku = False
+
+# Home
+# expected = {'tictactoe': 0.422, 'connect_four': 0.813, 'gomoku': 1.701}
+# Work
+expected = {'tictactoe': 0.61, 'connect_four': 0.65, 'gomoku': 7.08}
+
+
+class TestPerfoParallel(unittest.TestCase):
+    '''
+    @todo add test for tictactoe play and compute_ending
+    '''
+
+    @unittest.skipIf(not(all or tictactoe), "Performance")
+    def test_tictactoe(self):
+        from game.tictactoe import TicTacToe
+
+        n = 10
+        depth = 9
+        duration = 0
+        p1 = Player("AI_1", Token.A, True)
+        for i in range(n):
+            minmax = Minmax_AB_Parallel(p1, depth)
+            game = TicTacToe(p1=p1)
+
+            start = time.time()
+            minmax.compute(game)
+            duration += time.time() - start
+
+        print("Duration {}".format(duration / n))
+
+        r = expected['tictactoe']
+        delta = r * 3 / 100
+        self.assertAlmostEqual(duration / n, r, delta=delta)
+
+    @unittest.skipIf(not(all or connect_four), "Performance")
+    def test_connect_four(self):
+
+        from game.connect_four import ConnectFour
+
+        n = 20
+        depth = 9
+        p1 = Player("AI_1", Token.A, True)
+        duration = 0
+        for i in range(n):
+            minmax = Minmax_AB_Parallel(p1, depth)
+            game = ConnectFour(p1=p1)
+            for m in [3, 4, 3, 4, 3, 4, 0]:
+                game.play(m)
+
+            start = time.time()
+            minmax.compute(game)
+            duration += time.time() - start
+
+        print("Duration {}".format(duration / n))
+        r = expected['connect_four']
+        delta = r * 3 / 100
+        self.assertAlmostEqual(duration / n, r, delta=delta)
+
+    @unittest.skipIf(not(all or gomoku), "Performance")
+    def test_gomoku(self):
+        from game.gomoku import Gomoku
+
+        n = 2
+        depth = 4
+        p1 = Player("AI_1", Token.A, True)
+        duration = 0
+        for i in range(n):
+            game = Gomoku(p1=p1, size=9)
+            minmax = Minmax_AB_Parallel(p1, depth)
+
+            moves = [Point(4, 4), Point(3, 3), Point(4, 3),
+                     Point(3, 4), Point(3, 2), Point(4, 5)]
+            for m in moves:
+                game.play(m)
+
+            start = time.time()
+            minmax.compute(game)
+            duration += time.time() - start
+
+        print('Duration {}'.format(duration / n))
+        r = expected['gomoku']
+        delta = r * 3 / 100
+        self.assertAlmostEqual(duration / n, r, delta=delta)
+
+
+if __name__ == '__main__':
+    unittest.main()

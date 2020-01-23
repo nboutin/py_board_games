@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2020-01-23
+
+### Added
+- Minmax AlphaBeta multi-process (no improvement)
+
+### Changed
+- Use numpy array for Board internal grid representation
+
 ## [1.2.0] - 2020-01-13
 
 ### Added

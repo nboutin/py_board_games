@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import copy
 import sys
 import os
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
 
-from connect_four.connect_four import (ConnectFour, Token)
+from game.connect_four import (ConnectFour, Token)
 from game_base.board import (Point, Board)
 
 
@@ -20,6 +21,12 @@ class TestConnectFour(unittest.TestCase):
         self.assertEqual(game.winner, None)
         self.assertEqual(len(game.history), 0)
         self.assertEqual(game._current_player, game._p1)
+
+    def test_deepcopy(self):
+        game = ConnectFour()
+        cgame = copy.deepcopy(game)
+        
+        self.assertFalse(game is cgame)
 
     def test_next_player(self):
         game = ConnectFour()
@@ -147,7 +154,7 @@ class TestConnectFour(unittest.TestCase):
 
     def test_has_winner_diag_down(self):
         board = Board(7, 6)
-        token = Token.BLUE
+        token = Token.A
 
         board.add_token(Point(0, 2), token)
         board.add_token(Point(1, 3), token)
@@ -155,7 +162,8 @@ class TestConnectFour(unittest.TestCase):
         board.add_token(Point(3, 5), token)
 
         game = ConnectFour()
-        self.assertEqual(game._has_winner_diag_down(board), (True, token))
+        self.assertEqual(game._has_winner_diagonal(
+            board, Point(3, 5)), (True, token))
 
     def test_win_diag_down_player1(self):
         game = ConnectFour()
@@ -204,7 +212,16 @@ class TestConnectFour(unittest.TestCase):
 #
 #         self.assertTrue(game.is_over)
 #         self.assertEqual(game.winner, None)
-#
+
+    def test_generate_moves(self):
+        game = ConnectFour()
+        self.assertEqual(game.generate_moves(), [0, 1, 2, 3, 4, 5, 6])
+
+#         for i in range(ConnectFour._ROW):
+#             game.play(0)
+#         for i in range(ConnectFour._ROW):
+#             game.play(4)
+#         self.assertEqual(game.generate_moves(), [1, 2, 3, 5, 6])
 
 
 if __name__ == '__main__':
