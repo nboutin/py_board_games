@@ -9,7 +9,7 @@ from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
 from ai.minmax_ab_parallel import Minmax_AB_Parallel
 
-VERSION = "1.3.0-dev"
+VERSION = "1.3.0"
 
 
 def main(game_name, player_mode, level):

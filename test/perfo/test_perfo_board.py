@@ -10,9 +10,8 @@ sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 
 from game_base.board import Board
 
-# @unittest.skip("timeit")
 
-
+@unittest.skip("timeit")
 class TestPerfoBoard(unittest.TestCase):
 
     def test_board_array_equal(self):
