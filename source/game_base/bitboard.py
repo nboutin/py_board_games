@@ -23,7 +23,7 @@ class BitBoard():
         # Index 0 for 'x', Index 1 for 'o'
         self._bitboard = [0, 0]
         # Serves as a memory where the next token goes given the column
-        self._height = [0, 7, 15, 24, 30, 35, 42]
+        self._height = [0, 7, 14, 21, 28, 35, 42]
         # Number of moves done
         self._counter = 0
         # Remember the moves done so far
@@ -42,14 +42,26 @@ class BitBoard():
     def makeMove(self, col):
         '''
         @param col ranging from 0 to 6
+        void makeMove(int col)
+            long move = 1L << height[col]++;
+            bitboard[counter & 1] ^= move;  
+            moves[counter++] = col;
         '''
         move = 1 << self._height[col]
         self._height[col] += 1
         self._bitboard[self._counter & 1] ^= move
         self._moves.append(col)
         self._counter += 1
+#         print('col:', col)
+#         print('move:', move)
+#         print('height:', self._height)
 
     def undoMove(self):
+        '''
+        int col = moves[--counter];
+        long move = 1L << --height[col];
+        bitboard[counter & 1] ^= move;
+        '''
         self._counter -= 1
         col = self._moves[self._counter]
         self._height[col] -= 1
