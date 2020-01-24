@@ -80,6 +80,22 @@ class TestBoard(unittest.TestCase):
         bb = BitBoard()
         self.assertFalse(bb.isWin(0))
         self.assertFalse(bb.isWin(1))
+        
+    def test_listMoves(self):
+        board = BitBoard()
+        
+        self.assertEqual(board.listMoves(), [0,1,2,3,4,5,6])
+        for i in range(6):
+            board.makeMove(0)
+        self.assertEqual(board.listMoves(), [1,2,3,4,5,6])
+
+        for i in range(6):
+            board.makeMove(6)
+        self.assertEqual(board.listMoves(), [1,2,3,4,5])
+
+        for i in range(6):
+            board.makeMove(3)
+        self.assertEqual(board.listMoves(), [1,2,4,5])
 
     def test_seqA(self):
         board = BitBoard()
@@ -87,5 +103,4 @@ class TestBoard(unittest.TestCase):
         for m in moves:
             board.makeMove(m)
 
-        print(board)
         self.assertTrue(board.isWin(0))

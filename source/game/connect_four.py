@@ -34,9 +34,10 @@ class ConnectFour():
     def is_over(self):
         return self._is_over
 
-#     @property
-#     def current_player(self):
+    @property
+    def current_player(self):
 #         return self._current_player
+        return self._p1 if self._board.currentPlayer == 0 else self._p2
 
     @property
     def winner(self):
@@ -53,7 +54,8 @@ class ConnectFour():
         @details Removing move from full column does not improve performances
         @todo Use BitBoard.listMoves
         '''
-        return self._moves
+#         return self._moves
+        return self._board.listMoves()
 
     def play(self, move):
         if self._is_over:
