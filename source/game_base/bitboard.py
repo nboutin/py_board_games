@@ -77,7 +77,17 @@ class BitBoard():
         pass
 
     def __str__(self):
-        s = ''
-        for bb in self._bitboard:
-            s += '{:064b}\n'.format(bb)
+        s = '\n'
+        bbx = self._bitboard[0]
+        bbo = self._bitboard[1]
+
+        for i in range(5, -1, -1):
+            for j in range(0 + i, 47 + i, 7):
+                if (bbx >> j) & 1:
+                    s += 'x'
+                elif (bbo >> j) & 1:
+                    s += 'o'
+                else:
+                    s += '-'
+            s += '\n'
         return s

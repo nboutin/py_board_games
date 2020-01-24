@@ -21,6 +21,7 @@ AI opponent is using MinMax Alpha Beta algorithm.
 ## Optimization
 
 - [ ] Implement bitboard
+- [ ] Check only row for the current player
 - [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
 
 ## Design / Technical choice

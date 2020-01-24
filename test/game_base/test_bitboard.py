@@ -17,6 +17,8 @@ class TestBoard(unittest.TestCase):
     def test_makeMove(self):
         bb = BitBoard()
         bb.makeMove(0)
+        bb.makeMove(0)
+        bb.makeMove(1)
         bb.makeMove(1)
 
         print(bb)
