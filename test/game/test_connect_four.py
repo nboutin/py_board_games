@@ -20,7 +20,7 @@ class TestConnectFour(unittest.TestCase):
         self.assertFalse(game.is_over)
         self.assertEqual(game.winner, None)
         self.assertEqual(len(game.history), 0)
-        self.assertEqual(game._current_player, game._p1)
+#         self.assertEqual(game._current_player, game._p1)
 
     def test_deepcopy(self):
         game = ConnectFour()
@@ -28,26 +28,26 @@ class TestConnectFour(unittest.TestCase):
         
         self.assertFalse(game is cgame)
 
-    def test_next_player(self):
-        game = ConnectFour()
-
-        self.assertEqual(game._current_player, game._p1)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p2)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p1)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p2)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p1)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p2)
-        self.assertTrue(game.play(0))
-        self.assertEqual(game._current_player, game._p1)
-
-        # Cell not free, do not change current player
-        self.assertFalse(game.play(0))
-        self.assertEqual(game._current_player, game._p1)
+#     def test_next_player(self):
+#         game = ConnectFour()
+# 
+#         self.assertEqual(game._current_player, game._p1)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p2)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p1)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p2)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p1)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p2)
+#         self.assertTrue(game.play(0))
+#         self.assertEqual(game._current_player, game._p1)
+# 
+#         # Cell not free, do not change current player
+#         self.assertFalse(game.play(0))
+#         self.assertEqual(game._current_player, game._p1)
 
     def test_win_horizontal_player1(self):
         '''
@@ -152,18 +152,18 @@ class TestConnectFour(unittest.TestCase):
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p1)
 
-    def test_has_winner_diag_down(self):
-        board = Board(7, 6)
-        token = Token.A
-
-        board.add_token(Point(0, 2), token)
-        board.add_token(Point(1, 3), token)
-        board.add_token(Point(2, 4), token)
-        board.add_token(Point(3, 5), token)
-
-        game = ConnectFour()
-        self.assertEqual(game._has_winner_diagonal(
-            board, Point(3, 5)), (True, token))
+#     def test_has_winner_diag_down(self):
+#         board = Board(7, 6)
+#         token = Token.A
+# 
+#         board.add_token(Point(0, 2), token)
+#         board.add_token(Point(1, 3), token)
+#         board.add_token(Point(2, 4), token)
+#         board.add_token(Point(3, 5), token)
+# 
+#         game = ConnectFour()
+#         self.assertEqual(game._has_winner_diagonal(
+#             board, Point(3, 5)), (True, token))
 
     def test_win_diag_down_player1(self):
         game = ConnectFour()
@@ -182,6 +182,8 @@ class TestConnectFour(unittest.TestCase):
 
         self.assertTrue(game.play(4))
         self.assertTrue(game.play(3))  # B
+
+#         print(game._board)
 
         self.assertTrue(game.is_over)
         self.assertEqual(game.winner, game._p1)
