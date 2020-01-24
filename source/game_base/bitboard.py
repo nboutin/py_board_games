@@ -29,6 +29,16 @@ class BitBoard():
         # Remember the moves done so far
         self._moves = list()
 
+    @property
+    def currentPlayer(self):
+        '''
+        @return 0 if player 1, 1 if player 2
+        '''
+        return self._counter & 1
+
+    def hasFreeCell(self):
+        return self._counter < (6 * 7)
+
     def makeMove(self, col):
         '''
         @param col ranging from 0 to 6
@@ -46,10 +56,13 @@ class BitBoard():
         move = 1 << self._height[col]
         self._bitboard[self._counter & 1] ^= move
 
-    def isWin(self, bb):
+    def isWin(self, player):
         '''
         @brief Check whether there are four in row
+        @param player index, 0 player 1, 1 player 2
         '''
+        bb = self._bitboard[player]
+
         # diagonal \
         if (bb & (bb >> 6) & (bb >> 12) & (bb >> 18) != 0):
             return True

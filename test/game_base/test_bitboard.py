@@ -32,5 +32,5 @@ class TestBoard(unittest.TestCase):
 
     def test_isWin(self):
         bb = BitBoard()
-        self.assertFalse(bb.isWin(bb._bitboard[0]))
-        self.assertFalse(bb.isWin(bb._bitboard[1]))
+        self.assertFalse(bb.isWin(0))
+        self.assertFalse(bb.isWin(1))
