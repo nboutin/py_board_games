@@ -28,6 +28,8 @@ class BitBoard():
         self._counter = 0
         # Remember the moves done so far
         self._moves = list()
+        # Token count for each column
+        self._column_count = [ 6 for _ in range(7)]
 
     @property
     def currentPlayer(self):
@@ -52,6 +54,7 @@ class BitBoard():
         self._bitboard[self._counter & 1] ^= move
         self._moves.append(col)
         self._counter += 1
+        self._column_count[col] -= 1
 
     def undoMove(self):
         '''
@@ -64,26 +67,47 @@ class BitBoard():
         self._height[col] -= 1
         move = 1 << self._height[col]
         self._bitboard[self._counter & 1] ^= move
+        self._column_count[col] += 1
+
+#     def isWin(self, player):
+#         '''
+#         @brief Check whether there are four in row
+#         @param player index, 0 player 1, 1 player 2
+#         '''
+#         bb = self._bitboard[player]
+# 
+#         # diagonal \
+#         if (bb & (bb >> 6) & (bb >> 12) & (bb >> 18) != 0):
+#             return True
+#         # diagonal /
+#         if (bb & (bb >> 8) & (bb >> 16) & (bb >> 24) != 0):
+#             return True
+#         # horizontal
+#         if (bb & (bb >> 7) & (bb >> 14) & (bb >> 21) != 0):
+#             return True
+#         # vertical
+#         if (bb & (bb >> 1) & (bb >> 2) & (bb >> 3) != 0):
+#             return True
+#         return False
 
     def isWin(self, player):
         '''
-        @brief Check whether there are four in row
-        @param player index, 0 player 1, 1 player 2
+        boolean isWin(long bitboard) {
+            int[] directions = {1, 7, 6, 8};
+            long bb;
+            for(int direction : directions) {
+                bb = bitboard & (bitboard >> direction);
+                if ((bb & (bb >> (2 * direction))) != 0) return true;
+            }
+            return false;
+        }
         '''
         bb = self._bitboard[player]
-
-        # diagonal \
-        if (bb & (bb >> 6) & (bb >> 12) & (bb >> 18) != 0):
-            return True
-        # diagonal /
-        if (bb & (bb >> 8) & (bb >> 16) & (bb >> 24) != 0):
-            return True
-        # horizontal
-        if (bb & (bb >> 7) & (bb >> 14) & (bb >> 21) != 0):
-            return True
-        # vertical
-        if (bb & (bb >> 1) & (bb >> 2) & (bb >> 3) != 0):
-            return True
+        
+        for d in [1,7,6,8]:
+            b = bb & (bb >> d)
+            if (b & (b >> (2 * d))) != 0:
+                return True
         return False
 
     def listMoves(self):
@@ -97,12 +121,13 @@ class BitBoard():
         return moves;
         '''
         # 6 13 20 27 34 41 48
-        top = 1 << 6 | 1 << 13 | 1 << 20 | 1 << 27 | 1 << 34 | 1 << 41 | 1 << 48
-        moves = list()
-        for i in range(7):
-            if (top & 1 << self._height[i]) == 0:
-                moves.append(i)
-        return moves
+#         top = 1 << 6 | 1 << 13 | 1 << 20 | 1 << 27 | 1 << 34 | 1 << 41 | 1 << 48
+#         moves = list()
+#         for i in range(7):
+#             if (top & 1 << self._height[i]) == 0:
+#                 moves.append(i)
+#         return moves
+        return [i for i in range(7) if self._column_count[i] > 0]
 
     def __str__(self):
         s = '\n'
