@@ -52,9 +52,7 @@ class ConnectFour():
         '''
         @brief All legal moves
         @details Removing move from full column does not improve performances
-        @todo Use BitBoard.listMoves
         '''
-#         return self._moves
         return self._board.listMoves()
 
     def play(self, move):
