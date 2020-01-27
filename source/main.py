@@ -8,6 +8,7 @@ from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
 from ai.minmax_ab_parallel import Minmax_AB_Parallel
+from ai.minmax_ab import Minmax_AB
 
 VERSION = "1.4.0-dev"
 
@@ -27,7 +28,7 @@ def main(game_name, player_mode, level):
     ai1, ai2 = make_ai(player_mode, level, p1, p2)
     game = make_game(game_name, p1, p2)
 
-    view = ASCII_View(game.grid)
+    view = ASCII_View(game._board)
     view.welcome(game_name, VERSION)
 
     while game.is_over == False:
@@ -74,7 +75,7 @@ def menu_list(title, items, default):
 
 
 def select_level(game_name):
-    game_level_default = {'TicTacToe': 9, 'Connect Four': 15, 'Gomoku': 4}
+    game_level_default = {'TicTacToe': 9, 'Connect Four': 11, 'Gomoku': 4}
     level_default = game_level_default[game_name]
     level = input('Level ({}):'.format(level_default))
     print()
@@ -107,12 +108,12 @@ def make_ai(mode, level, p1, p2):
 
     ai1, ai2 = None, None
     if mode == 'AI_H':
-        ai1 = Minmax_AB_Parallel(p1, level)
+        ai1 = Minmax_AB(p1, level)
     elif mode == 'H_AI':
-        ai2 = Minmax_AB_Parallel(p2, level)
+        ai2 = Minmax_AB(p2, level)
     elif mode == 'AI_AI':
-        ai1 = Minmax_AB_Parallel(p1, level)
-        ai2 = Minmax_AB_Parallel(p2, level)
+        ai1 = Minmax_AB(p1, level)
+        ai2 = Minmax_AB(p2, level)
 
     return ai1, ai2
 
