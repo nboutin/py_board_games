@@ -108,7 +108,8 @@ def make_ai(mode, level, p1, p2):
 
     ai1, ai2 = None, None
     if mode == 'AI_H':
-        ai1 = Minmax_AB(p1, level)
+#         ai1 = Minmax_AB(p1, level)
+        ai1 = Minmax_AB_Parallel(p1, level)
     elif mode == 'H_AI':
         ai2 = Minmax_AB(p2, level)
     elif mode == 'AI_AI':

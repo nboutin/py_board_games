@@ -25,6 +25,7 @@ AI opponent is using MinMax Alpha Beta algorithm.
 - [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
 
 ## Design / Technical choice
+- [ ] Update ASCII_View to handle grid and bitboard representation
 - [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration

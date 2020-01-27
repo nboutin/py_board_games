@@ -20,9 +20,9 @@ connect_four = True
 gomoku = False
 
 # Home
-# expected = {'tictactoe': 0.422, 'connect_four': 0.813, 'gomoku': 1.701}
+# expected = {'tictactoe': 0.422, 'connect_four': 112400, 'gomoku': 1.701}
 # Work
-expected = {'tictactoe': 0.52, 'connect_four': 2.23, 'gomoku': 0.77}
+expected = {'tictactoe': 0.52, 'connect_four': 174777, 'gomoku': 0.77}
 
 
 class TestPerformance(unittest.TestCase):
@@ -58,23 +58,27 @@ class TestPerformance(unittest.TestCase):
         from game.connect_four import ConnectFour
 
         n = 10
-        depth = 13
+        depth = 11
         p1 = Player("AI_1", Token.A, True)
         duration = 0
+        move_count = 0
         for i in range(n):
             minmax = Minmax_AB(p1, depth)
             game = ConnectFour(p1=p1)
-            for m in [3, 4, 3, 4, 3, 4, 0]:
+            for m in [0, 2, 0, 3]:
                 game.play(m)
 
             start = time.time()
             minmax.compute(game)
             duration += time.time() - start
+            move_count += minmax._move_count
 
-        print("Duration {}".format(duration / n))
-        r = expected['connect_four']
-        delta = r * 3 / 100
-        self.assertAlmostEqual(duration / n, r, delta=delta)
+        r = move_count / duration
+        e = expected['connect_four']
+        d = r * 3 / 100
+
+        print("Move/second: {} (+/- {})".format(int(move_count / duration), int(d)))
+        self.assertAlmostEqual(r, e, delta=d)
 
     @unittest.skipIf(not(all or gomoku), "Performance")
     def test_gomoku(self):
