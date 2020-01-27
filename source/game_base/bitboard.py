@@ -52,9 +52,6 @@ class BitBoard():
         self._bitboard[self._counter & 1] ^= move
         self._moves.append(col)
         self._counter += 1
-#         print('col:', col)
-#         print('move:', move)
-#         print('height:', self._height)
 
     def undoMove(self):
         '''
@@ -63,12 +60,9 @@ class BitBoard():
         bitboard[counter & 1] ^= move;
         '''
         self._counter -= 1
-        col = self._moves[self._counter]
-        print('col:', col)
+        col = self._moves.pop()
         self._height[col] -= 1
-        print('height:', self._height)
         move = 1 << self._height[col]
-        print('move:', move)
         self._bitboard[self._counter & 1] ^= move
 
     def isWin(self, player):
@@ -102,17 +96,14 @@ class BitBoard():
         }
         return moves;
         '''
-        # 5 12 19 26 33 40 47
-        # 0, 7, 14, 21, 28, 35, 42
         # 6 13 20 27 34 41 48
         top = 1 << 6 | 1 << 13 | 1 << 20 | 1 << 27 | 1 << 34 | 1 << 41 | 1 << 48
-#         print('{:64b}'.format(top))
-        moves = list() 
+        moves = list()
         for i in range(7):
-            if (top & 1 << self._height[i]) == 0 :
+            if (top & 1 << self._height[i]) == 0:
                 moves.append(i)
         return moves
-        
+
     def __str__(self):
         s = '\n'
         bbx = self._bitboard[0]

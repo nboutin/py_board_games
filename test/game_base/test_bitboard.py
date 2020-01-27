@@ -68,34 +68,87 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(bb[0], x)
         self.assertEqual(bb[1], o)
 
+    def test_undoMove(self):
+        board = BitBoard()
+        bb = board._bitboard
 
-#     def test_undoMove(self):
-#         bb = BitBoard()
-#         bb.makeMove(0)
-#         bb.makeMove(1)
-#         bb.undoMove()
-#         print(bb)
+        # one move
+        board.makeMove(0)
+        self.assertEqual(bb[0], 1)
+        self.assertEqual(board.currentPlayer, 1)
+
+        board.undoMove()
+        self.assertEqual(bb[0], 0)
+        self.assertEqual(board.currentPlayer, 0)
+
+        # first column
+        board.makeMove(0)
+        board.makeMove(0)
+        board.makeMove(0)
+        board.makeMove(0)
+        x = 1 | 1 << 2
+        o = 1 << 1 | 1 << 3
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 0)
+
+        board.undoMove()
+        o ^= 1 << 3
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 1)
+
+        board.undoMove()
+        x ^= 1 << 2
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 0)
+
+        # horizontal
+        board = BitBoard()
+        bb = board._bitboard
+        board.makeMove(0)
+        board.makeMove(1)
+        board.makeMove(2)
+        board.makeMove(3)
+        x = 1 | 1 << 14
+        o = 1 << 7 | 1 << 21
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 0)
+        
+        board.undoMove()
+        o ^= 1 << 21
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 1)
+
+        board.undoMove()
+        x ^= 1 << 14
+        self.assertEqual(bb[0], x)
+        self.assertEqual(bb[1], o)
+        self.assertEqual(board.currentPlayer, 0)
 
     def test_isWin(self):
         bb = BitBoard()
         self.assertFalse(bb.isWin(0))
         self.assertFalse(bb.isWin(1))
-        
+
     def test_listMoves(self):
         board = BitBoard()
-        
-        self.assertEqual(board.listMoves(), [0,1,2,3,4,5,6])
+
+        self.assertEqual(board.listMoves(), [0, 1, 2, 3, 4, 5, 6])
         for i in range(6):
             board.makeMove(0)
-        self.assertEqual(board.listMoves(), [1,2,3,4,5,6])
+        self.assertEqual(board.listMoves(), [1, 2, 3, 4, 5, 6])
 
         for i in range(6):
             board.makeMove(6)
-        self.assertEqual(board.listMoves(), [1,2,3,4,5])
+        self.assertEqual(board.listMoves(), [1, 2, 3, 4, 5])
 
         for i in range(6):
             board.makeMove(3)
-        self.assertEqual(board.listMoves(), [1,2,4,5])
+        self.assertEqual(board.listMoves(), [1, 2, 4, 5])
 
     def test_seqA(self):
         board = BitBoard()
