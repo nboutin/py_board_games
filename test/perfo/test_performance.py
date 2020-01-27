@@ -16,13 +16,13 @@ from ai.minmax_ab import Minmax_AB
 # Enable
 all = False
 tictactoe = False
-connect_four = False
+connect_four = True
 gomoku = False
 
 # Home
 # expected = {'tictactoe': 0.422, 'connect_four': 0.813, 'gomoku': 1.701}
 # Work
-expected = {'tictactoe': 0.52, 'connect_four': 0.55, 'gomoku': 0.77}
+expected = {'tictactoe': 0.52, 'connect_four': 2.23, 'gomoku': 0.77}
 
 
 class TestPerformance(unittest.TestCase):
@@ -57,8 +57,8 @@ class TestPerformance(unittest.TestCase):
 
         from game.connect_four import ConnectFour
 
-        n = 20
-        depth = 9
+        n = 10
+        depth = 13
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         for i in range(n):
