@@ -7,8 +7,9 @@ from game_base.board import Token
 
 class ASCII_View():
 
-    def __init__(self, grid):
+    def __init__(self, grid=None, bitboard=None):
         self._grid = grid
+        self._bitboard = bitboard
         self._messages = list()
         self.current_player = None
         self._history = list()
@@ -20,7 +21,10 @@ class ASCII_View():
         self._print_history()
         self._print_messages()
         print('-----')
-        self._print_grid(self._grid)
+        if self._grid is not None:
+            self._print_grid(self._grid)
+        else:
+            self._print_bitboard(self._bitboard)
         self._print_player(self.current_player)
 
     def ask_input(self, n):
@@ -38,20 +42,37 @@ class ASCII_View():
         self._history = h
 
     def _print_grid(self, grid):
-        print(grid)
 
-#     def _print_grid(self, grid):
-#
-#         print('  ', end='')
-#         for i in range(len(grid[0])):
-#             print('{} '.format(i), end='')
-#         print()
-#
-#         for i, row in enumerate(grid):
-#             print('{}|'.format(i), end='')
-#             for cell in row:
-#                 print(self._token_str(cell) + "|", end='')
-#             print('')
+        print('  ', end='')
+        for i in range(len(grid[0])):
+            print('{} '.format(i), end='')
+        print()
+
+        for i, row in enumerate(grid):
+            print('{}|'.format(i), end='')
+            for cell in row:
+                print(self._token_str(cell) + "|", end='')
+            print('')
+
+    def _print_bitboard(self, bitboard):
+        s = '\n'
+        bbx = bitboard[0]
+        bbo = bitboard[1]
+
+        for i in range(7):
+            s += str(i) + ' '
+        s += '\n'
+
+        for i in range(5, -1, -1):
+            for j in range(0 + i, 47 + i, 7):
+                if (bbx >> j) & 1:
+                    s += 'x|'
+                elif (bbo >> j) & 1:
+                    s += 'o|'
+                else:
+                    s += '-|'
+            s += '\n'
+        print(s)
 
     def _print_player(self, player):
         print(player.name + '(' + self._token_str(player.token) + ')')

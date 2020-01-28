@@ -26,9 +26,9 @@ class ConnectFour():
         self._moves = [i for i in range(ConnectFour._COLUMN)]
 #         self._patterns = [np.full(4, token) for token in [Token.A, Token.B]]
 
-#     @property
-#     def grid(self):
-#         return self._board.grid
+    @property
+    def bitboard(self):
+        return self._board._bitboard
 
     @property
     def is_over(self):
@@ -36,7 +36,7 @@ class ConnectFour():
 
     @property
     def current_player(self):
-#         return self._current_player
+        #         return self._current_player
         return self._p1 if self._board.currentPlayer == 0 else self._p2
 
     @property
