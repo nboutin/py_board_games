@@ -56,12 +56,12 @@ class TestMinmaxAlphaBeta(unittest.TestCase):
         minmax = Minmax_AB_Parallel(ai_player, depth)
         minmax.compute(game)
 
-    def test_connect_four(self):
-        ai_player = Player("AI_1", Token.A, True)
-        game = ConnectFour(p1=ai_player)
-        depth = 2
-        minmax = Minmax_AB_Parallel(ai_player, depth)
-        minmax.compute(game)
+#     def test_connect_four(self):
+#         ai_player = Player("AI_1", Token.A, True)
+#         game = ConnectFour(p1=ai_player)
+#         depth = 2
+#         minmax = Minmax_AB_Parallel(ai_player, depth)
+#         minmax.compute(game)
 
     def test_gomoku(self):
         ai_player = Player("AI_1", Token.A, True)

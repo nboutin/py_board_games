@@ -21,11 +21,11 @@ from ai.minmax_ab_parallel import Minmax_AB_Parallel
 def main():
     pr = cProfile.Profile()
 
-    depth = 8
+    depth = 10
     p1 = Player("AI_1", Token.A, True)
     game = ConnectFour(p1=p1)
-#     minmax = Minmax_AB(p1, depth)
-    minmax = Minmax_AB_Parallel(p1, depth)
+    minmax = Minmax_AB(p1, depth)
+#     minmax = Minmax_AB_Parallel(p1, depth)
 
     moves = [0, 1, 0, 1, 5, 6, 5, 6]
     for m in moves:

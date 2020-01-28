@@ -50,7 +50,7 @@ class Minmax_AB_Parallel():
                                         cgame, cdepth - 1, calpha, cbeta)
                     futures.append([move, f])
 
-                game.undo()
+                    game.undo()
 
         for move, f in futures:
             val, _ = f.result()
@@ -77,7 +77,7 @@ class Minmax_AB_Parallel():
                 if val > max:
                     max = val
                     best_move = move
-            game.undo()
+                game.undo()
 
             if max >= beta:
                 return max, best_move
@@ -101,7 +101,7 @@ class Minmax_AB_Parallel():
                 if val < min:
                     min = val
                     best_move = move
-            game.undo()
+                game.undo()
 
             if min <= alpha:
                 return min, best_move

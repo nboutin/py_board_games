@@ -8,8 +8,9 @@ from game.tictactoe import TicTacToe
 from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
 from ai.minmax_ab_parallel import Minmax_AB_Parallel
+from ai.minmax_ab import Minmax_AB
 
-VERSION = "1.3.0"
+VERSION = "1.4.0-dev"
 
 
 def main(game_name, player_mode, level):
@@ -27,7 +28,7 @@ def main(game_name, player_mode, level):
     ai1, ai2 = make_ai(player_mode, level, p1, p2)
     game = make_game(game_name, p1, p2)
 
-    view = ASCII_View(game.grid)
+    view = make_view(game_name, game)
     view.welcome(game_name, VERSION)
 
     while game.is_over == False:
@@ -35,14 +36,9 @@ def main(game_name, player_mode, level):
         view.display()
 
         if game.current_player.is_ai:
-            if game.current_player == p1:
-                ai = ai1
-            elif game.current_player == p2:
-                ai = ai2
-
+            ai = ai1 if game.current_player == p1 else ai2
             move = ai.compute(game)
-            view.add_message("Move: {} ({}s)".format(
-                move, ai.computation_time))
+            view.add_message("Time:{}s".format(ai.computation_time))
         else:
             if game_name == "Connect Four":
                 move = view.ask_input(1)
@@ -50,9 +46,14 @@ def main(game_name, player_mode, level):
                 x, y = view.ask_input(2)
                 move = Point(x, y)
 
-        if not game.play(move):
-            view.add_message("Input is invalid")
+        if not game.is_valid_move(move):
+            view.add_message("Input is invalid ({})".format(move))
+        else:
+            game.play(move)
 
+        view.set_history(game.history)
+
+    # End of Game
     if game.winner is None:
         view.add_message("Game is finished. Draw")
     else:
@@ -74,7 +75,7 @@ def menu_list(title, items, default):
 
 
 def select_level(game_name):
-    game_level_default = {'TicTacToe': 9, 'Connect Four': 9, 'Gomoku': 4}
+    game_level_default = {'TicTacToe': 9, 'Connect Four': 11, 'Gomoku': 4}
     level_default = game_level_default[game_name]
     level = input('Level ({}):'.format(level_default))
     print()
@@ -107,12 +108,12 @@ def make_ai(mode, level, p1, p2):
 
     ai1, ai2 = None, None
     if mode == 'AI_H':
-        ai1 = Minmax_AB_Parallel(p1, level)
+        ai1 = Minmax_AB(p1, level)
     elif mode == 'H_AI':
-        ai2 = Minmax_AB_Parallel(p2, level)
+        ai2 = Minmax_AB(p2, level)
     elif mode == 'AI_AI':
-        ai1 = Minmax_AB_Parallel(p1, level)
-        ai2 = Minmax_AB_Parallel(p2, level)
+        ai1 = Minmax_AB(p1, level)
+        ai2 = Minmax_AB(p2, level)
 
     return ai1, ai2
 
@@ -129,6 +130,14 @@ def make_game(game_name, p1, p2):
     else:
         assert(False)
     return game
+
+
+def make_view(game_name, game):
+
+    if game_name == 'Connect Four':
+        return ASCII_View(bitboard=game.bitboard)
+    else:
+        return ASCII_View(grid=game.grid)
 
 
 if __name__ == "__main__":
