@@ -48,12 +48,12 @@ class Minmax_AB():
 
         for move in game.generate_moves():
             self._move_count += 1
-            if game.play(move):
-                val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
-                if val > max:
-                    max = val
-                    best_move = move
-                game.undo()
+            game.play(move)
+            val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
+            if val > max:
+                max = val
+                best_move = move
+            game.undo()
 
             if max >= beta:
                 return max, best_move
@@ -73,12 +73,12 @@ class Minmax_AB():
 
         for move in game.generate_moves():
             self._move_count += 1
-            if game.play(move):
-                val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
-                if val < min:
-                    min = val
-                    best_move = move
-                game.undo()
+            game.play(move)
+            val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
+            if val < min:
+                min = val
+                best_move = move
+            game.undo()
 
             if min <= alpha:
                 return min, best_move

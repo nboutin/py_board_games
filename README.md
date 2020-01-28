@@ -16,7 +16,7 @@ AI opponent is using MinMax Alpha Beta algorithm.
     
 # ToDo
 ## Feature
-- [ ] Print moves history
+- [x] Print moves history
 
 ## Optimization
 
@@ -25,10 +25,10 @@ AI opponent is using MinMax Alpha Beta algorithm.
 - [x] Check only row for the current player
 
 ## Design / Technical choice
-- [ ] Update ASCII_View to handle grid and bitboard representation
 - [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration
+- [x] Update ASCII_View to handle grid and bitboard representation
 
 ## Tests
 - [ ] Add unittest for game selection/configuration in main
