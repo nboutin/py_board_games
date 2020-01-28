@@ -38,8 +38,7 @@ def main(game_name, player_mode, level):
         if game.current_player.is_ai:
             ai = ai1 if game.current_player == p1 else ai2
             move = ai.compute(game)
-            view.add_message("Move: {} ({}s)".format(
-                move, ai.computation_time))
+            view.add_message("Time:{}s".format(ai.computation_time))
         else:
             if game_name == "Connect Four":
                 move = view.ask_input(1)
@@ -48,9 +47,11 @@ def main(game_name, player_mode, level):
                 move = Point(x, y)
 
         if not game.is_valid_move(move):
-            view.add_message("Input is invalid")
+            view.add_message("Input is invalid ({})".format(move))
         else:
             game.play(move)
+
+        view.set_history(game.history)
 
     # End of Game
     if game.winner is None:
