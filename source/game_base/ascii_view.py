@@ -18,13 +18,13 @@ class ASCII_View():
         print('{} {}'.format(title, version))
 
     def display(self):
-        self._print_history()
         self._print_messages()
         print('-----')
         if self._grid is not None:
             self._print_grid(self._grid)
         else:
             self._print_bitboard(self._bitboard)
+        self._print_history()
         self._print_player(self.current_player)
 
     def ask_input(self, n):

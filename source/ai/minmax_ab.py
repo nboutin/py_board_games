@@ -34,7 +34,7 @@ class Minmax_AB():
         start = time.time()
         _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
         end = time.time()
-        self._computation_time = round(end - start, 3)
+        self._computation_time = round(end - start, 2)
 
         return best_move
 
