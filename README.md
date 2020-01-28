@@ -9,6 +9,10 @@ AI opponent is using MinMax Alpha Beta algorithm.
 - Connect Four
 - Gomoku aka 5 in row
 
+## Neat
+
+- https://neat-python.readthedocs.io/en/latest/
+
 # Test
 
     $ cd py_board_games
