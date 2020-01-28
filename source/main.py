@@ -28,7 +28,7 @@ def main(game_name, player_mode, level):
     ai1, ai2 = make_ai(player_mode, level, p1, p2)
     game = make_game(game_name, p1, p2)
 
-    view = ASCII_View(game._board)
+    view = make_view(game_name, game)
     view.welcome(game_name, VERSION)
 
     while game.is_over == False:
@@ -108,8 +108,7 @@ def make_ai(mode, level, p1, p2):
 
     ai1, ai2 = None, None
     if mode == 'AI_H':
-#         ai1 = Minmax_AB(p1, level)
-        ai1 = Minmax_AB_Parallel(p1, level)
+        ai1 = Minmax_AB(p1, level)
     elif mode == 'H_AI':
         ai2 = Minmax_AB(p2, level)
     elif mode == 'AI_AI':
@@ -131,6 +130,14 @@ def make_game(game_name, p1, p2):
     else:
         assert(False)
     return game
+
+
+def make_view(game_name, game):
+
+    if game_name == 'Connect Four':
+        return ASCII_View(bitboard=game.bitboard)
+    else:
+        return ASCII_View(grid=game.grid)
 
 
 if __name__ == "__main__":
