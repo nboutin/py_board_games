@@ -49,15 +49,19 @@ class ConnectFour():
         '''
         return self._board.listMoves()
 
-    def play(self, move):
+    def is_valid_move(self, move):
         if self._is_over:
             return False
 
+        if move not in self._board.listMoves():
+            return False
+
+        return True
+
+    def play(self, move):
         current_player = self._board.currentPlayer
         self._board.makeMove(move)
         self._compute_ending(current_player)
-
-        return True
 
     def undo(self):
         self._board.undoMove()

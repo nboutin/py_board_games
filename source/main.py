@@ -36,11 +36,7 @@ def main(game_name, player_mode, level):
         view.display()
 
         if game.current_player.is_ai:
-            if game.current_player == p1:
-                ai = ai1
-            elif game.current_player == p2:
-                ai = ai2
-
+            ai = ai1 if game.current_player == p1 else ai2
             move = ai.compute(game)
             view.add_message("Move: {} ({}s)".format(
                 move, ai.computation_time))
@@ -51,9 +47,12 @@ def main(game_name, player_mode, level):
                 x, y = view.ask_input(2)
                 move = Point(x, y)
 
-        if not game.play(move):
+        if not game.is_valid_move(move):
             view.add_message("Input is invalid")
+        else:
+            game.play(move)
 
+    # End of Game
     if game.winner is None:
         view.add_message("Game is finished. Draw")
     else:
