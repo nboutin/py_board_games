@@ -38,17 +38,20 @@ class ASCII_View():
         self._history = h
 
     def _print_grid(self, grid):
+        print(grid)
 
-        print('  ', end='')
-        for i in range(len(grid[0])):
-            print('{} '.format(i), end='')
-        print()
-
-        for i, row in enumerate(grid):
-            print('{}|'.format(i), end='')
-            for cell in row:
-                print(self._token_str(cell) + "|", end='')
-            print('')
+#     def _print_grid(self, grid):
+#
+#         print('  ', end='')
+#         for i in range(len(grid[0])):
+#             print('{} '.format(i), end='')
+#         print()
+#
+#         for i, row in enumerate(grid):
+#             print('{}|'.format(i), end='')
+#             for cell in row:
+#                 print(self._token_str(cell) + "|", end='')
+#             print('')
 
     def _print_player(self, player):
         print(player.name + '(' + self._token_str(player.token) + ')')

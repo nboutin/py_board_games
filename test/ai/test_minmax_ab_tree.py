@@ -16,6 +16,7 @@ from ai.minmax_alphabeta_tree import Minmax_AlphaBeta_Tree
 
 class TestMinmaxAlphaBetaTree(unittest.TestCase):
 
+    @unittest.skip("")
     def test_export_json(self):
 
         depth = 4
@@ -26,6 +27,7 @@ class TestMinmaxAlphaBetaTree(unittest.TestCase):
 
         minmax.to_json("minmax" + str(depth) + ".json")
 
+    @unittest.skip("")
     def test_print_and_export(self):
         p1 = Player("AI_1", Token.A, True)
         minmax = Minmax_AlphaBeta_Tree(p1, 3)

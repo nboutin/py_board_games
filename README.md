@@ -20,10 +20,12 @@ AI opponent is using MinMax Alpha Beta algorithm.
 
 ## Optimization
 
-- [ ] Implement bitboard
 - [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
+- [x] Implement bitboard
+- [x] Check only row for the current player
 
 ## Design / Technical choice
+- [ ] Update ASCII_View to handle grid and bitboard representation
 - [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration

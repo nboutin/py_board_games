@@ -19,6 +19,7 @@ class Minmax_AB():
         self._player = player
         self._depth = depth
         self._computation_time = 0.0
+        self._move_count = 0
 
     @property
     def computation_time(self):
@@ -32,7 +33,6 @@ class Minmax_AB():
 
         start = time.time()
         _, best_move = self._max_alpha_beta(game, depth, alpha, beta)
-
         end = time.time()
         self._computation_time = round(end - start, 3)
 
@@ -47,12 +47,13 @@ class Minmax_AB():
             return self._evaluate(game, depth,  self._player.token), best_move
 
         for move in game.generate_moves():
+            self._move_count += 1
             if game.play(move):
                 val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
                 if val > max:
                     max = val
                     best_move = move
-            game.undo()
+                game.undo()
 
             if max >= beta:
                 return max, best_move
@@ -71,12 +72,13 @@ class Minmax_AB():
             return self._evaluate(game, depth, self._player.token), best_move
 
         for move in game.generate_moves():
+            self._move_count += 1
             if game.play(move):
                 val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
                 if val < min:
                     min = val
                     best_move = move
-            game.undo()
+                game.undo()
 
             if min <= alpha:
                 return min, best_move
