@@ -1,7 +1,8 @@
 [NEAT]
 fitness_criterion     = max
-# max fitness = 2000
-fitness_threshold     = 1600
+# max fitness = 2000 - move_count
+# 1500 = 4/5 win
+fitness_threshold     = 1500
 pop_size              = 150
 reset_on_extinction   = False
 

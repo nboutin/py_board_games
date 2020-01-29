@@ -5,6 +5,10 @@ import neat
 import multiprocessing as mp
 # import visualize
 
+import cProfile
+import pstats
+from pstats import SortKey
+
 CORE_COUNT = 1
 CORE_COUNT = mp.cpu_count() - 1
 
@@ -25,8 +29,9 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-#     p.add_reporter(neat.Checkpointer(generation_interval=300,
-#                                      filename_prefix='connectfour_checkpoint_'))
+    p.add_reporter(neat.Checkpointer(generation_interval=1000,
+                                     time_interval_seconds=300,
+                                     filename_prefix='cf_chkpt_'))
 
     # Run until a solution is found.
     winner = None
@@ -36,11 +41,25 @@ def run(config_file):
         pe = neat.ParallelEvaluator(CORE_COUNT, eval_genome)
         winner = p.run(pe.evaluate)
 
+#     pr = cProfile.Profile()
+#     pr.enable()
+#     winner = p.run(evaluate, 100)
+#     pr.disable()
+#     ps = pstats.Stats(pr)
+#     ps.strip_dirs()
+#     ps.sort_stats('tottime')
+#     ps.print_stats()
+
     # Display the winning genome.
 #     print('\nBest genome:\n{!s}'.format(winner))
 #     print('\nBest genome:\n{!s}'.format(p.best_genome))
 
-    neat.Checkpointer(filename_prefix='cf_chkpt_').save_checkpoint(config, p, neat.DefaultSpeciesSet, 'win')
+    neat.Checkpointer(filename_prefix='cf_chkpt_').save_checkpoint(
+        config, p, neat.DefaultSpeciesSet, 'win')
+    
+    # Save the winner.
+    with open('winner-ctrnn', 'wb') as f:
+        pickle.dump(winner, f)
 
 #     visualize.plot_stats(stats, ylog=False, view=False, filename="fitness.svg")
 #     visualize.draw_net(config, winner, view=False, filename="winner-net.gv")
@@ -93,24 +112,13 @@ def simulate(net):
         p2 = Player("AI_2", Token.B, True)
         ai = Minmax_AB(p2, 2)
         game = ConnectFour(p1=p1, p2=p2)
-        bbx = game.bitboard[0]
-        bbo = game.bitboard[1]
-
         move_count = 0
 
         while not game.is_over:
             cp = game.current_player
 
             # Convert game board to inputs matrix
-            inputs = list()
-            for i in range(5, -1, -1):
-                for j in range(0 + i, 47 + i, 7):
-                    if (bbx >> j) & 1:
-                        inputs.append(1)
-                    elif (bbo >> j) & 1:
-                        inputs.append(-1)
-                    else:
-                        inputs.append(0)
+            inputs = bitboardToMatrix(game.bitboard)
 
             if cp == p1:
                 output = net.activate(inputs)
@@ -136,6 +144,22 @@ def simulate(net):
             fitness += move_count
 
     return fitness
+
+
+def bitboardToMatrix(bb):
+    bbx = bb[0]
+    bbo = bb[1]
+
+    inputs = list()
+    for i in range(5, -1, -1):
+        for j in range(0 + i, 47 + i, 7):
+            if (bbx >> j) & 1:
+                inputs.append(1)
+            elif (bbo >> j) & 1:
+                inputs.append(-1)
+            else:
+                inputs.append(0)
+    return inputs
 
 
 if __name__ == "__main__":

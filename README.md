@@ -19,6 +19,12 @@ AI opponent is using MinMax Alpha Beta algorithm.
     $ python -m unittest -v
     
 # ToDo
+## Neat
+- [ ] Profile evolve module
+- [ ] Use Minmax_AB which return random moves when their are equals
+- [ ] Start learning with only horizontal line to win, vertical, then diagonal
+- [ ] Fitness function increase MinMax level when Neat wins
+
 ## Feature
 - [x] Print moves history
 
