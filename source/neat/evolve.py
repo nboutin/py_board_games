@@ -5,8 +5,8 @@ import neat
 import multiprocessing as mp
 # import visualize
 
-CORE_COUNT = 1  # mp.cpu_count()
-EPISODE_COUNT = 100
+CORE_COUNT = 1
+CORE_COUNT = mp.cpu_count() - 1
 
 
 def run(config_file):
@@ -25,8 +25,8 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(generation_interval=300,
-                                     filename_prefix='connectfour_checkpoint_'))
+#     p.add_reporter(neat.Checkpointer(generation_interval=300,
+#                                      filename_prefix='connectfour_checkpoint_'))
 
     # Run until a solution is found.
     winner = None
@@ -37,16 +37,13 @@ def run(config_file):
         winner = p.run(pe.evaluate)
 
     # Display the winning genome.
-    print('\nBest genome:\n{!s}'.format(winner))
-    print('\nBest genome:\n{!s}'.format(p.best_genome))
+#     print('\nBest genome:\n{!s}'.format(winner))
+#     print('\nBest genome:\n{!s}'.format(p.best_genome))
+
+    neat.Checkpointer(filename_prefix='cf_chkpt_').save_checkpoint(config, p, neat.DefaultSpeciesSet, 'win')
 
 #     visualize.plot_stats(stats, ylog=False, view=False, filename="fitness.svg")
-
-    name = 'winner'
-    g = winner
-#     visualize.draw_net(config, g, view=False, filename=name + "-net.gv")
-
-    # Execute Winner
+#     visualize.draw_net(config, winner, view=False, filename="winner-net.gv")
 
 
 def evaluate(genomes, config):
@@ -73,22 +70,21 @@ def simulate(net):
     @param net to evaluate
     @return fitness of net
     @details Fitness is constructed as follow:
-    - win game +1000 (minus move count)
-    - loose game 100 (plus move count)
-    - draw game 500
+    - win game +400 (minus move count)
+    - loose game 0 (plus move count)
+    - draw game 200
     - invalid move, return move count
     - accumulate points over 5 matches
-    - Max Fitness = 5 * (1000 - 4) = 4800
+    - Max Fitness = 5 * (400 - 4) ~= 2000
     @todo
-    - How to balance loose game and invalid move
     - increase AI level after a win
 
     numpy.argmax: Returns the indices of the maximum values along an axis.
     '''
     episode_count = 5
     move_count_max = 6 * 7 / 2  # 21
-    win_point = move_count_max * episode_count
-    draw_point = win_point / 2
+    draw_point = 200  # at least > 21*5*2
+    win_point = draw_point * 2
     loose_point = 0
     fitness = 0
 
@@ -139,7 +135,7 @@ def simulate(net):
         else:
             fitness += move_count
 
-    return fitness / episode_count
+    return fitness
 
 
 if __name__ == "__main__":
