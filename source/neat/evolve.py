@@ -25,7 +25,8 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-#     p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(generation_interval=300,
+                                     filename_prefix='connectfour_checkpoint_'))
 
     # Run until a solution is found.
     winner = None
@@ -37,6 +38,7 @@ def run(config_file):
 
     # Display the winning genome.
     print('\nBest genome:\n{!s}'.format(winner))
+    print('\nBest genome:\n{!s}'.format(p.best_genome))
 
 #     visualize.plot_stats(stats, ylog=False, view=False, filename="fitness.svg")
 
@@ -45,29 +47,6 @@ def run(config_file):
 #     visualize.draw_net(config, g, view=False, filename=name + "-net.gv")
 
     # Execute Winner
-#     net = neat.nn.RecurrentNetwork.create(winner, config)
-#     env = gym.make('Copy-v0')
-#     env = wrappers.Monitor(env, directory="monitor", force=True)
-# #     env = wrappers.Monitor(env, directory="monitor", video_callable=lambda eid: True, force=True)
-#
-#     for i in range(EPISODE_COUNT):
-#         observation = env.reset()
-#         net.reset()
-#         while True:
-#             env.render()
-#             inputs = [0] * int(env.observation_space.n)
-#             inputs[observation] = 1
-#             output = net.activate(inputs)
-#
-#             d = output[0:2]
-#             w = output[2:4]
-#             c = output[4:]
-#             action = (np.argmax(d), np.argmax(w), np.argmax(c))
-#             observation, reward, done, info = env.step(action)
-#
-#             if done:
-#                 break
-#     env.close()
 
 
 def evaluate(genomes, config):
@@ -161,44 +140,6 @@ def simulate(net):
             fitness += move_count
 
     return fitness / episode_count
-
-# def simulate(net, config):
-#     ''' return: fitness
-#
-#         Actions consist of 3 sub-actions:
-#         - Direction to move the read head (left or right, plus up and down for 2-d envs)
-#         - Whether to write to the output tape
-#         - Which character to write (ignored if the above sub-action is 0)
-#
-#         Reward schedule:
-#             write a correct character: +1
-#             write a wrong character: -.5
-#             run out the clock: -1
-#             otherwise: 0
-#     '''
-#     return 0
-#     env = gym.make('Copy-v0')
-#     fitness = 0
-#
-#     for i in range(EPISODE_COUNT):
-#         observation = env.reset()
-#         net.reset()
-#         while True:
-#             inputs = [0] * int(env.observation_space.n)
-#             inputs[observation] = 1
-#             output = net.activate(inputs)
-#
-#             d = output[0:2]
-#             w = output[2:4]
-#             c = output[4:]
-#             action = (np.argmax(d), np.argmax(w), np.argmax(c))
-#             observation, reward, done, info = env.step(action)
-#
-#             if done:
-#                 fitness += reward
-#                 break
-#     env.close()
-#     return fitness
 
 
 if __name__ == "__main__":
