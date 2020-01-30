@@ -30,7 +30,7 @@ def main(config_file):
 
     p1 = Player("Neat_1", Token.A)
     p2 = Player("AI_2", Token.B, True)
-    ai = Minmax_AB(p2, 2)
+    ai = Minmax_AB(p2, 2, False)
     game = ConnectFour(p1=p1, p2=p2)
 
     while not game.is_over:

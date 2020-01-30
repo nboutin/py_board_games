@@ -112,7 +112,7 @@ def simulate(net):
     for i in range(episode_count):
         p1 = Player("Neat_1", Token.A)
         p2 = Player("AI_2", Token.B, True)
-        ai = Minmax_AB(p2, 6)
+        ai = Minmax_AB(p2, 2, True)
         game = ConnectFour(p1=p1, p2=p2)
         move_count = 0
 

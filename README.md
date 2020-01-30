@@ -30,6 +30,7 @@ AI opponent is using MinMax Alpha Beta algorithm.
 
 ## Optimization
 
+- [ ] Improve alpha beta by exploring center column first (3,2,4,1,5,0,6)
 - [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
 - [x] Implement bitboard
 - [x] Check only row for the current player
@@ -51,6 +52,8 @@ AI opponent is using MinMax Alpha Beta algorithm.
 - [ ] https://github.com/denkspuren/BitboardC4/blob/master/BitboardDesign.md
 - [ ] https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0
 - [ ] https://github.com/aimacode/aima-python/blob/master/games.py
+- [ ] http://blog.gamesolver.org/solving-connect-four
+- [ ] https://github.com/PascalPons/connect4
 
 
 # Links
@@ -63,8 +66,6 @@ AI opponent is using MinMax Alpha Beta algorithm.
 
 * https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/
 * http://www.pressibus.org/ataxx/autre/minimax/paper.html
-* https://github.com/Cledersonbc/tic-tac-toe-minimax
-* https://www.ntu.edu.sg/home/ehchua/programming/java/JavaGame_TicTacToe_AI.html
 * https://www.codeproject.com/Articles/43622/Solve-Tic-Tac-Toe-with-the-MiniMax-algorithm
 
 # Other board games

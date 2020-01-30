@@ -3,6 +3,7 @@
 
 import sys
 import time
+from random import getrandbits
 
 
 class Minmax_AB():
@@ -11,7 +12,7 @@ class Minmax_AB():
     LOOSE_POINT = -WIN_POINT
     DRAW_POINT = 0
 
-    def __init__(self, player, depth):
+    def __init__(self, player, depth, rand=False):
         '''
         @param player: AI player
         @param depth: explore tree moves until depth value (min:1)
@@ -20,6 +21,7 @@ class Minmax_AB():
         self._depth = depth
         self._computation_time = 0.0
         self._move_count = 0
+        self._rand = rand
 
     @property
     def computation_time(self):
@@ -53,6 +55,10 @@ class Minmax_AB():
             if val > max:
                 max = val
                 best_move = move
+#             elif self._rand and self._depth == depth and val == max:
+#                 if (not not getrandbits(1)):
+#                     max = val
+#                     best_move = move
             game.undo()
 
             if max >= beta:

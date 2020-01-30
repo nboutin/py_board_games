@@ -1,5 +1,7 @@
 *.png
 *.json
+cf_genome_win
+cf_chkpt_win
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

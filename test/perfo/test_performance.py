@@ -20,7 +20,7 @@ connect_four = True
 gomoku = False
 
 # Home
-expected = {'tictactoe': 0.422, 'connect_four': 84110, 'gomoku': 1.701}
+expected = {'tictactoe': 0.422, 'connect_four': 110000, 'gomoku': 1.701}
 # Work
 # expected = {'tictactoe': 0.52, 'connect_four': 174777, 'gomoku': 0.77}
 

@@ -188,6 +188,73 @@ class TestConnectFour(unittest.TestCase):
 
 class TestGamePosition(unittest.TestCase):
 
+    @unittest.skip('')
+    def test_rand_move(self):
+        p1 = Player("AI_1", Token.A, True)
+        p2 = Player("AI_2", Token.B, True)
+        ai1 = Minmax_AB(p1, 6, True)
+        ai2 = Minmax_AB(p2, 2, False)
+        game = ConnectFour(p1=p1, p2=p2)
+
+        for m in [3, 0, 6, 0, 5, 4, 1, 0, 0, 0, 5, 0, 6, 1, 2, 1, 6, 6, 6, 1, 1, 1, 5, 5, 5, 2, 6, 3]:
+            game.play(m)
+        print(game._board)
+
+        while not game.is_over:
+            cp = game.current_player
+            if cp == p1:
+                move = ai1.compute(game)
+            elif cp == p2:
+                move = ai2.compute(game)
+            else:
+                self.assertTrue(False)
+
+            game.play(move)
+        print("winner", game.winner)
+        print("history", game.history)
+        self.assertEqual(game.winner, p1)
+
+    def test_pos4(self):
+        p1 = Player("AI_1", Token.A, True)
+        ai1a = Minmax_AB(p1, 2, False)
+#         ai1b = Minmax_AB(p1, 2, True)
+        game = ConnectFour(p1=p1)
+        for m in [3, 0, 6, 0, 5, 4, 1, 0, 0, 0, 5, 0, 6, 1, 2, 1, 6, 6, 6, 1, 1, 1, 5, 5, 5, 2]:  # 6, 3
+            game.play(m)
+#         print(game._board)
+
+        self.assertFalse(game.is_valid_move(0))
+        self.assertFalse(game.is_valid_move(1))
+        self.assertTrue(game.is_valid_move(2))
+        self.assertTrue(game.is_valid_move(3))
+        self.assertTrue(game.is_valid_move(4))
+        self.assertTrue(game.is_valid_move(5))
+        self.assertTrue(game.is_valid_move(6))
+        
+        game.play(2)
+        self.assertFalse(game.is_over)
+        game.undo()
+        
+        game.play(3)
+        self.assertFalse(game.is_over)
+        game.undo()
+        
+        game.play(4)
+        self.assertFalse(game.is_over)
+        game.undo()
+
+        game.play(5)
+        self.assertFalse(game.is_over)
+        game.undo()
+
+        game.play(6)
+        self.assertFalse(game.is_over)
+        game.undo()
+
+        self.assertEqual(game.current_player, p1)
+        self.assertEqual(ai1a.compute(game), 3)
+#         self.assertEqual(ai1b.compute(game), 3)
+
     def test_pos3(self):
         '''
           0 1 2 3 4 5 6
