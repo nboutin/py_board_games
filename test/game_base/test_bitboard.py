@@ -116,7 +116,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(bb[0], x)
         self.assertEqual(bb[1], o)
         self.assertEqual(board.currentPlayer, 0)
-        
+
         board.undoMove()
         o ^= 1 << 21
         self.assertEqual(bb[0], x)
@@ -157,3 +157,46 @@ class TestBoard(unittest.TestCase):
             board.makeMove(m)
 
         self.assertTrue(board.isWin(0))
+
+    def test_flatView(self):
+        # init
+        b = BitBoard()
+        self.assertEqual(len(b.flatView()), 42)
+        self.assertEqual(b.flatView(), [0 for _ in range(42)])
+
+        g = [0 for _ in range(42)]
+        # column 0
+        g[0] = 1
+        b.makeMove(0)
+        self.assertEqual(b.flatView(), g)
+
+        # column 1
+        g[6] = -1
+        b.makeMove(1)
+        self.assertEqual(b.flatView(), g)
+
+        # column 2
+        g[12] = 1
+        b.makeMove(2)
+        self.assertEqual(b.flatView(), g)
+
+        # full column 0
+        g[1] = -1
+        g[2] = 1
+        g[3] = -1
+        g[4] = 1
+        g[5] = -1
+        for _ in range(5):
+            b.makeMove(0)
+        self.assertEqual(b.flatView(), g)
+
+        # full column 6
+        g[36] = 1
+        g[37] = -1
+        g[38] = 1
+        g[39] = -1
+        g[40] = 1
+        g[41] = -1
+        for _ in range(6):
+            b.makeMove(6)
+        self.assertEqual(b.flatView(), g)

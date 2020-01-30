@@ -29,7 +29,9 @@ class BitBoard():
         # Remember the moves done so far
         self._moves = list()
         # Token count for each column
-        self._column_count = [ 6 for _ in range(7)]
+        self._column_count = [6 for _ in range(7)]
+        # Flat view to be use by Neural Network
+        self._flat = [0 for _ in range(49)]
 
     @property
     def currentPlayer(self):
@@ -50,6 +52,7 @@ class BitBoard():
             moves[counter++] = col;
         '''
         move = 1 << self._height[col]
+        self._flat[self._height[col]] = -1 if self._counter & 1 else 1
         self._height[col] += 1
         self._bitboard[self._counter & 1] ^= move
         self._moves.append(col)
@@ -66,6 +69,7 @@ class BitBoard():
         col = self._moves.pop()
         self._height[col] -= 1
         move = 1 << self._height[col]
+        self._flat[self._height[col]] = 0
         self._bitboard[self._counter & 1] ^= move
         self._column_count[col] += 1
 
@@ -75,7 +79,7 @@ class BitBoard():
 #         @param player index, 0 player 1, 1 player 2
 #         '''
 #         bb = self._bitboard[player]
-# 
+#
 #         # diagonal \
 #         if (bb & (bb >> 6) & (bb >> 12) & (bb >> 18) != 0):
 #             return True
@@ -103,8 +107,8 @@ class BitBoard():
         }
         '''
         bb = self._bitboard[player]
-        
-        for d in [1,7,6,8]:
+
+        for d in [1, 7, 6, 8]:
             b = bb & (bb >> d)
             if (b & (b >> (2 * d))) != 0:
                 return True
@@ -128,6 +132,17 @@ class BitBoard():
 #                 moves.append(i)
 #         return moves
         return [i for i in range(7) if self._column_count[i] > 0]
+
+    def flatView(self):
+        '''
+        @brief Get flat view of the board
+        @details flat size is based on bitboard size (49). To represent Connect Four board,
+         index (6 13 20 27 34 41 48) should be remove from list. 
+        '''
+        view = self._flat[:]
+        for i in (48, 41, 34, 27, 20, 13, 6):
+            view.pop(i)
+        return view
 
     def __str__(self):
         s = '\n'
