@@ -13,7 +13,7 @@ from ai.minmax_ab import Minmax_AB
 from game.connect_four import ConnectFour
 
 
-CHECKPOINT_FILENAME = os.path.join('best', '0129_cf_chkpt_win_10500')
+GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_1940_28_l2')
 
 
 def main(config_file):
@@ -23,11 +23,10 @@ def main(config_file):
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_file)
     # load the winner
-    with open('winner-ctrnn', 'rb') as f:
+    with open(GENOME_PATHNAME, 'rb') as f:
         c = pickle.load(f)
 
     net = neat.nn.RecurrentNetwork.create(c, config)
-
 
     p1 = Player("Neat_1", Token.A)
     p2 = Player("AI_2", Token.B, True)
@@ -37,10 +36,8 @@ def main(config_file):
     while not game.is_over:
         cp = game.current_player
 
-        # Convert game board to inputs matrix
-        inputs = bitboardToMatrix(game.bitboard)
-
         if cp == p1:
+            inputs = game.flat
             output = net.activate(inputs)
             move = np.argmax(output)
 
@@ -51,23 +48,9 @@ def main(config_file):
 
         game.play(move)
 
-    output = net.activate(inputs)
-    move = np.argmax(output)
+    print("History:", game.history)
+    print("Winner:", game.winner)
 
-def bitboardToMatrix(bb):
-    bbx = bb[0]
-    bbo = bb[1]
-
-    inputs = list()
-    for i in range(5, -1, -1):
-        for j in range(0 + i, 47 + i, 7):
-            if (bbx >> j) & 1:
-                inputs.append(1)
-            elif (bbo >> j) & 1:
-                inputs.append(-1)
-            else:
-                inputs.append(0)
-    return inputs
 
 if __name__ == '__main__':
     import os

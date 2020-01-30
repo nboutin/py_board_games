@@ -119,10 +119,8 @@ def simulate(net):
         while not game.is_over:
             cp = game.current_player
 
-            # Convert game board to inputs matrix
-            inputs = game.flat
-
             if cp == p1:
+                inputs = game.flat
                 output = net.activate(inputs)
                 move = np.argmax(output)
 
@@ -146,22 +144,6 @@ def simulate(net):
             fitness += move_count
 
     return fitness
-
-
-# def bitboardToMatrix(bb):
-#     bbx = bb[0]
-#     bbo = bb[1]
-#
-#     inputs = list()
-#     for i in range(5, -1, -1):
-#         for j in range(0 + i, 47 + i, 7):
-#             if (bbx >> j) & 1:
-#                 inputs.append(1)
-#             elif (bbo >> j) & 1:
-#                 inputs.append(-1)
-#             else:
-#                 inputs.append(0)
-#     return inputs
 
 
 if __name__ == "__main__":

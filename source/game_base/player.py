@@ -24,3 +24,6 @@ class Player():
     @is_ai.setter
     def is_ai(self, val):
         self._is_ai = val
+
+    def __str__(self):
+        return self._name
