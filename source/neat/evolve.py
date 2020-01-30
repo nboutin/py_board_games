@@ -3,13 +3,14 @@
 
 import neat
 import multiprocessing as mp
+import pickle
 # import visualize
 
 import cProfile
 import pstats
 from pstats import SortKey
 
-CORE_COUNT = 1
+# CORE_COUNT = 1
 CORE_COUNT = mp.cpu_count() - 1
 
 
@@ -54,11 +55,12 @@ def run(config_file):
 #     print('\nBest genome:\n{!s}'.format(winner))
 #     print('\nBest genome:\n{!s}'.format(p.best_genome))
 
+    # Generate checkpoint of population when winner is found
     neat.Checkpointer(filename_prefix='cf_chkpt_').save_checkpoint(
         config, p, neat.DefaultSpeciesSet, 'win')
-    
-    # Save the winner.
-    with open('winner-ctrnn', 'wb') as f:
+
+    # Save the genome winner.
+    with open(os.path.join('genome', 'cf_genome_win'), 'wb') as f:
         pickle.dump(winner, f)
 
 #     visualize.plot_stats(stats, ylog=False, view=False, filename="fitness.svg")
@@ -118,7 +120,7 @@ def simulate(net):
             cp = game.current_player
 
             # Convert game board to inputs matrix
-            inputs = bitboardToMatrix(game.bitboard)
+            inputs = game.flat
 
             if cp == p1:
                 output = net.activate(inputs)
@@ -146,20 +148,20 @@ def simulate(net):
     return fitness
 
 
-def bitboardToMatrix(bb):
-    bbx = bb[0]
-    bbo = bb[1]
-
-    inputs = list()
-    for i in range(5, -1, -1):
-        for j in range(0 + i, 47 + i, 7):
-            if (bbx >> j) & 1:
-                inputs.append(1)
-            elif (bbo >> j) & 1:
-                inputs.append(-1)
-            else:
-                inputs.append(0)
-    return inputs
+# def bitboardToMatrix(bb):
+#     bbx = bb[0]
+#     bbo = bb[1]
+#
+#     inputs = list()
+#     for i in range(5, -1, -1):
+#         for j in range(0 + i, 47 + i, 7):
+#             if (bbx >> j) & 1:
+#                 inputs.append(1)
+#             elif (bbo >> j) & 1:
+#                 inputs.append(-1)
+#             else:
+#                 inputs.append(0)
+#     return inputs
 
 
 if __name__ == "__main__":

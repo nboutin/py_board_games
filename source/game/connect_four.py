@@ -27,6 +27,10 @@ class ConnectFour():
         return self._board._bitboard
 
     @property
+    def flat(self):
+        return self._board.flatView()
+
+    @property
     def is_over(self):
         return self._is_over
 
