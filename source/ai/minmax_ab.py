@@ -3,7 +3,7 @@
 
 import sys
 import time
-from random import getrandbits
+from random import shuffle
 
 
 class Minmax_AB():
@@ -48,17 +48,16 @@ class Minmax_AB():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth,  self._player.token), best_move
 
-        for move in game.generate_moves():
+        moves = game.generate_moves()
+        if self._rand:
+            shuffle(moves)
+        for move in moves:
             self._move_count += 1
             game.play(move)
             val, _ = self._min_alpha_beta(game, depth - 1, alpha, beta)
             if val > max:
                 max = val
                 best_move = move
-#             elif self._rand and self._depth == depth and val == max:
-#                 if (not not getrandbits(1)):
-#                     max = val
-#                     best_move = move
             game.undo()
 
             if max >= beta:
@@ -77,7 +76,10 @@ class Minmax_AB():
         if self._is_leaf(game, depth):
             return self._evaluate(game, depth, self._player.token), best_move
 
-        for move in game.generate_moves():
+        moves = game.generate_moves()
+        if self._rand:
+            shuffle(moves)
+        for move in moves:
             self._move_count += 1
             game.play(move)
             val, _ = self._max_alpha_beta(game, depth - 1, alpha, beta)
@@ -105,7 +107,7 @@ class Minmax_AB():
         '''
         if game.is_over and not game.winner is None:
             if game.winner.token == win_token:
-                return Minmax_AB.WIN_POINT + depth
+                return Minmax_AB.WIN_POINT - game.moveCount
             else:
-                return Minmax_AB.LOOSE_POINT - depth
+                return Minmax_AB.LOOSE_POINT + game.moveCount
         return Minmax_AB.DRAW_POINT

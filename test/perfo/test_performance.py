@@ -20,9 +20,9 @@ connect_four = True
 gomoku = False
 
 # Home
-expected = {'tictactoe': 0.422, 'connect_four': 110000, 'gomoku': 1.701}
+# expected = {'tictactoe': 0.422, 'connect_four': 110000, 'gomoku': 1.701}
 # Work
-# expected = {'tictactoe': 0.52, 'connect_four': 174777, 'gomoku': 0.77}
+expected = {'tictactoe': 0.52, 'connect_four': 150000, 'gomoku': 0.77}
 
 
 class TestPerformance(unittest.TestCase):
@@ -57,8 +57,8 @@ class TestPerformance(unittest.TestCase):
 
         from game.connect_four import ConnectFour
 
-        n = 10
-        depth = 11
+        n = 2
+        depth = 10
         p1 = Player("AI_1", Token.A, True)
         duration = 0
         move_count = 0

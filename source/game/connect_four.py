@@ -46,11 +46,11 @@ class ConnectFour():
     def history(self):
         return self._board._moves
 
+    @property
+    def moveCount(self):
+        return self._board.moveCount
+
     def generate_moves(self):
-        '''
-        @brief All legal moves
-        @details Removing move from full column does not improve performances
-        '''
         return self._board.listMoves()
 
     def is_valid_move(self, move):

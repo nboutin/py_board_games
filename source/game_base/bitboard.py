@@ -35,10 +35,12 @@ class BitBoard():
 
     @property
     def currentPlayer(self):
-        '''
-        @return 0 if player 1, 1 if player 2
-        '''
+        '''@return 0 if player 1, 1 if player 2'''
         return self._counter & 1
+
+    @property
+    def moveCount(self):
+        return self._counter
 
     def hasFreeCell(self):
         return self._counter < (6 * 7)
@@ -131,7 +133,11 @@ class BitBoard():
 #             if (top & 1 << self._height[i]) == 0:
 #                 moves.append(i)
 #         return moves
-        return [i for i in range(7) if self._column_count[i] > 0]
+#         for(int i = 0; i < Position::WIDTH; i++)
+#             columnOrder[i] = Position::WIDTH/2 + (1-2*(i%2))*(i+1)/2;
+#         return [i for i in range(7) if self._column_count[i] > 0]
+
+        return [i for i in [3, 2, 4, 1, 5, 0, 6] if self._column_count[i] > 0]
 
     def flatView(self):
         '''

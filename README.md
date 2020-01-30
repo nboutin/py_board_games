@@ -20,22 +20,25 @@ AI opponent is using MinMax Alpha Beta algorithm.
     
 # ToDo
 ## Neat
+- [ ] Evaluate against ten last champion (ten last best genome)
+- [ ] Add player turn position as input
 - [ ] Profile evolve module
 - [ ] Use Minmax_AB which return random moves when their are equals
 - [ ] Start learning with only horizontal line to win, vertical, then diagonal
-- [ ] Fitness function increase MinMax level when Neat wins
+- [x] Fitness function increase MinMax level when Neat wins
 
 ## Feature
 - [x] Print moves history
 
 ## Optimization
 
-- [ ] Improve alpha beta by exploring center column first (3,2,4,1,5,0,6)
+- [ ] Improve alpha beta by exploring center column first [3,2,4,1,5,0,6]
 - [ ] Improve evaluate function by counting 3 token in a row of 4, take into account empty cell
 - [x] Implement bitboard
 - [x] Check only row for the current player
 
 ## Design / Technical choice
+- [ ] Remove Token from Player and use turn_position, idem for Minmax_AB
 - [ ] MinMax use current depth and depth_max parameters
 - [ ] Define base class Game
 - [ ] Construct TicTacToe game from Gomoku with configuration

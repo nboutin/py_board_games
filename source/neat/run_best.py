@@ -7,13 +7,15 @@ import numpy as np
 import pickle
 import sys
 sys.path.append("..")
-from game_base.player import Player
+from game_base.player import PlayerNeat, PlayerMinmax
 from game_base.board import Token
 from ai.minmax_ab import Minmax_AB
 from game.connect_four import ConnectFour
 
 
-GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_1940_28_l2')
+# GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_1940_28_l2')
+# GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_5895_11')
+GENOME_PATHNAME = os.path.join('genome', 'cf_genome_win')
 
 
 def main(config_file):
@@ -27,29 +29,24 @@ def main(config_file):
         c = pickle.load(f)
 
     net = neat.nn.RecurrentNetwork.create(c, config)
+    level = 8
 
-    p1 = Player("Neat_1", Token.A)
-    p2 = Player("AI_2", Token.B, True)
-    ai = Minmax_AB(p2, 2, False)
+    p1 = PlayerNeat("Neat_1", net)
+    p2 = PlayerMinmax("Minmax_1", Token.B, level, True)
     game = ConnectFour(p1=p1, p2=p2)
+    move = None
 
     while not game.is_over:
-        cp = game.current_player
-
-        if cp == p1:
-            inputs = game.flat
-            output = net.activate(inputs)
-            move = np.argmax(output)
-
-            if not game.is_valid_move(move):
-                break
-        else:
-            move = ai.compute(game)
-
+        move = game.current_player.next_move(game)
+        if not game.is_valid_move(move):
+            break
         game.play(move)
 
-    print("History:", game.history)
     print("Winner:", game.winner)
+    print("History:", game.history)
+    print("Current player:", game.current_player)
+    print('Last move:', move)
+    print(game._board)
 
 
 if __name__ == '__main__':
