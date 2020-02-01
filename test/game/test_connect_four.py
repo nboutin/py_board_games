@@ -177,13 +177,13 @@ class TestConnectFour(unittest.TestCase):
 
     def test_generate_moves(self):
         game = ConnectFour()
-        self.assertEqual(game.generate_moves(), [0, 1, 2, 3, 4, 5, 6])
+        self.assertEqual(game.generate_moves(), [3,2,4,1,5,0,6])
 
         for i in range(ConnectFour._ROW):
             game.play(0)
         for i in range(ConnectFour._ROW):
             game.play(4)
-        self.assertEqual(game.generate_moves(), [1, 2, 3, 5, 6])
+        self.assertEqual(game.generate_moves(), [3,2,1,5,6])
 
 
 class TestGamePosition(unittest.TestCase):
@@ -340,11 +340,11 @@ class TestGamePosition(unittest.TestCase):
 
         depth = 1
         minmax = Minmax_AB(p2, depth)
-        self.assertEqual(minmax.compute(game), 0)
+        self.assertEqual(minmax.compute(game), 3)
 
         depth = 2
         minmax = Minmax_AB(p2, depth)
-        self.assertEqual(minmax.compute(game), 0)
+        self.assertEqual(minmax.compute(game), 3)
 
 
 if __name__ == '__main__':

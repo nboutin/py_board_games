@@ -42,6 +42,10 @@ class TicTacToe():
     @property
     def history(self):
         return self._history
+    
+    @property
+    def moveCount(self):
+        return self._board.cell_used_count
 
     def generate_moves(self):
         '''

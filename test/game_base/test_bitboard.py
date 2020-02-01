@@ -137,18 +137,18 @@ class TestBoard(unittest.TestCase):
     def test_listMoves(self):
         board = BitBoard()
 
-        self.assertEqual(board.listMoves(), [0, 1, 2, 3, 4, 5, 6])
+        self.assertEqual(board.listMoves(), [3,2,4,1,5,0,6])
         for i in range(6):
             board.makeMove(0)
-        self.assertEqual(board.listMoves(), [1, 2, 3, 4, 5, 6])
+        self.assertEqual(board.listMoves(), [3,2,4,1,5,6])
 
         for i in range(6):
             board.makeMove(6)
-        self.assertEqual(board.listMoves(), [1, 2, 3, 4, 5])
+        self.assertEqual(board.listMoves(), [3,2,4,1,5])
 
         for i in range(6):
             board.makeMove(3)
-        self.assertEqual(board.listMoves(), [1, 2, 4, 5])
+        self.assertEqual(board.listMoves(), [2,4,1,5])
 
     def test_seqA(self):
         board = BitBoard()

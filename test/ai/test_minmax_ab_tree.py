@@ -13,7 +13,7 @@ from game_base.player import Player
 from game.connect_four import (ConnectFour, Token)
 from ai.minmax_alphabeta_tree import Minmax_AlphaBeta_Tree
 
-
+@unittest.skip("not supported")
 class TestMinmaxAlphaBetaTree(unittest.TestCase):
 
     @unittest.skip("")
