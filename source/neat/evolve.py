@@ -14,8 +14,8 @@ from pstats import SortKey
 # CORE_COUNT = 2
 CORE_COUNT = mp.cpu_count()
 
-CHECKPOINT = os.path.join('genome', 'cf_chkpt_12349')
-# CHECKPOINT = None
+# CHECKPOINT = os.path.join('genome', 'cf_chkpt_12349')
+CHECKPOINT = None
 
 # make pop global to be use in evaluate function
 pop = None
@@ -114,19 +114,9 @@ def simulate(net):
         run_game(game, p1, p2)
 
         fitness += p1.score * level if p1.score >= 0 else p1.score
-        scores.append((p1.score, level))
         if game.winner == p1:
             level += 1
 
-#     # Play 10 game against itself without bad move
-#     for _ in range(10):
-#         p1 = PlayerNeat("Neat_1", net)
-#         p2 = PlayerNeat("Neat_2", net)
-#         game = ConnectFour(p1=p1, p2=p2)
-#         run_game(game, p1, p2)
-
-    if fitness >= 10000:
-        print('scores:', scores)
     return fitness
 
 

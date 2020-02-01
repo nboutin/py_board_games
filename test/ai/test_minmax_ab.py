@@ -57,10 +57,10 @@ class TestMinmaxAB(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.A), Minmax_AB.WIN_POINT)
+            game, depth, Token.A), Minmax_AB.WIN_POINT - game.moveCount)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.B), Minmax_AB.LOOSE_POINT)
+            game, depth, Token.B), Minmax_AB.LOOSE_POINT + game.moveCount)
 
     def test_evaluate_d1(self):
         '''
@@ -86,10 +86,10 @@ class TestMinmaxAB(unittest.TestCase):
         game.play(Point(2, 0))
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.A), Minmax_AB.WIN_POINT + depth)
+            game, depth, Token.A), Minmax_AB.WIN_POINT - game.moveCount)
 
         self.assertEqual(minmax._evaluate(
-            game, depth, Token.B), Minmax_AB.LOOSE_POINT - depth)
+            game, depth, Token.B), Minmax_AB.LOOSE_POINT + game.moveCount)
 
     def test_minmax_d1(self):
         '''
@@ -112,7 +112,7 @@ class TestMinmaxAB(unittest.TestCase):
 
         game.play(Point(2, 0))
         val, _ = minmax._min_alpha_beta(game, depth, -1000, 1000)
-        self.assertEqual(val, Minmax_AB.WIN_POINT + depth)
+        self.assertEqual(val, Minmax_AB.WIN_POINT - game.moveCount)
         game.undo()
 
         game.play(Point(2, 1))
@@ -122,7 +122,7 @@ class TestMinmaxAB(unittest.TestCase):
 
         game.play(Point(2, 2))
         val, _ = minmax._min_alpha_beta(game, depth, -1000, 1000)
-        self.assertEqual(val, Minmax_AB.LOOSE_POINT)
+        self.assertEqual(val, Minmax_AB.LOOSE_POINT + 8)
         game.undo()
 
     def test_minmax_d2(self):

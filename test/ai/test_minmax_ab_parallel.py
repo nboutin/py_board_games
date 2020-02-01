@@ -18,6 +18,7 @@ from game.connect_four import ConnectFour
 from game.gomoku import Gomoku
 
 
+@unittest.skip("not supported")
 class TestMinmaxAlphaBeta(unittest.TestCase):
 
     def test_pos(self):

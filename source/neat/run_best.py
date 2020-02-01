@@ -15,6 +15,7 @@ from game.connect_four import ConnectFour
 
 # GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_1940_28_l2')
 # GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_5895_11')
+GENOME_PATHNAME = os.path.join('genome', '0202_cf_genome_win')
 GENOME_PATHNAME = os.path.join('genome', 'cf_genome_win')
 
 
