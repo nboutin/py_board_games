@@ -13,7 +13,7 @@ from game_base.player import Player
 from game.tictactoe import (TicTacToe, Token)
 from ai.minmax import Minmax
 
-
+@unittest.skip("not supported")
 class TestMinmax(unittest.TestCase):
 
     def test_is_leaf(self):

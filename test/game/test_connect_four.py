@@ -5,6 +5,7 @@ import unittest
 import copy
 import sys
 import os
+from source.game_base.player import PlayerMinmax
 sys.path.insert(0, os.path.join(sys.path[0], 'source'))
 # sys.path.insert(0, os.path.join(sys.path[0], '..', '..', 'source'))
 
@@ -215,9 +216,10 @@ class TestGamePosition(unittest.TestCase):
         self.assertEqual(game.winner, p1)
 
     def test_pos4(self):
-        p1 = Player("AI_1", Token.A, True)
-        ai1a = Minmax_AB(p1, 2, False)
+#         p1 = Player("AI_1", Token.A, True)
+#         ai1a = Minmax_AB(p1, 2, False)
 #         ai1b = Minmax_AB(p1, 2, True)
+        p1 = PlayerMinmax("AI1", level=2)
         game = ConnectFour(p1=p1)
         for m in [3, 0, 6, 0, 5, 4, 1, 0, 0, 0, 5, 0, 6, 1, 2, 1, 6, 6, 6, 1, 1, 1, 5, 5, 5, 2]:  # 6, 3
             game.play(m)
@@ -252,7 +254,7 @@ class TestGamePosition(unittest.TestCase):
         game.undo()
 
         self.assertEqual(game.current_player, p1)
-        self.assertEqual(ai1a.compute(game), 3)
+        self.assertEqual(p1.next_move(game), 3)
 #         self.assertEqual(ai1b.compute(game), 3)
 
     def test_pos3(self):
@@ -266,18 +268,18 @@ class TestGamePosition(unittest.TestCase):
         5|X|O|O|-|-|-|-|
         Player_1(X) to play
         '''
-        p1 = Player("AI_1", Token.A, True)
-        p2 = Player("AI_2", Token.B, True)
-        game = ConnectFour(p1=p1, p2=p2)
+        p1 = PlayerMinmax("AI_1", level=2)
+#         p2 = Player("AI_2", Token.B, True)
+        game = ConnectFour(p1=p1)
 
         moves = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 2, 1, 2]
         for m in moves:
             game.play(m)
 
-        depth = 2
-        ai = Minmax_AB(p1, depth)
+#         depth = 2
+#         ai = Minmax_AB(p1, depth)
 
-        self.assertEqual(ai.compute(game), 3)
+        self.assertEqual(p1.next_move(game), 3)
 
     def test_pos2(self):
         '''
@@ -289,7 +291,7 @@ class TestGamePosition(unittest.TestCase):
         4|O|X|X|X|O|-|-|
         5|O|X|O|X|X|-|-|
         '''
-        p2 = Player("AI_2", Token.B, True)
+        p2 = PlayerMinmax("AI2", level=2)
         game = ConnectFour(p2=p2)
 
         moves = [3, 0, 4, 2, 3, 0, 2, 0, 0, 4, 1,
@@ -314,9 +316,9 @@ class TestGamePosition(unittest.TestCase):
         game.undo()
         game.undo()
         self.assertEqual(game.current_player, p2)
-        depth = 2
-        minmax = Minmax_AB(p2, depth)
-        self.assertEqual(minmax.compute(game), 4)
+#         depth = 2
+#         minmax = Minmax_AB(p2, depth)
+        self.assertEqual(p2.next_move(game), 4)
 
     def test_pos1(self):
         '''
@@ -329,7 +331,7 @@ class TestGamePosition(unittest.TestCase):
         5|O|-|O|X|X|X|O|
         '''
 
-        p2 = Player("AI_2", Token.B, True)
+        p2 = PlayerMinmax("AI2", level=1)
         game = ConnectFour(p2=p2)
 
         moves = [3, 0, 4, 2, 5, 6, 4, 0, 3, 0, 0, 2, 2, 2, 5, 6, 4, 4, 3]
@@ -338,13 +340,14 @@ class TestGamePosition(unittest.TestCase):
 
         self.assertEqual(game.current_player, p2)
 
-        depth = 1
-        minmax = Minmax_AB(p2, depth)
-        self.assertEqual(minmax.compute(game), 3)
+#         depth = 1
+#         minmax = Minmax_AB(p2, depth)
+        self.assertEqual(p2.next_move(game), 3)
 
-        depth = 2
-        minmax = Minmax_AB(p2, depth)
-        self.assertEqual(minmax.compute(game), 3)
+#         depth = 2
+#         minmax = Minmax_AB(p2, depth)
+        p2._ai._depth = 2
+        self.assertEqual(p2.next_move(game), 3)
 
 
 if __name__ == '__main__':

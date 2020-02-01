@@ -11,6 +11,7 @@ from game_base.board import (Point)
 
 GOMOKU_LINE_WIN_SIZE = 5
 
+@unittest.skip("not supported")
 class TestGomoku(unittest.TestCase):
 
     def test_init(self):

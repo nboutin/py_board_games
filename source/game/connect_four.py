@@ -16,8 +16,10 @@ class ConnectFour():
 
     def __init__(self, p1=None, p2=None):
         self._board = BitBoard()
-        self._p1 = p1 if not p1 is None else Player("Player 1", Token.A)
-        self._p2 = p2 if not p2 is None else Player("Player 2", Token.B)
+        self._p1 = p1 if p1 is not None else Player("Player_1")
+        self._p1.turn = 0
+        self._p2 = p2 if p2 is not None else Player("Player_2")
+        self._p2.turn = 1
         self._winner_player = None
         self._is_over = False
         self._moves = [i for i in range(ConnectFour._COLUMN)]

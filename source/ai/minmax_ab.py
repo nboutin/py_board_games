@@ -46,7 +46,7 @@ class Minmax_AB():
         best_move = None
 
         if self._is_leaf(game, depth):
-            return self._evaluate(game, depth,  self._player.token), best_move
+            return self._evaluate(game, self._player.turn), best_move
 
         moves = game.generate_moves()
         if self._rand:
@@ -74,7 +74,7 @@ class Minmax_AB():
         best_move = None
 
         if self._is_leaf(game, depth):
-            return self._evaluate(game, depth, self._player.token), best_move
+            return self._evaluate(game, self._player.turn), best_move
 
         moves = game.generate_moves()
         if self._rand:
@@ -99,14 +99,14 @@ class Minmax_AB():
     def _is_leaf(self, game, depth):
         return game.is_over or depth <= 0
 
-    def _evaluate(self, game, depth, win_token):
+    def _evaluate(self, game, win_turn):
         '''
         TODO: replace win_token with is_max boolean that way 
         draw point could be evaluate in function of depth
         TODO: use free cell count to improve draw value
         '''
-        if game.is_over and not game.winner is None:
-            if game.winner.token == win_token:
+        if game.is_over and game.winner is not None:
+            if game.winner.turn == win_turn:
                 return Minmax_AB.WIN_POINT - game.moveCount
             else:
                 return Minmax_AB.LOOSE_POINT + game.moveCount

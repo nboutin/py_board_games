@@ -2,43 +2,49 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import numpy as np
+
 sys.path.append("..")
 from ai.minmax_ab import Minmax_AB
-import numpy as np
 
 
 class Player():
 
-    def __init__(self, name, token, is_ai=False):
+    def __init__(self, name):
         self._name = name
-        self._token = token
-        self._is_ai = is_ai
+        self._turn = None
         self.score = 0
 
     @property
     def name(self):
         return self._name
-
+    
     @property
-    def token(self):
-        return self._token
+    def turn(self):
+        return self._turn
+    
+    @turn.setter
+    def turn(self, t):
+        self._turn = t
 
-    @property
-    def is_ai(self):
-        return self._is_ai
-
-    @is_ai.setter
-    def is_ai(self, val):
-        self._is_ai = val
+    def next_move(self, game):
+        raise Exception("Not implemented")
 
     def __str__(self):
-        return self._name
+        return self._name + '(' + self._turn + ')'
 
+class PlayerHuman(Player):
+    
+    def __init__(self, name):
+        super().__init__(name)
+        
+    def next_move(self, game):
+        return int(input("Enter (x): "))
 
 class PlayerMinmax(Player):
 
-    def __init__(self, name, token, level, rand=False):
-        super().__init__(name, token, True)
+    def __init__(self, name, level, rand=False):
+        super().__init__(name)
         self._ai = Minmax_AB(self, level, rand)
 
     def next_move(self, game):
@@ -48,7 +54,7 @@ class PlayerMinmax(Player):
 class PlayerNeat(Player):
 
     def __init__(self, name, net):
-        super().__init__(name, None, True)
+        super().__init__(name)
         self._net = net
 
     def next_move(self, game):

@@ -34,22 +34,27 @@ def main(game_name, player_mode, level):
     while game.is_over == False:
         view.current_player = game.current_player
         view.display()
-
-        if game.current_player.is_ai:
-            ai = ai1 if game.current_player == p1 else ai2
-            move = ai.compute(game)
-            view.add_message("Time:{}s".format(ai.computation_time))
-        else:
-            if game_name == "Connect Four":
-                move = view.ask_input(1)
-            else:
-                x, y = view.ask_input(2)
-                move = Point(x, y)
-
+        
+        move = game.current_player.next_move(game)
         if not game.is_valid_move(move):
             view.add_message("Input is invalid ({})".format(move))
-        else:
-            game.play(move)
+        game.play(move)
+
+#         if game.current_player.is_ai:
+#             ai = ai1 if game.current_player == p1 else ai2
+#             move = ai.compute(game)
+#             view.add_message("Time:{}s".format(ai.computation_time))
+#         else:
+#             if game_name == "Connect Four":
+#                 move = view.ask_input(1)
+#             else:
+#                 x, y = view.ask_input(2)
+#                 move = Point(x, y)
+# 
+#         if not game.is_valid_move(move):
+#             view.add_message("Input is invalid ({})".format(move))
+#         else:
+#             game.play(move)
 
         view.set_history(game.history)
 
