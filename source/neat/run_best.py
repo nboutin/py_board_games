@@ -15,7 +15,7 @@ from game.connect_four import ConnectFour
 
 # GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_1940_28_l2')
 # GENOME_PATHNAME = os.path.join('genome', '0130_cf_genome_win_5895_11')
-GENOME_PATHNAME = os.path.join('genome', '0202_cf_genome_win')
+# GENOME_PATHNAME = os.path.join('genome', '0202_cf_genome_win')
 GENOME_PATHNAME = os.path.join('genome', 'cf_genome_win')
 
 
@@ -30,7 +30,7 @@ def main(config_file):
         c = pickle.load(f)
 
     net = neat.nn.RecurrentNetwork.create(c, config)
-    level = 8
+    level = 2
 
     p1 = PlayerNeat("Neat_1", net)
     p2 = PlayerMinmax("Minmax_1", Token.B, level, True)

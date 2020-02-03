@@ -82,10 +82,9 @@ def evaluate(genomes, config):
 
 def eval_genome(genome, config):
     net = neat.nn.RecurrentNetwork.create(genome, config)
-    return simulate(net)
+    return simulate_B(net)
 
 
-import numpy as np
 import sys
 sys.path.append("..")
 from game_base.player import Player, PlayerNeat, PlayerMinmax
@@ -94,7 +93,7 @@ from game_base.board import Token
 from game.connect_four import ConnectFour
 
 
-def simulate(net):
+def simulate_A(net):
     '''
     @param net to evaluate
     @return fitness of net
@@ -112,6 +111,7 @@ def simulate(net):
         p2 = PlayerMinmax("Minmax_1", Token.B, level, True)
         game = ConnectFour(p1=p1, p2=p2)
         run_game(game, p1, p2)
+        set_score(game, p1, p2)
 
         fitness += p1.score * level if p1.score >= 0 else p1.score
         if game.winner == p1:
@@ -120,31 +120,48 @@ def simulate(net):
     return fitness
 
 
-def run_game(game, p1, p2):
+def simulate_B(net):
+    '''
+    Play 10 round against minmax
+    win:200, draw:100, loose:0, bad move:0
+    '''
+    episode_count = 20
+    level = 2
+    fitness = 0
+    
+    for _ in range (episode_count):
+        p1 = PlayerNeat("Neat_1", net)
+        p2 = PlayerMinmax("Minmax_1", Token.B, level, True)
+        
+        game = ConnectFour(p1=p1, p2=p2)
+        run_game(game)
+        set_score(game, p1, p2, episode_count)
+        
+        fitness += p1.score
+    return fitness
+
+def run_game(game):
     while not game.is_over:
         move = game.current_player.next_move(game)
         if not game.is_valid_move(move):
             break
         game.play(move)
-    set_score(game, p1, p2)
 
-
-def set_score(game, p1, p2):
+def set_score(game, p1, p2, n):
     '''
     @details Fitness is constructed as follow:
-    - win game +400 (minus move count)
+    - win game 200 (minus move count)
+    - draw game 100
     - loose game 0 (plus move count)
-    - draw game 200
     - invalid move, return move count
-    - accumulate points over 5 matches
-    - Max Fitness = (1+2+3+4+5) * (400 - 15) ~= 5790 
     '''
 
     move_count = game.moveCount / 2
-    draw_point = 200
-    win_point = draw_point * 2 - move_count
+    move_max = 6*7/2
+    win_point = (move_max * n) * 2 - move_count
+    draw_point = win_point / 2
     loose_point = 0 + move_count
-    bad_move_point = -100
+    bad_move_point = 0
 
     if game.is_over:
         if game.winner == p1:
@@ -159,9 +176,9 @@ def set_score(game, p1, p2):
     else:  # bad move
         if game.current_player == p1:
             p1.score = bad_move_point
-            p2.score = move_count
+            p2.score = None # Opponent play invalid move
         else:
-            p1.score = move_count
+            p1.score = None # Opponent play invalid move
             p2.score = bad_move_point
 
 if __name__ == "__main__":
